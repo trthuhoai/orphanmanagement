@@ -1,0 +1,27 @@
+@use "../../scss/abstracts/" as *;
+
+.modal {
+    color: $mainColor;
+}
+
+.btn__close {
+    // position: absolute;
+    // bottom: 16px;
+    // right: 125px;
+}
+
+// CARD DETAIL
+.card {
+    @include flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.card__image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.card__body {
+}
+.card__title {
+}

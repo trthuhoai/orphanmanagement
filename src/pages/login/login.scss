@@ -1,0 +1,73 @@
+@use "../../scss/abstracts/" as *;
+
+.login {
+    @include flex;
+    height: 100vh;
+    background-color: #c6d9ee;
+    background: linear-gradient(
+            rgba(198, 217, 238, 0.5),
+            rgba(198, 217, 238, 0.5)
+        ),
+        center / cover no-repeat
+            url("https://images.unsplash.com/photo-1533222535026-754c501569dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
+
+    .form__login {
+        border-radius: 12px;
+        background-color: $secondaryColor;
+        overflow: hidden;
+        max-width: 486px;
+        width: 100%;
+        text-align: center;
+
+        .form__top {
+            background-color: $mainColor;
+            color: $secondaryColor;
+            font-size: $fontSizeLarge;
+            text-align: center;
+            padding: 8px;
+            .logo {
+                font-size: $fontSizeLarge;
+
+                &__name {
+                    color: $logoColor;
+                    font-weight: 700;
+                    margin-right: 6px;
+                }
+            }
+        }
+
+        .form__body {
+            .form__desc {
+                font-size: $fontSizeNormal;
+                color: $mainColor;
+                margin: 16px auto;
+            }
+
+            .form__group {
+                border: 1px solid $mainColor;
+                margin: 16px auto;
+                padding: 8px 12px;
+                border-radius: 8px;
+                color: $mainColor;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 8px;
+                max-width: 300px;
+                width: 100%;
+                input {
+                    width: 100%;
+                }
+            }
+        }
+        .form__bottom {
+            button {
+                margin-bottom: 8px;
+            }
+            .no-account {
+                color: $mainColor;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}

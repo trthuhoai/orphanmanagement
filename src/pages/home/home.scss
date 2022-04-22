@@ -1,0 +1,15 @@
+@use "../../scss/abstracts/" as *;
+
+.home{
+    display: flex;
+
+    .homeContainer{
+        background-color: #ecf5ff;
+        flex: 4;
+
+        .main{
+            height: calc(100% - #{$headerHeight});
+            padding: $spacing;
+        }
+    }
+}

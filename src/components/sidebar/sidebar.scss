@@ -1,0 +1,44 @@
+@use "../../scss/abstracts/" as *;
+
+.sidebar {
+    background-color: #0f1e54;
+    flex: 1;
+    height: 100vh;
+    text-align: left;
+    // margin-left: -16px;
+    z-index: 10;
+    .top {
+        @include flex;
+        height: $headerHeight;
+        margin: 0 auto 48px;
+
+    }
+
+    .center {
+        width: 100%;
+        text-align: center;
+
+        ul {
+            margin: 16px 0;
+            padding: 0;
+            .title {
+                font-size: $fontSizeMedium;
+                text-transform: uppercase;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+
+            .item {
+                font-size: $fontSizeNormal;
+                margin: 8px auto;
+                opacity: 0.5;
+                transition: color 0.2s linear, opacity 0.2s linear;
+                &:hover {
+                    color: $secondaryColor;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
