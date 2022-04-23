@@ -1,0 +1,41 @@
+@use "../../scss/abstracts/" as *;
+
+.form {
+    color: $mainColor;
+
+    .form-group:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.form-group {
+    max-width: 500px;
+}
+
+.form-select,
+.form-control {
+    border: 1px solid $mainColor;
+    border-radius: 8px;
+    outline: none;
+
+    &:focus {
+        border: 1px solid $mainColor;
+        box-shadow: none;
+    }
+}
+
+.row {
+    @include flex;
+    gap: 12px;
+    margin: 0 0 16px !important;
+}
+
+.row>* {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.password__match{
+    // margin-top: -1rem;
+    margin-bottom: -1rem;
+}

@@ -1,0 +1,151 @@
+@use "./abstracts/" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: $fontFamily;
+    color: $secondaryColor;
+    font-size: $fontSizeNormal;
+    line-height: 1.5;
+    background-color: $bodyBg;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+img {
+    width: 100%;
+}
+
+ul,
+li {
+    list-style-type: none;
+}
+
+button,
+textarea,
+input {
+    border: 0;
+    outline: none;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: $fontSizeLarge;
+    font-weight: 500;
+}
+
+.btn {
+    min-width: 100px;
+    padding: 4px 12px;
+    font-size: $fontSizeNormal;
+    font-weight: 500;
+    border-radius: 12px;
+    outline: none;
+    transition: color 0.2s linear, opacity 0.2s linear;
+
+    &:visited,
+    &:active {
+        background-color: currentColor;
+        border-color: currentColor;
+    }
+
+    &:active:focus {
+        box-shadow: none;
+    }
+}
+
+.btn--primary {
+    color: $secondaryColor;
+    border: 2px solid $mainColor;
+    background-color: $mainColor;
+
+    &:hover {
+        background-color: $secondaryColor;
+        border: 2px solid $mainColor;
+        color: $mainColor;
+    }
+
+    &:focus {
+        color: $mainColor;
+        box-shadow: none;
+        background-color: $secondaryColor;
+        border: 2px solid $mainColor;
+    }
+}
+.btn--secondary {
+    color: $secondaryColor;
+    background-color: $logoColor;
+    border: 2px solid $logoColor;
+
+    &:hover {
+        background-color: $secondaryColor;
+        border: 2px solid $logoColor;
+        color: $logoColor;
+    }
+    &:focus {
+        color: $logoColor;
+        box-shadow: none;
+        background-color: $secondaryColor;
+        border: 2px solid $logoColor;
+    }
+}
+.logo {
+    font-size: $fontSizeLarge;
+
+    &__name {
+        color: $logoColor;
+        font-weight: 700;
+        margin-right: 6px;
+    }
+
+    @include mobile {
+        & span:not(.logo__name) {
+            display: none;
+        }
+    }
+}
+
+
+
+.form-control__file {
+    display: none;
+}
+
+.image {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+    margin-bottom: 4px;
+    border-radius: 50%;
+}
+
+.btn__image {
+    @include flex;
+    gap: 8px;
+
+    .icon {
+        font-size: $fontSizeNormal;
+    }
+    max-width: 125px;
+    width: 100%;
+    padding: 2px 8px;
+    border-radius: 12px;
+    outline: none;
+    transition: color 0.2s linear, opacity 0.2s linear;
+}

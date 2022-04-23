@@ -1,0 +1,30 @@
+@use "../../scss/abstracts/" as *;
+
+.header {
+    padding: 0 $spacing;
+    background-color: $secondaryColor;
+    height: $headerHeight;
+    text-align: right;
+
+    .user {
+        transform: translateY(50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        color: $mainColor;
+        font-size: $fontSizeMedium;
+        font-weight: 500;
+
+        .info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            &__avatar {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+}
