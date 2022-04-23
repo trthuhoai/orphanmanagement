@@ -8,15 +8,21 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/admin" element={<List/>}/>
+                    <Route path="/admin/users" element={<List/>}/>
+                </Routes> 
+                {/* <Routes>
                     <Route index element={<Login />} />
                 </Routes>
                 <Routes>
                     <Route path="/">
-                        <Route path="users">
+                        <Route path="admin">
                             <Route index element={<List />} />
                         </Route>
                     </Route>
-                </Routes>
+                </Routes> */}
             </BrowserRouter>
         </div>
     );

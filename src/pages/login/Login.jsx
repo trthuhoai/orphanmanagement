@@ -29,7 +29,7 @@ export default function Login() {
         result = await result.json();
         localStorage.setItem("token", JSON.stringify(result.data.token));
         if (result.code === 200) {
-            navigate("/users");
+            navigate("/admin");
         } else {
             if (result.message === "Unauthorized") {
                 setErrorMessage("Bạn đã nhập sai mật khẩu!");
