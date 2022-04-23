@@ -11,8 +11,5 @@ root.render(
     </React.StrictMode>
 );
 ///jjjjjjj
-<<<<<<< HEAD
 /////22222
-=======
 /////11111
->>>>>>> test
