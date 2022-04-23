@@ -35,35 +35,76 @@ const AccountDetail = ({ theAccount }) => {
 
     return (
         <Card className="card">
-            <Card.Img
-                className="card__image"
-                variant="top"
-                src={
-                    detailAccount.image ||
-                    "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
-                }
-            />
+            <Card.Header className="card__header">
+                <Card.Img
+                    className="card__image"
+                    variant="top"
+                    src={
+                        detailAccount.image ||
+                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                    }
+                />
+                <div>
+                    <Card.Title className="card__title">
+                        {detailAccount.fullName}
+                    </Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted card__subtitle">
+                        {detailAccount.roles.includes("ROLE_ADMIN")
+                            ? "Admin"
+                            : detailAccount.roles.includes("ROLE_MANAGER")
+                            ? "Manager"
+                            : ""}
+                    </Card.Subtitle>
+                    <Card.Text className="card-text">
+                        {detailAccount.email}
+                    </Card.Text>
+                </div>
+            </Card.Header>
             <Card.Body className="card__body">
-                <Card.Title className="card__title">
-                    {detailAccount.fullName}
-                </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                    {detailAccount.roles.includes("ROLE_ADMIN")
-                        ? "Admin"
-                        : detailAccount.roles.includes("ROLE_MANAGER")
-                        ? "Manager"
-                        : ""}
-                </Card.Subtitle>
-                <Card.Text>{detailAccount.address}</Card.Text>
-                <ListGroup variant="flush">
-                    <ListGroup.Item>{detailAccount.address}</ListGroup.Item>
-                    <ListGroup.Item>{detailAccount.email}</ListGroup.Item>
-                    <ListGroup.Item>
-                        {detailAccount.date_of_birth}
+                <ListGroup variant="flush" className="list-group">
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            Giới tính
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailAccount.gender === true
+                                ? "Nam"
+                                : detailAccount.gender === false
+                                ? "Nữ"
+                                : ""}
+                        </p>
                     </ListGroup.Item>
-                    <ListGroup.Item>{detailAccount.phone}</ListGroup.Item>
-                    <ListGroup.Item>
-                        {detailAccount.identification}
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            Ngày sinh
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailAccount.date_of_birth}
+                        </p>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            CMND/CCCD
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailAccount.identification}
+                        </p>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            Số điện thoại
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailAccount.phone}
+                        </p>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            Địa chỉ
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailAccount.address}
+                        </p>
                     </ListGroup.Item>
                 </ListGroup>
             </Card.Body>

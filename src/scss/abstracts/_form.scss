@@ -2,7 +2,10 @@
 
 .form {
     color: $mainColor;
-    // text-align: center;
+
+    .form-group:last-child{
+        margin-bottom: 0;
+    }
 }
 
 .form-group {
@@ -33,6 +36,6 @@
 }
 
 .password__match{
-    margin-top: -1rem;
+    // margin-top: -1rem;
     margin-bottom: -1rem;
 }

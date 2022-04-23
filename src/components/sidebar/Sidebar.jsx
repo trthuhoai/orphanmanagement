@@ -1,31 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.scss";
 
 const Sidebar = () => {
-    const [userInfo, setUserInfo] = useState({ roles: [] });
+    const currentUser = JSON.parse(localStorage.getItem("current-user"));
 
-    useEffect(() => {
-        getUserInfo();
-    }, []);
-
-    async function getUserInfo() {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        const result = await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/auth/account",
-            requestOptions
-        );
-        const getResult = await result.json();
-        setUserInfo(getResult.data);
-    }
     const linkStyle = {
         color: "#fff",
         textDecoration: "none",
@@ -41,54 +19,48 @@ const Sidebar = () => {
                 </Link>
             </div>
             <div className="center">
-                {userInfo.roles.includes("ROLE_ADMIN") ? (
+                {currentUser.roles.includes("ROLE_ADMIN") ? (
                     <ul>
                         <h2 className="title">Tài khoản</h2>
                         <Link to="/users" style={linkStyle}>
                             <li className="item">Thành viên</li>
                         </Link>
                     </ul>
-                ) : userInfo.roles.includes("ROLE_MANAGER") ? (
+                ) : currentUser.roles.includes("ROLE_MANAGER") ? (
                     <>
                         <ul>
                             <h2 className="title">Trung tâm</h2>
-                            <Link to="/children" style={linkStyle}>
+                            <Link to="/manager/children" style={linkStyle}>
                                 <li className="item">Trẻ em</li>
                             </Link>
-                            <Link to="/staff" style={linkStyle}>
+                            <Link to="/manager/staff" style={linkStyle}>
                                 <li className="item">Nhân viên</li>
                             </Link>
-                            <Link to="/furniture" style={linkStyle}>
+                            <Link to="/manager/furniture" style={linkStyle}>
                                 <li className="item">Trang thiết bị</li>
                             </Link>
                         </ul>
                         <ul>
                             <h2 className="title">Hoạt động</h2>
-                            <Link to="/charity" style={linkStyle}>
+                            <Link to="/manager/charity" style={linkStyle}>
                                 <li className="item">Từ thiện</li>
                             </Link>
-                            <Link to="/picnic" style={linkStyle}>
+                            <Link to="/manager/picnic" style={linkStyle}>
                                 <li className="item">Dã ngoại</li>
                             </Link>
-                            <Link to="/adoption" style={linkStyle}>
+                            <Link to="/manager/adoption" style={linkStyle}>
                                 <li className="item">Nhận nuôi</li>
                             </Link>
-                            <Link to="/introduction" style={linkStyle}>
+                            <Link to="/manager/introduction" style={linkStyle}>
                                 <li className="item">Giới thiệu trẻ</li>
                             </Link>
-                            <Link to="/feedback" style={linkStyle}>
+                            <Link to="/manager/feedback" style={linkStyle}>
                                 <li className="item">Phản hồi</li>
                             </Link>
-                            <Link
-                                to="/statistics"
-                                style={linkStyle}
-                            >
+                            <Link to="/manager/statistics" style={linkStyle}>
                                 <li className="item">Thống kê</li>
                             </Link>
-                            <Link
-                                to="/notifications"
-                                style={linkStyle}
-                            >
+                            <Link to="/manager/notifications" style={linkStyle}>
                                 <li className="item">Thông báo</li>
                             </Link>
                         </ul>

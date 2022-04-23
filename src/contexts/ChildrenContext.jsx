@@ -1,17 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 
-export const AccountContext = createContext();
+export const ChildrenContext = createContext();
 
-const AccountContextProvider = (props) => {
-    const [accounts, setAccounts] = useState([]);
-    const [detailAccounts, setDetailAccounts] = useState({});
-
+const ChildrenContextProvider = (props) => {
+    const [childrens, setChildrens] = useState([]);
     useEffect(() => {
-        getAccountsList();
+        getChildrensList();
     }, []);
 
-    // GET ACCOUNTS LIST
-    async function getAccountsList() {
+    // GET ChildrenS LIST
+    async function getChildrensList() {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
@@ -22,18 +20,17 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/children",
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
-                console.log(result)
-                setAccounts(JSON.parse(result).data.result);
+                setChildrens(JSON.parse(result).data.result);
             })
             .catch((error) => console.log("error", error));
     }
-    // ADD ACCOUNT
-    async function addAccount(
+    // ADD Children
+    async function addChildren(
         image,
         fullName,
         date_of_birth,
@@ -75,14 +72,27 @@ const AccountContextProvider = (props) => {
             requestOptions
         )
             .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setAccounts([...accounts, result.data]);
-            })
+            .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
+        setChildrens([
+            ...childrens,
+            {
+                image,
+                fullName,
+                date_of_birth,
+                gender,
+                roles,
+                address,
+                identification,
+                phone,
+                email,
+                password,
+                confirmPassword,
+            },
+        ]);
     }
-    // VIEW ACCOUNT DETAILS
-    async function viewAccount(id) {
+    // VIEW Children DETAILS
+    async function viewChildren(id) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
@@ -99,15 +109,15 @@ const AccountContextProvider = (props) => {
         )
             .then((response) => response.text())
             .then((result) => {
-                console.log(result);
-                setAccounts(JSON.parse(result).data);
+                console.log(JSON.parse(result).data);
+                setChildrens(JSON.parse(result).data);
             })
             .catch((error) => console.log("error", error));
     }
-    //EDIT ACCOUNT
-    async function updateAccount(id, updatedAccount) {
+    //EDIT Children
+    async function updateChildren(id, updatedChildren) {
         const token = JSON.parse(localStorage.getItem("token"));
-        let raw = JSON.stringify(updatedAccount);
+        let raw = JSON.stringify(updatedChildren);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -123,52 +133,48 @@ const AccountContextProvider = (props) => {
             requestOptions
         )
             .then((response) => response.text())
-            .then((result) => {
-                console.log(result);
-                setAccounts(
-                    accounts.map((account) =>
-                        account.id === id ? JSON.parse(result).data : account
-                    )
-                );
-            })
+            .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
+        setChildrens(
+            childrens.map((Children) =>
+                Children.id === id ? updatedChildren : Children
+            )
+        );
     }
-    // DELETE ACCOUNT
-    async function deleteAccount(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "DELETE",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
+    // DELETE Children
+    async function deleteChildren(id) {
+        // const token = JSON.parse(localStorage.getItem("token"));
+        // let requestOptions = {
+        //     method: "DELETE",
+        //     headers: {
+        //         Authorization: "Bearer " + token,
+        //         "Content-Type": "application/json",
+        //     },
+        //     redirect: "follow",
+        // };
 
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
-            requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(result);
-                setAccounts(accounts.filter((account) => account.id !== id));
-            })
-            .catch((error) => console.log("error", error));
+        // await fetch(
+        //     `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+        //     requestOptions
+        // )
+        //     .then((response) => response.text())
+        //     // .then((result) => console.log(result))
+        //     .catch((error) => console.log("error", error));
+        setChildrens(childrens.filter((Children) => Children.id !== id));
     }
     return (
-        <AccountContext.Provider
+        <ChildrenContext.Provider
             value={{
-                accounts,
-                addAccount,
-                deleteAccount,
-                viewAccount,
-                updateAccount,
+                childrens,
+                addChildren,
+                deleteChildren,
+                viewChildren,
+                updateChildren,
             }}
         >
             {props.children}
-        </AccountContext.Provider>
+        </ChildrenContext.Provider>
     );
 };
 
-export default AccountContextProvider;
+export default ChildrenContextProvider;

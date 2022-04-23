@@ -1,55 +1,54 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { ChildrenContext } from "../../contexts/ChildrenContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Account from "./Account";
-import AccountCreate from "./AccountCreate";
-import "./_account.scss";
+import Children from "./Children";
+import ChildrenCreate from "./ChildrenCreate";
+import "./_children.scss";
 
-const AccountList = () => {
-    const { accounts } = useContext(AccountContext);
+const ChildrenList = () => {
+    const { childrens } = useContext(ChildrenContext);
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
         handleClose();
-    }, [accounts]);
+    }, [childrens]);
 
     return (
         <div className="table">
             <div className="table__top">
-                <h2>Thành viên</h2>
+                <h2>Trẻ em</h2>
                 <Button className="btn btn--primary" onClick={handleShow}>
-                    Thêm tài khoản
+                    Thêm trẻ em
                 </Button>
             </div>
             <table className="table__body">
                 <thead>
                     <tr>
                         <th scope="col">Họ và tên</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phân quyền</th>
+                        <th scope="col">Ngày sinh</th>
+                        <th scope="col">Trạng thái</th>
                         <th scope="col">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {accounts.map((account) => (
-                        <tr key={account.id}>
-                            <Account account={account} />
+                    {childrens.map((children) => (
+                        <tr key={children.id}>
+                            <Children children={children} />
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <Modal show={show} onHide={handleClose} centered className="modal">
+            {/* <Modal show={show} onHide={handleClose} centered className="modal">
                 <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Thêm tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountCreate />
+                    <ChildrenCreate />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -61,16 +60,16 @@ const AccountList = () => {
                     </Button>
                     <Button
                         variant="success"
-                        form="accountCreate"
+                        form="childrenCreate"
                         type="submit"
                         className="btn btn--primary btn__submit"
                     >
                         Xác nhận
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
         </div>
     );
 };
 
-export default AccountList;
+export default ChildrenList;

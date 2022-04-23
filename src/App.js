@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import List from "./pages/list/List";
+import ListAccount from "./pages/list/ListAccount";
 import Login from "./pages/login/Login";
 import "./scss/App.scss";
 
@@ -8,21 +8,18 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Login/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/admin" element={<List/>}/>
-                    <Route path="/admin/users" element={<List/>}/>
-                </Routes> 
-                {/* <Routes>
                     <Route index element={<Login />} />
                 </Routes>
                 <Routes>
-                    <Route path="/">
-                        <Route path="admin">
-                            <Route index element={<List />} />
-                        </Route>
+                    <Route path="/admin">
+                        <Route index element={<ListAccount />} />
+                        {/* <Route path="/admin/users"></Route> */}
                     </Route>
-                </Routes> */}
+                    <Route path="/manager">
+                        {/* <Route path="/manager/children" index element={<List />} /> */}
+                        {/* <Route path="/admin/users"></Route> */}
+                    </Route>
+                </Routes>
             </BrowserRouter>
         </div>
     );

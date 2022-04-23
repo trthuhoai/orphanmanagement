@@ -4,24 +4,44 @@
     color: $mainColor;
 }
 
-.btn__close {
-    // position: absolute;
-    // bottom: 16px;
-    // right: 125px;
-}
-
 // CARD DETAIL
 .card {
-    @include flex;
-    flex-direction: row;
-    align-items: flex-start;
-}
-.card__image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-.card__body {
-}
-.card__title {
+    display: flex;
+    // align-items: ce
+
+    &__image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+    }
+    &__header {
+        display: flex;
+        gap: 12px;
+        background-color: $secondaryColor;
+    }
+
+    &__body {
+        .list-group {
+            width: 100%;
+            display: inline-block;
+        }
+
+        .list-group__item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            $headingWidth: 150px;
+            &-heading {
+                min-width: $headingWidth;
+            }
+            &-content {
+                min-width: calc(100% - $headingWidth);
+                width: 100%;
+                margin-bottom: 0;
+                color: $mainColor;
+                font-weight: 500;
+            }
+        }
+    }
 }

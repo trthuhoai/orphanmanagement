@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
-import AccountDetail from "./AccountDetail";
-import AccountUpdate from "./AccountUpdate";
+import { ChildrenContext } from "../../contexts/ChildrenContext";
+import ChildrenDetail from "./ChildrenDetail";
+import ChildrenUpdate from "./ChildrenUpdate";
 
-const Account = ({ account }) => {
-    const { deleteAccount } = useContext(AccountContext);
+const Children = ({ children }) => {
+    const { deleteChildren } = useContext(ChildrenContext);
 
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
@@ -27,22 +27,16 @@ const Account = ({ account }) => {
             <td>
                 <img
                     src={
-                        account.image ||
+                        children.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                     alt=""
                 />
-                {account.fullName}
+                {children.fullName}
             </td>
-            <td>{account.email} </td>
+            <td>{children.dateOfBirth} </td>
             <td>
-                {account.roles.includes("ROLE_ADMIN") ||
-                account.roles.includes("admin")
-                    ? "Admin"
-                    : account.roles.includes("ROLE_MANAGER") ||
-                      account.roles.includes("manager")
-                    ? "Manager"
-                    : ""}
+                {children.status === "WAIT_TO_RECEIVE" ? "Đang chờ nhận nuôi" : ""}
             </td>
             <td>
                 <i
@@ -73,7 +67,7 @@ const Account = ({ account }) => {
                     <Modal.Title>Thông tin tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountDetail theAccount={account} />
+                    <ChildrenDetail theChildren={children} />
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}
@@ -87,7 +81,7 @@ const Account = ({ account }) => {
                     <Modal.Title>Cập nhật tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountUpdate theAccount={account} />
+                    <ChildrenUpdate theChildren={children} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -98,7 +92,7 @@ const Account = ({ account }) => {
                         Close
                     </Button>
                     <Button
-                        form="accountUpdate"
+                        form="childrenUpdate"
                         variant="success"
                         type="submit"
                         className="btn btn--primary btn__submit"
@@ -119,7 +113,7 @@ const Account = ({ account }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Bạn có chắc chắn muốn xoá ${account.fullName} khỏi danh sách không?`}
+                        {`Bạn có chắc chắn muốn xoá ${children.fullName} khỏi danh sách không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -133,7 +127,7 @@ const Account = ({ account }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            deleteAccount(account.id);
+                            deleteChildren(children.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
@@ -145,4 +139,4 @@ const Account = ({ account }) => {
     );
 };
 
-export default Account;
+export default Children;

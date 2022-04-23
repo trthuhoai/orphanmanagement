@@ -27,9 +27,33 @@ export default function Login() {
             }
         );
         result = await result.json();
-        localStorage.setItem("token", JSON.stringify(result.data.token));
+        console.log(result)
         if (result.code === 200) {
-            navigate("/admin");
+            localStorage.setItem("token", JSON.stringify(result.data.token));
+            const token = JSON.parse(localStorage.getItem("token"));
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            let _result = await fetch(
+                "https://orphanmanagement.herokuapp.com/api/v1/auth/account",
+                requestOptions
+            );
+            _result = await _result.json();
+            localStorage.setItem("current-user", JSON.stringify(_result.data));
+            navigate(
+                `${
+                    _result.data.roles.includes("ROLE_ADMIN")
+                        ? "/admin"
+                        : _result.data.roles.includes("ROLE_MANAGER")
+                        ? "/manager/children"
+                        : ""
+                }`
+            );
         } else {
             if (result.message === "Unauthorized") {
                 setErrorMessage("Bạn đã nhập sai mật khẩu!");
