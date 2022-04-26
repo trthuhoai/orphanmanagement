@@ -44,16 +44,51 @@ export default function Login() {
                 requestOptions
             );
             _result = await _result.json();
-            localStorage.setItem("current-user", JSON.stringify(_result.data));
-            navigate(
-                `${
-                    _result.data.roles.includes("ROLE_ADMIN")
-                        ? "/admin"
-                        : _result.data.roles.includes("ROLE_MANAGER")
-                        ? "/manager/children"
-                        : ""
-                }`
-            );
+            const currentUser=_result.data;
+            localStorage.setItem("current-user", JSON.stringify(currentUser));
+            currentUser.roles.forEach((role)=>{
+                switch (role.roleName){
+                    case "ROLE_ADMIN":
+                        navigate("/admin");
+                        break;
+                    case "ROLE_MANAGER_LOGISTIC":
+                        navigate("/manager/furniture");
+                        break;
+                    case "ROLE_MANAGER_HR":
+                        navigate("/manager");
+                        break;
+                    case "ROLE_MANAGER_CHILDREN":
+                        navigate("/manager");
+                        break;
+                    default:
+                        break;
+                }
+
+            })
+            // // for(let i = 0, l = _result.data.roles.length; i < l; i++) 
+            // // {
+                
+            // // }
+            // if(_result.data.roles[0].roleId===1)
+            // {
+            //     navigate("/admin")
+            // }
+            // else if (_result.data.roles[0].roleId===2)
+            // {
+            //     navigate("/manager/furniture")
+            // }
+            // else {
+            //     navigate("")
+            // }
+            // navigate(
+            //     `${
+            //         _result.data.roles.includes("ROLE_ADMIN")
+            //             ? "/admin"
+            //             : _result.data.roles.includes("ROLE_MANAGER")
+            //             ? "/manager/children"
+            //             : ""
+            //     }`
+            // );
         } else {
             if (result.message === "Unauthorized") {
                 setErrorMessage("Bạn đã nhập sai mật khẩu!");
