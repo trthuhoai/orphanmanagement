@@ -10,4 +10,10 @@ root.render(
         <App />
     </React.StrictMode>
 );
+<<<<<<< HEAD
 
+=======
+///jjjjjjj
+/////22222
+/////11111
+>>>>>>> addedFurniture
