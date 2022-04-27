@@ -128,7 +128,7 @@ const FormCreate = () => {
                         type="text"
                         placeholder="Tên thiết bị"
                         name="nameFurniture"
-                        value={nameFurniture}
+                        // value={nameFurniture}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
@@ -140,7 +140,7 @@ const FormCreate = () => {
                             defaultValue="GOOD"
                             className="form-select"
                             name="status"
-                            value={status}
+                            // value={status}
                             onChange={(e) => {
                                 let tempGender =
                                     e.target.value;
@@ -169,7 +169,7 @@ const FormCreate = () => {
                             type="number"
                             placeholder="Số lượng"
                             name="quantity"
-                            value={quantity}
+                            // value={quantity}
                             onChange={(e) => onInputChange(e)}
                             required
                         />

@@ -43,7 +43,7 @@ const FurnitureList = () => {
                 </thead>
                 <tbody>
                     {furnitures.map((furniture) => (
-                        <tr key={furniture.id}>
+                        <tr key={furniture.furnitureId}>
                             <Furniture furniture={furniture} />
                         </tr>
                     ))}

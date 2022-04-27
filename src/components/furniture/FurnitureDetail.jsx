@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
-const AccountDetail = ({ theAccount }) => {
-    const id = theAccount.id;
-    const [detailAccount, setDetailAccount] = useState({ roles: [] });
-
+const FurnitureDetail = ({ theFurniture }) => {
+    const id = theFurniture.furnitureId;
+    const [detailFurniture, setDetailFurniture] = useState({ roles: [] });
     useEffect(() => {
-        getDetailAccount();
+        getDetailFurniture();
     }, []);
 
-    async function getDetailAccount() {
+    async function getDetailFurniture() {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
@@ -21,13 +20,13 @@ const AccountDetail = ({ theAccount }) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 result = JSON.parse(result).data;
-                setDetailAccount(result);
+                setDetailFurniture(result);
                 console.log(result);
             })
             .catch((error) => console.log("error", error));
@@ -40,15 +39,15 @@ const AccountDetail = ({ theAccount }) => {
                     className="card__image"
                     variant="top"
                     src={
-                        detailAccount.image ||
+                        detailFurniture.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                 />
                 <div>
                     <Card.Title className="card__title">
-                        {detailAccount.fullName}
+                        {detailFurniture.nameFurniture}
                     </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted card__subtitle">
+                    {/* <Card.Subtitle className="mb-2 text-muted card__subtitle">
                         {detailAccount.roles.includes("ROLE_ADMIN")
                             ? "Admin"
                             : detailAccount.roles.includes("ROLE_MANAGER")
@@ -57,32 +56,33 @@ const AccountDetail = ({ theAccount }) => {
                     </Card.Subtitle>
                     <Card.Text className="card-text">
                         {detailAccount.email}
-                    </Card.Text>
+                    </Card.Text> */}
                 </div>
             </Card.Header>
             <Card.Body className="card__body">
                 <ListGroup variant="flush" className="list-group">
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Giới tính
+                            Số lượng
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.gender === true
+                            {/* {detailAccount.gender === true
                                 ? "Nam"
                                 : detailAccount.gender === false
                                 ? "Nữ"
-                                : ""}
+                                : ""} */}
+                                {detailFurniture.quantity}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Ngày sinh
+                            Tình trạng
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.date_of_birth}
+                            {detailFurniture.status} 
                         </p>
                     </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
+                    {/* <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
                             CMND/CCCD
                         </span>
@@ -105,11 +105,11 @@ const AccountDetail = ({ theAccount }) => {
                         <p className="list-group__item-content">
                             {detailAccount.address}
                         </p>
-                    </ListGroup.Item>
+                    </ListGroup.Item> */}
                 </ListGroup>
             </Card.Body>
         </Card>
     );
 };
 
-export default AccountDetail;
+export default FurnitureDetail;

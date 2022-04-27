@@ -69,7 +69,7 @@ const FurnitureContextProvider = (props) => {
                 {
                     setAddResult("true");
                 }
-                setFurnitures([...furnitures, result.data]);
+                //setFurnitures([...furnitures, result.data]);
             })
             .catch((error) => console.log("error", error));
     }
@@ -92,14 +92,16 @@ const FurnitureContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
+
+                //Cần fix để hiển thi ds thay đổi sau khi add
                // setAccounts(JSON.parse(result).data);
             })
             .catch((error) => console.log("error", error));
     }
-    //EDIT ACCOUNT
-    async function updateFurniture(id, updatedAccount) {
+    //UPDATE ACCOUNT
+    async function updateFurniture(id, updatedFurniture) {
         const token = JSON.parse(localStorage.getItem("token"));
-        let raw = JSON.stringify(updatedAccount);
+        let raw = JSON.stringify(updatedFurniture);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -111,17 +113,17 @@ const FurnitureContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                // setAccounts(
-                //     accounts.map((account) =>
-                //         account.id === id ? JSON.parse(result).data : account
-                //     )
-                // );
+                setFurnitures(
+                    furnitures.map((furniture) =>
+                        furniture.furnitureId === id ? JSON.parse(result).data : furniture
+                    )
+                );
             })
             .catch((error) => console.log("error", error));
     }
@@ -138,13 +140,13 @@ const FurnitureContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
-                // console.log(result);
-                // setAccounts(accounts.filter((account) => account.id !== id));
+                console.log(result);
+                setFurnitures(furnitures.filter((furniture) => furniture.furnitureId !== id));
             })
             .catch((error) => console.log("error", error));
     }
