@@ -4,22 +4,37 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
-
+import { SearchBar } from "../searchBar/SearchBar";
+import "./_children.scss";
 const FormCreate = () => {
     const { addChildren } = useContext(ChildrenContext);
+    const { introducers } = useContext(ChildrenContext);
+    const { nurturers } = useContext(ChildrenContext);
+    
     const [newChildren, setNewChildren] = useState({
         image: "",
         fullName: "",
-        date_of_birth: "",
-        gender: null,
-        roles: [],
-        address: "",
-        identification: "",
-        phone: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+        dateOfBirth: "",
+        gender: "",
+        introductoryDate: "",
+        adoptiveDate: "",
+        introducerId: 0,
+        nurturerId: 0,
     });
+    const [introducerId, setIntroducerId] = useState(0);
+    const [introducer, setIntroducer] = useState({});
+    const getIntroducerId = (valueId) => {
+        setIntroducerId(valueId);
+        setIntroducer(
+            introducers.find((introducer) => introducer.id === valueId)
+        );
+    };
+    const [nurturerId, setNurturerId] = useState(0);
+    // const [nurturer, setNurturer] = useState(0);
+    // const getNurturerId = (valueId) => {
+    //     setNurturerId(valueId);
+    //     setNurturerId(nurturers.find((nurturer) => nurturer.id === valueId));
+    // };
     const onInputChange = (e) => {
         setNewChildren({
             ...newChildren,
@@ -30,37 +45,40 @@ const FormCreate = () => {
     const {
         image,
         fullName,
-        date_of_birth,
         gender,
-        roles,
-        address,
-        identification,
-        phone,
-        email,
-        password,
-        confirmPassword,
+        dateOfBirth,
+        introductoryDate,
+        adoptiveDate,
     } = newChildren;
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("ok");
-        // handleUpload();
         addChildren(
             image,
             fullName,
-            date_of_birth,
             gender,
-            roles,
-            address,
-            identification,
-            phone,
-            email,
-            password,
-            confirmPassword
+            dateOfBirth,
+            introductoryDate,
+            adoptiveDate,
+            introducerId,
+            nurturerId
         );
     };
 
     //Image Upload
-    const [file, setFile] = useState(null);
+    // generate random string for filename
+    function generateString(length) {
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = " ";
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+        }
+        return result;
+    }
+    const [file, setFile] = useState("");
     const onFileChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -68,10 +86,7 @@ const FormCreate = () => {
     };
     async function handleUpload() {
         if (!file) return;
-        const storageRef = ref(
-            storage,
-            `admin/users/${newChildren.fullName} ${newChildren.identification}`
-        );
+        const storageRef = ref(storage, `children/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -85,7 +100,7 @@ const FormCreate = () => {
         });
     }
     return (
-        <Form onSubmit={handleSubmit} className="form" id="ChildrenCreate">
+        <Form onSubmit={handleSubmit} className="form" id="childrenCreate">
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
@@ -110,7 +125,6 @@ const FormCreate = () => {
                         accept="image/*"
                         name="image"
                         id="childrenImageFile"
-                        // value={file}
                         onChange={onFileChange}
                         required
                     />
@@ -118,7 +132,8 @@ const FormCreate = () => {
                         className="form-label btn__image btn btn--secondary"
                         onClick={handleUpload}
                     >
-                        <i class="bi bi-file-earmark-arrow-up-fill"></i> Lưu ảnh
+                        <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
+                        ảnh
                     </Button>
                 </Row>
             </Form.Group>
@@ -140,13 +155,12 @@ const FormCreate = () => {
                         className="form-control"
                         type="text"
                         placeholder="Ngày sinh"
-                        name="date_of_birth"
-                        value={date_of_birth}
+                        name="dateOfBirth"
+                        value={dateOfBirth}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
-
                 <Form.Group as={Col} className="form-group">
                     <Form.Select
                         defaultValue="Giới tính"
@@ -154,151 +168,76 @@ const FormCreate = () => {
                         name="gender"
                         value={gender}
                         onChange={(e) => {
-                            let tempGender =
-                                e.target.value === "true" ? true : false;
-                            console.log(tempGender);
                             onInputChange(e);
                             setNewChildren({
                                 ...newChildren,
-                                gender: tempGender,
+                                gender:
+                                    e.target.value === "true" ? true : false,
                             });
-                            console.log(typeof e.target.value, e.target.value);
                         }}
                     >
-                        <option selected hidden>
+                        <option value={"Giới tính"} hidden>
                             Giới tính
                         </option>
                         <option value={true}>Nam</option>
                         <option value={false}>Nữ</option>
                     </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col} className="form-group">
-                    <Form.Select
-                        defaultValue="Phân quyền"
-                        className="form-select"
-                        name="roles"
-                        value={roles}
-                        onChange={(e) => {
-                            let tempRoles = [e.target.value];
-                            onInputChange(e);
-                            setNewChildren({
-                                ...newChildren,
-                                roles: tempRoles,
-                            });
-                        }}
-                    >
-                        <option selected hidden>
-                            Phân quyền
-                        </option>
-                        <option value={["admin"]}>Admin</option>
-                        <option value={["manager"]}>Manager</option>
-                    </Form.Select>
-                </Form.Group>
             </Row>
-
-            {/* <Form.Group className="mb-3 form-group">
-                    <Form.Select
-                        defaultValue="Phân quyền"
-                        className="form-select"
-                        name="roles"
-                        value={roles}
-                        onChange={(e) => {
-                            let tempRoles = [e.target.value];
-                            onInputChange(e);
-                            setNewChildren({
-                                ...newChildren,
-                                roles: tempRoles,
-                            });
-                        }}
-                    >
-                        <option selected hidden>
-                            Phân quyền
-                        </option>
-                        <option value={["admin"]}>Admin</option>
-                        <option value={["manager"]}>Manager</option>
-                    </Form.Select>
-                </Form.Group> */}
-
-            <Form.Group className="mb-3 form-group">
-                <Form.Control
-                    className="form-control"
-                    type="text"
-                    placeholder="Địa chỉ"
-                    name="address"
-                    value={address}
-                    onChange={(e) => onInputChange(e)}
-                    required
-                />
-            </Form.Group>
-
             <Row className="mb-3">
-                <Form.Group as={Col} className="form-group">
+                <Form.Group as={Col} className=" form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="CMND/CCCD"
-                        name="identification"
-                        value={identification}
+                        placeholder="Ngày vào trung tâm"
+                        name="introductoryDate"
+                        value={introductoryDate}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
-
-                <Form.Group as={Col} className="form-group">
+                <Form.Group as={Col} className=" form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="Số điện thoại"
-                        name="phone"
-                        value={phone}
+                        placeholder="Ngày nhận nuôi"
+                        name="adoptiveDate"
+                        value={adoptiveDate}
                         onChange={(e) => onInputChange(e)}
-                        required
+                        // required
                     />
                 </Form.Group>
             </Row>
-
-            <Form.Group className="mb-3 form-group">
-                <Form.Control
-                    className="form-control"
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={email}
-                    onChange={(e) => onInputChange(e)}
-                    required
+            <Form.Group as={Col} className="mb-3 form-group">
+                <SearchBar
+                    placeholder={"Nhập tên người giới thiệu"}
+                    data={introducers}
+                    getValueId={getIntroducerId}
                 />
             </Form.Group>
-
-            <Row className="mb-3">
-                <Form.Group as={Col} className="form-group">
-                    <Form.Control
-                        className="form-control"
-                        type="password"
-                        placeholder="Mật khẩu"
-                        name="password"
-                        value={password}
-                        onChange={(e) => onInputChange(e)}
-                        required
+            {Object.keys(introducer).length !== 0 && (
+                <Form.Group className="mb-3 form-group search-item">
+                    <img
+                        src={
+                            introducer.image ||
+                            "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        }
+                        alt=""
+                        className="search-item__image"
                     />
+                    <div className="search-item__content">
+                        <p>{introducer.fullName || "Tên người giới thiệu"}</p>
+                        <span> {introducer.phone || "Số điện thoại"}</span>
+                    </div>
                 </Form.Group>
-
-                <Form.Group as={Col} className="form-group">
-                    <Form.Control
-                        className="form-control"
-                        type="password"
-                        placeholder="Xác nhận mật khẩu"
-                        name="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => onInputChange(e)}
-                        required
-                    />
-                </Form.Group>
-                {password !== confirmPassword && (
-                    <p className="password__match">
-                        Mật khẩu không trùng khớp.
-                    </p>
-                )}
-            </Row>
+            )}
+            {/* <Form.Group as={Col} className="mb-3 form-group">
+                <SearchBar
+                    placeholder={"Nhập tên người giới thiệu"}
+                    data={introducers}
+                    getValueId={getIntroducerId}
+                />
+            </Form.Group> */}
         </Form>
     );
 };

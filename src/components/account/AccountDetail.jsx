@@ -1,37 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
+import { AccountContext } from "../../contexts/AccountContext";
 
 const AccountDetail = ({ theAccount }) => {
     const id = theAccount.id;
-    const [detailAccount, setDetailAccount] = useState({ roles: [] });
 
+    const [detailAccount, setDetailAccount] = useState({
+        roles: [{ description: "" }],
+    });
+
+    const { viewAccount } = useContext(AccountContext);
     useEffect(() => {
-        getDetailAccount();
-    }, []);
-
-    async function getDetailAccount() {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
-            requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                result = JSON.parse(result).data;
-                setDetailAccount(result);
-                console.log(result);
-            })
-            .catch((error) => console.log("error", error));
-    }
+        viewAccount(id).then((result) => {
+            setDetailAccount(result);
+        });
+    },[])
 
     return (
         <Card className="card">
@@ -49,11 +32,7 @@ const AccountDetail = ({ theAccount }) => {
                         {detailAccount.fullName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted card__subtitle">
-                        {detailAccount.roles.includes("ROLE_ADMIN")
-                            ? "Admin"
-                            : detailAccount.roles.includes("ROLE_MANAGER")
-                            ? "Manager"
-                            : ""}
+                        {detailAccount.roles[0].description}
                     </Card.Subtitle>
                     <Card.Text className="card-text">
                         {detailAccount.email}

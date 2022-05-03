@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { AccountContext } from "../../contexts/AccountContext";
 import AccountDetail from "./AccountDetail";
@@ -7,6 +7,10 @@ import AccountUpdate from "./AccountUpdate";
 const Account = ({ account }) => {
     const { deleteAccount } = useContext(AccountContext);
 
+    useEffect(() => {
+        handleCloseUpdate();
+        handleCloseDelete();
+    }, [account]);
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
@@ -35,15 +39,7 @@ const Account = ({ account }) => {
                 {account.fullName}
             </td>
             <td>{account.email} </td>
-            <td>
-                {account.roles.includes("ROLE_ADMIN") ||
-                account.roles.includes("admin")
-                    ? "Admin"
-                    : account.roles.includes("ROLE_MANAGER") ||
-                      account.roles.includes("manager")
-                    ? "Manager"
-                    : ""}
-            </td>
+            <td>{account.roles[0].description}</td>
             <td>
                 <i
                     title="Xem chi tiết"

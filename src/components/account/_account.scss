@@ -7,7 +7,6 @@
 // CARD DETAIL
 .card {
     display: flex;
-    // align-items: ce
 
     &__image {
         width: 120px;
@@ -31,7 +30,7 @@
             align-items: flex-start;
             justify-content: space-between;
 
-            $headingWidth: 150px;
+            $headingWidth: 200px;
             &-heading {
                 min-width: $headingWidth;
             }

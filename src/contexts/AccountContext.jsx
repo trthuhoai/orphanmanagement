@@ -4,14 +4,14 @@ export const AccountContext = createContext();
 
 const AccountContextProvider = (props) => {
     const [accounts, setAccounts] = useState([]);
-    const [detailAccounts, setDetailAccounts] = useState({});
+    const [pages, setPages] = useState([]);
 
     useEffect(() => {
         getAccountsList();
     }, []);
 
     // GET ACCOUNTS LIST
-    async function getAccountsList() {
+    async function getAccountsList(page = 1) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
@@ -22,13 +22,13 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin",
+            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${page}`,
             requestOptions
         )
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
-                console.log(result)
-                setAccounts(JSON.parse(result).data.result);
+                setAccounts(result.data.result);
+                setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
@@ -78,7 +78,7 @@ const AccountContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setAccounts([...accounts, result.data]);
+                getAccountsList();
             })
             .catch((error) => console.log("error", error));
     }
@@ -94,16 +94,12 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
 
-        await fetch(
+        let result = await fetch(
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(result);
-                setAccounts(JSON.parse(result).data);
-            })
-            .catch((error) => console.log("error", error));
+        );
+        result = await result.json();
+        return result.data;
     }
     //EDIT ACCOUNT
     async function updateAccount(id, updatedAccount) {
@@ -123,14 +119,10 @@ const AccountContextProvider = (props) => {
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
         )
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setAccounts(
-                    accounts.map((account) =>
-                        account.id === id ? JSON.parse(result).data : account
-                    )
-                );
+                getAccountsList();
             })
             .catch((error) => console.log("error", error));
     }
@@ -153,7 +145,7 @@ const AccountContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                setAccounts(accounts.filter((account) => account.id !== id));
+                getAccountsList();
             })
             .catch((error) => console.log("error", error));
     }
@@ -161,10 +153,12 @@ const AccountContextProvider = (props) => {
         <AccountContext.Provider
             value={{
                 accounts,
+                getAccountsList,
                 addAccount,
                 deleteAccount,
                 viewAccount,
                 updateAccount,
+                pages,
             }}
         >
             {props.children}

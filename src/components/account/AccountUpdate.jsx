@@ -1,7 +1,8 @@
 import {
-    deleteObject, getDownloadURL,
+    deleteObject,
+    getDownloadURL,
     ref,
-    uploadBytes
+    uploadBytes,
 } from "firebase/storage";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
@@ -11,10 +12,6 @@ import "../../scss/abstracts/_form.scss";
 
 const AccountUpdate = ({ theAccount }) => {
     const id = theAccount.id;
-
-    useEffect(() => {
-        getDetailAccount();
-    }, []);
 
     const [image, setImage] = useState("");
     const [fullName, setFullName] = useState("");
@@ -27,58 +24,23 @@ const AccountUpdate = ({ theAccount }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    async function getDetailAccount() {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
 
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
-            requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                result = JSON.parse(result).data;
-                setImage(result.image);
-                setFullName(result.fullName);
-                setDate_of_birth(result.date_of_birth);
-                setGender(result.gender);
-                setRoles(
-                    result.roles.includes("ROLE_ADMIN")
-                        ? ["admin"]
-                        : ["manager"]
-                );
-                setAddress(result.address);
-                setIdentification(result.identification);
-                setPhone(result.phone);
-                setEmail(result.email);
-                setPassword(result.password);
-                setConfirmPassword(result.confirmPassword);
-                console.log(
-                    result.image,
-                    result.fullName,
-                    result.date_of_birth,
-                    result.gender,
-                    result.roles,
-                    result.address,
-                    result.identification,
-                    result.phone,
-                    result.email,
-                    result.password,
-                    result.confirmPassword
-                );
-            })
-            .catch((error) => console.log("error", error));
-    }
+    const { viewAccount } = useContext(AccountContext);
+    useEffect(() => {
+        viewAccount(id).then((result) => {
+            setImage(result.image);
+            setFullName(result.fullName);
+            setDate_of_birth(result.date_of_birth);
+            setGender(result.gender);
+            setRoles([result.roles[0].roleName]);
+            setAddress(result.address);
+            setIdentification(result.identification);
+            setPhone(result.phone);
+            setEmail(result.email);
+        });
+    }, []);
 
     const { updateAccount } = useContext(AccountContext);
-
     const updatedAccount = {
         image,
         fullName,
@@ -95,11 +57,11 @@ const AccountUpdate = ({ theAccount }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(updatedAccount);
         updateAccount(id, updatedAccount);
     };
-
     // IMAGE UPDATE
-    // generate random string for filename    
+    // generate random string for filename
     function generateString(length) {
         const characters =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -112,7 +74,7 @@ const AccountUpdate = ({ theAccount }) => {
         }
         return result;
     }
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState("");
     const onFileChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -120,20 +82,26 @@ const AccountUpdate = ({ theAccount }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        const pathFromURL = ref(storage, image)._location.path_;
-        const desertRef = ref(storage, pathFromURL);
-        await deleteObject(desertRef)
-            .then(() => {
-                console.log("File deleted successfully");
-            })
-            .catch((error) => {
-                console.log("Uh-oh, an error occurred!", error);
-            });
-        const storageRef = ref(storage, generateString(100));
+        if (image.includes("firebasestorage")) {
+            const pathFromURL = ref(storage, image)._location.path_;
+            const desertRef = ref(storage, pathFromURL);
+            await deleteObject(desertRef)
+                .then(() => {
+                    console.log("File deleted successfully");
+                })
+                .catch((error) => {
+                    console.log("Uh-oh, an error occurred!", error);
+                });
+        }
+        const storageRef = ref(
+            storage,
+            `admin/accounts/${generateString(100)}`
+        );
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
                     console.log(url);
+                    setImage(url);
                 })
                 .catch((err) => console.log(err));
         });
@@ -146,6 +114,7 @@ const AccountUpdate = ({ theAccount }) => {
                     id="accountImage"
                     alt=""
                     src={
+                        (file && URL.createObjectURL(file)) ||
                         image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
@@ -171,7 +140,8 @@ const AccountUpdate = ({ theAccount }) => {
                         className="form-label btn__image btn btn--secondary"
                         onClick={handleUpdateImage}
                     >
-                        <i class="bi bi-file-earmark-arrow-up-fill"></i> Lưu ảnh
+                        <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
+                        ảnh
                     </Button>
                 </Row>
             </Form.Group>
@@ -202,36 +172,44 @@ const AccountUpdate = ({ theAccount }) => {
 
                     <Form.Group as={Col} className="form-group">
                         <Form.Select
-                            defaultValue="Giới tính"
-                            className="form-select"
+                            className="form-select form-select__gender"
                             name="gender"
-                            value={gender}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                                console.log(e.target.value);
                                 setGender(
                                     e.target.value === "true" ? true : false
-                                )
-                            }
+                                );
+                            }}
+                            value={gender}
                         >
-                            <option selected hidden>
-                                Giới tính
-                            </option>
+                            <option hidden>Giới tính</option>
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} className="form-group">
                         <Form.Select
-                            defaultValue="Phân quyền"
                             className="form-select"
                             name="roles"
+                            onChange={(e) => {
+                                setRoles([e.target.value]);
+                            }}
                             value={roles}
-                            onChange={(e) => setRoles([e.target.value])}
                         >
-                            <option selected hidden>
-                                Phân quyền
+                            <option hidden>Phân quyền</option>
+                            <option value={["ROLE_ADMIN"]}>
+                                Quản trị viên
                             </option>
-                            <option value={["admin"]}>Admin</option>
-                            <option value={["manager"]}>Manager</option>
+                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
+                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
+                                Quản lý trung tâm
+                            </option>
+                            <option value={["ROLE_MANAGER_HR"]}>
+                                Quản lý nhân sự
+                            </option>
+                            <option value={["ROLE_MANAGER_CHILDREN"]}>
+                                Quản lý trẻ em
+                            </option>
                         </Form.Select>
                     </Form.Group>
                 </Row>

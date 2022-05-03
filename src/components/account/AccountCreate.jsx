@@ -11,7 +11,7 @@ const FormCreate = () => {
         image: "",
         fullName: "",
         date_of_birth: "",
-        gender: null,
+        gender: "",
         roles: [],
         address: "",
         identification: "",
@@ -42,7 +42,6 @@ const FormCreate = () => {
     } = newAccount;
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("ok");
         addAccount(
             image,
             fullName,
@@ -72,7 +71,7 @@ const FormCreate = () => {
         }
         return result;
     }
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState("");
     const onFileChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -80,7 +79,7 @@ const FormCreate = () => {
     };
     async function handleUploadImage() {
         if (!file) return;
-        const storageRef = ref(storage, generateString(100));
+        const storageRef = ref(storage, `account/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -88,11 +87,12 @@ const FormCreate = () => {
                         ...newAccount,
                         image: url,
                     });
-                    console.log("link anh ", url);
+                    console.log(url);
                 })
                 .catch((err) => console.log("err", err));
         });
     }
+
     return (
         <>
             <Form.Group className="mb-3 form-group">
@@ -126,7 +126,8 @@ const FormCreate = () => {
                         className="form-label btn__image btn btn--secondary"
                         onClick={handleUploadImage}
                     >
-                        <i class="bi bi-file-earmark-arrow-up-fill"></i> Lưu ảnh
+                        <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
+                        ảnh
                     </Button>
                 </Row>
             </Form.Group>
@@ -162,73 +163,54 @@ const FormCreate = () => {
                             name="gender"
                             value={gender}
                             onChange={(e) => {
-                                let tempGender =
-                                    e.target.value === "true" ? true : false;
-                                console.log(tempGender);
                                 onInputChange(e);
                                 setNewAccount({
                                     ...newAccount,
-                                    gender: tempGender,
+                                    gender:
+                                        e.target.value === "true"
+                                            ? true
+                                            : false,
                                 });
-                                console.log(
-                                    typeof e.target.value,
-                                    e.target.value
-                                );
                             }}
                         >
-                            <option selected hidden>
-                                Giới tính
-                            </option>
+                            <option value={"Giới tính"} hidden>Giới tính</option>
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} className="form-group">
-                        <Form.Select
+                        <select
                             defaultValue="Phân quyền"
                             className="form-select"
                             name="roles"
                             value={roles}
                             onChange={(e) => {
-                                let tempRoles = [e.target.value];
                                 onInputChange(e);
                                 setNewAccount({
                                     ...newAccount,
-                                    roles: tempRoles,
+                                    roles: [e.target.value],
                                 });
                             }}
                         >
-                            <option selected hidden>
+                            <option value={"Phân quyền"} hidden>
                                 Phân quyền
                             </option>
-                            <option value={["admin"]}>Admin</option>
-                            <option value={["manager"]}>Manager</option>
-                        </Form.Select>
+                            <option value={["ROLE_ADMIN"]}>
+                                Quản trị viên
+                            </option>
+                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
+                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
+                                Quản lý trung tâm
+                            </option>
+                            <option value={["ROLE_MANAGER_HR"]}>
+                                Quản lý nhân sự
+                            </option>
+                            <option value={["ROLE_MANAGER_CHILDREN"]}>
+                                Quản lý trẻ em
+                            </option>
+                        </select>
                     </Form.Group>
                 </Row>
-
-                {/* <Form.Group className="mb-3 form-group">
-                    <Form.Select
-                        defaultValue="Phân quyền"
-                        className="form-select"
-                        name="roles"
-                        value={roles}
-                        onChange={(e) => {
-                            let tempRoles = [e.target.value];
-                            onInputChange(e);
-                            setNewAccount({
-                                ...newAccount,
-                                roles: tempRoles,
-                            });
-                        }}
-                    >
-                        <option selected hidden>
-                            Phân quyền
-                        </option>
-                        <option value={["admin"]}>Admin</option>
-                        <option value={["manager"]}>Manager</option>
-                    </Form.Select>
-                </Form.Group> */}
 
                 <Form.Group className="mb-3 form-group">
                     <Form.Control

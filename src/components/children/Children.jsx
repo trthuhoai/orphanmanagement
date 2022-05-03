@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import ChildrenDetail from "./ChildrenDetail";
@@ -22,6 +22,11 @@ const Children = ({ children }) => {
     const handleCloseDelete = () => setShowDelete(false);
     const handleShowDelete = () => setShowDelete(true);
 
+    useEffect(() => {
+        handleCloseUpdate();
+        handleCloseDelete();
+    }, [children]);
+
     return (
         <>
             <td>
@@ -36,7 +41,9 @@ const Children = ({ children }) => {
             </td>
             <td>{children.dateOfBirth} </td>
             <td>
-                {children.status === "WAIT_TO_RECEIVE" ? "Đang chờ nhận nuôi" : ""}
+                {children.status === "WAIT_TO_RECEIVE"
+                    ? "Đang ở trung tâm"
+                    : "Đã được nhận nuôi"}
             </td>
             <td>
                 <i
@@ -64,7 +71,7 @@ const Children = ({ children }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Thông tin tài khoản</Modal.Title>
+                    <Modal.Title>Thông tin trẻ em</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <ChildrenDetail theChildren={children} />
@@ -78,7 +85,7 @@ const Children = ({ children }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                    <Modal.Title>Cập nhật trẻ em</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <ChildrenUpdate theChildren={children} />
@@ -109,7 +116,7 @@ const Children = ({ children }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Xoá tài khoản</Modal.Title>
+                    <Modal.Title>Xoá trẻ em</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
