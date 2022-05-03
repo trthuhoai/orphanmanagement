@@ -35,6 +35,7 @@ const ChildrenUpdate = ({ theChildren }) => {
             setIntroductoryDate(result.introductoryDate);
             setAdoptiveDate(result.adoptiveDate ?? "");
             setIntroducerId(result.introducerId);
+            setNurturerId(result.introducerId);
         });
     }, []);
     const [introducer, setIntroducer] = useState({});
