@@ -1,0 +1,49 @@
+.history-payed {
+    background: #fff;
+}
+
+.history-nopay {
+    background: #fff;
+}
+
+.history-payed,
+.history-nopay {
+    width: 1140px;
+    height: auto;
+    margin: 0 auto;
+    color: #000;
+}
+
+
+.history-payed img,
+.history-nopay img {
+    width: 271px;
+    height: auto;
+}
+
+.btn-nopay, 
+.btn-payed {
+    padding: 8px;
+    margin-left: 5px;
+    background: #bbb;
+    border-radius: 5px;
+    border: 0px solid #555;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+.btn-nopay:hover, 
+.btn-payed:hover,
+.btn-nopay:link, 
+.btn-payed:link {
+    opacity: 0.9;
+}
+
+.btn-nopay:active, 
+.btn-payed:active,
+.btn-nopay:visited, 
+.btn-payed:visited {
+    background-color: #fff;
+    box-shadow: none;
+    border: 1px solid #ccc;
+}

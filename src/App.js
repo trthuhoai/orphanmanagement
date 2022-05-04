@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListAccount from "./pages/list/ListAccount";
+import Home from "./pages/home/Home";
 import ListFurniture from "./pages/list/ListFurniture";
 import Login from "./pages/login/Login";
 import "./scss/App.scss";
@@ -9,7 +10,7 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Login/>}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/admin" element={<ListAccount/>}/>
                     <Route path="/admin/users" element={<ListAccount/>}/>

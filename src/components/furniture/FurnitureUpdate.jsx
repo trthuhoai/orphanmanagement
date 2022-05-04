@@ -150,13 +150,13 @@ const FurnitureUpdate = ({ theFurniture }) => {
                     </Button>
                 </Row>
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="furnitureUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
                         placeholder="Họ và tên"
-                        name="fullName"
+                        name="nameFurniture"
                         value={nameFurniture}
                         onChange={(e) => setNameFurniture(e.target.value)}
                         required
@@ -177,7 +177,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
 
                     <Form.Group as={Col} className="form-group">
                         <Form.Select
-                            defaultValue="Giới tính"
+                            defaultValue="GOOD"
                             className="form-select"
                             name="status"
                             value={status}

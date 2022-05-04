@@ -10,6 +10,7 @@ import FurnitureUpdate from "./FurnitureUpdate";
 const Furniture = ({ furniture }) => {
     // const { deleteAccount } = useContext(AccountContext);
     const { deleteFurniture } = useContext(FurnitureContext);
+    const { updateFurniture } = useContext(FurnitureContext);
     // // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
