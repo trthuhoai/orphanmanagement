@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const ChildrenPagination = () => {
-    const { getChildrensList } = useContext(ChildrenContext);
-    const { pages } = useContext(ChildrenContext);
+const NurturerPagination = () => {
+    const { getNurturersList } = useContext(NurturerContext);
+    const { pages } = useContext(NurturerContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
-        getChildrensList(currentPage);
+        getNurturersList(currentPage);
     };
 
     return (
@@ -35,4 +35,4 @@ const ChildrenPagination = () => {
     );
 };
 
-export default ChildrenPagination;
+export default NurturerPagination;

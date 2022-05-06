@@ -6,11 +6,12 @@ import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 import { SearchBar } from "../searchBar/SearchBar";
 import "./_children.scss";
-const FormCreate = () => {
+
+const ChildrenCreate = () => {
     const { addChildren } = useContext(ChildrenContext);
     const { introducers } = useContext(ChildrenContext);
     const { nurturers } = useContext(ChildrenContext);
-    
+
     const [newChildren, setNewChildren] = useState({
         image: "",
         fullName: "",
@@ -30,11 +31,11 @@ const FormCreate = () => {
         );
     };
     const [nurturerId, setNurturerId] = useState(0);
-    // const [nurturer, setNurturer] = useState(0);
-    // const getNurturerId = (valueId) => {
-    //     setNurturerId(valueId);
-    //     setNurturerId(nurturers.find((nurturer) => nurturer.id === valueId));
-    // };
+    const [nurturer, setNurturer] = useState(0);
+    const getNurturerId = (valueId) => {
+        setNurturerId(valueId);
+        setNurturer(nurturers.find((nurturer) => nurturer.id === valueId));
+    };
     const onInputChange = (e) => {
         setNewChildren({
             ...newChildren,
@@ -226,20 +227,36 @@ const FormCreate = () => {
                         className="search-item__image"
                     />
                     <div className="search-item__content">
-                        <p>{introducer.fullName || "Tên người giới thiệu"}</p>
-                        <span> {introducer.phone || "Số điện thoại"}</span>
+                        <p>{introducer.fullName}</p>
+                        <span> {introducer.phone}</span>
                     </div>
                 </Form.Group>
             )}
-            {/* <Form.Group as={Col} className="mb-3 form-group">
+            <Form.Group as={Col} className="mb-3 form-group">
                 <SearchBar
-                    placeholder={"Nhập tên người giới thiệu"}
-                    data={introducers}
-                    getValueId={getIntroducerId}
+                    placeholder={"Nhập tên người nhận nuôi"}
+                    data={nurturers}
+                    getValueId={getNurturerId}
                 />
-            </Form.Group> */}
+            </Form.Group>
+            {Object.keys(nurturer).length !== 0 && (
+                <Form.Group className="mb-3 form-group search-item">
+                    <img
+                        src={
+                            nurturer.image ||
+                            "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        }
+                        alt=""
+                        className="search-item__image"
+                    />
+                    <div className="search-item__content">
+                        <p>{nurturer.fullName}</p>
+                        <span> {nurturer.phone}</span>
+                    </div>
+                </Form.Group>
+            )}
         </Form>
     );
 };
 
-export default FormCreate;
+export default ChildrenCreate;

@@ -33,11 +33,11 @@ export const SearchBar = ({ placeholder, data, getValueId }) => {
                     placeholder={placeholder}
                     onChange={handleFilter}
                     value={searchWord}
-                    // onBlur={() => {
-                    //     setTimeout(() => {
-                    //         setSuggestions([]);
-                    //     }, 500);
-                    // }}
+                    onBlur={() => {
+                        setTimeout(() => {
+                            setSuggestions([]);
+                        }, 500);
+                    }}
                 />
                 <i className="bi bi-search icon icon__search"></i>
             </div>

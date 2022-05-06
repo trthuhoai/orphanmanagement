@@ -1,27 +1,27 @@
 import { MetaTags } from "react-meta-tags";
-import ChildrenList from "../../components/children/ChildrenList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
-import ChildrenContextProvider from "../../contexts/ChildrenContext";
+import StorageList from "../../components/storage/StorageList";
+import StorageContextProvider from "../../contexts/StorageContext";
 import "./list.scss";
 
-const ListChildren = () => {
+const ListStorage = () => {
     return (
         <div className="list">
             <MetaTags>
-                <title>CYF Center | Trẻ em</title>
+                <title>CYF Center | Lưu trữ</title>
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
                 <Header />
                 <div className="main">
-                    <ChildrenContextProvider>
-                        <ChildrenList />
-                    </ChildrenContextProvider>
+                    <StorageContextProvider>
+                        <StorageList />
+                    </StorageContextProvider>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ListChildren;
+export default ListStorage;

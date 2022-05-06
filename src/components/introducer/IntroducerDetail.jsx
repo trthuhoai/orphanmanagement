@@ -1,21 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_card.scss";
 
-const AccountDetail = ({ theAccount }) => {
-    const id = theAccount.id;
+const IntroducerDetail = ({ theIntroducer }) => {
+    const id = theIntroducer.id;
 
-    const [detailAccount, setDetailAccount] = useState({
-        roles: [{ description: "" }],
-    });
+    const [detailIntroducer, setDetailIntroducer] = useState({});
 
-    const { viewAccount } = useContext(AccountContext);
+    const { viewIntroducer } = useContext(IntroducerContext);
     useEffect(() => {
-        viewAccount(id).then((result) => {
-            setDetailAccount(result);
+        viewIntroducer(id).then((result) => {
+            setDetailIntroducer(result);
         });
-    },[])
+    }, []);
 
     return (
         <Card className="card">
@@ -24,19 +22,19 @@ const AccountDetail = ({ theAccount }) => {
                     className="card__image"
                     variant="top"
                     src={
-                        detailAccount.image ||
+                        detailIntroducer.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                 />
                 <div>
                     <Card.Title className="card__title">
-                        {detailAccount.fullName}
+                        {detailIntroducer.fullName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted card__subtitle">
-                        {detailAccount.roles[0].description}
+                        {detailIntroducer.address}
                     </Card.Subtitle>
                     <Card.Text className="card-text">
-                        {detailAccount.email}
+                        {detailIntroducer.email}
                     </Card.Text>
                 </div>
             </Card.Header>
@@ -47,9 +45,9 @@ const AccountDetail = ({ theAccount }) => {
                             Giới tính
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.gender === true
+                            {detailIntroducer.gender === true
                                 ? "Nam"
-                                : detailAccount.gender === false
+                                : detailIntroducer.gender === false
                                 ? "Nữ"
                                 : ""}
                         </p>
@@ -59,7 +57,7 @@ const AccountDetail = ({ theAccount }) => {
                             Ngày sinh
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.date_of_birth}
+                            {detailIntroducer.dateOfBirth}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
@@ -67,7 +65,7 @@ const AccountDetail = ({ theAccount }) => {
                             CMND/CCCD
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.identification}
+                            {detailIntroducer.identification}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
@@ -75,15 +73,7 @@ const AccountDetail = ({ theAccount }) => {
                             Số điện thoại
                         </span>
                         <p className="list-group__item-content">
-                            {detailAccount.phone}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Địa chỉ
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailAccount.address}
+                            {detailIntroducer.phone}
                         </p>
                     </ListGroup.Item>
                 </ListGroup>
@@ -92,4 +82,4 @@ const AccountDetail = ({ theAccount }) => {
     );
 };
 
-export default AccountDetail;
+export default IntroducerDetail;

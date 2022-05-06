@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Account from "./Account";
-import AccountCreate from "./AccountCreate";
-import AccountPagination from "./AccountPagination";
+import Storage from "./Storage";
+// import StorageCreate from "./StorageCreate";
+// import StoragePagination from "./StoragePagination";
 
-const AccountList = () => {
-    const { accounts } = useContext(AccountContext);
+const StorageList = () => {
+    const { storages } = useContext(StorageContext);
 
     const [show, setShow] = useState(false);
 
@@ -17,7 +17,7 @@ const AccountList = () => {
 
     useEffect(() => {
         handleClose();
-    }, [accounts]);
+    }, [storages]);
 
     return (
         <>
@@ -38,14 +38,14 @@ const AccountList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id}>
-                                <Account account={account} />
+                        {storages.map((storage) => (
+                            <tr key={storage.id}>
+                                <Storage storage={storage} />
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <Modal
+                {/* <Modal
                     show={show}
                     onHide={handleClose}
                     centered
@@ -55,7 +55,7 @@ const AccountList = () => {
                         <Modal.Title>Thêm tài khoản</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <AccountCreate />
+                        <StorageCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,18 +67,18 @@ const AccountList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="accountCreate"
+                            form="storageCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
                             Xác nhận
                         </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
             </div>
-            <AccountPagination />
+            {/* <StoragePagination /> */}
         </>
     );
 };
 
-export default AccountList;
+export default StorageList;

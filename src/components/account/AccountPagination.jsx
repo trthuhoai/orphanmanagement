@@ -17,7 +17,7 @@ const AccountPagination = () => {
             previousLabel={"Previous"}
             nextLabel={"Next"}
             breakLabel={"..."}
-            pageCount={pages}
+            pageCount={Math.ceil(pages)}
             marginPagesDisplayed={3}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}

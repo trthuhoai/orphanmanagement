@@ -10,11 +10,7 @@ const ChildrenContextProvider = (props) => {
 
     useEffect(() => {
         getChildrensList();
-    }, []);
-    useEffect(() => {
         getIntroducersList();
-    }, []);
-    useEffect(() => {
         getNurturersList();
     }, []);
 
@@ -202,7 +198,8 @@ const ChildrenContextProvider = (props) => {
         <ChildrenContext.Provider
             value={{
                 childrens,
-                introducers,nurturers,
+                introducers,
+                nurturers,
                 getChildrensList,
                 addChildren,
                 deleteChildren,

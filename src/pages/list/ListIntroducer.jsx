@@ -1,27 +1,27 @@
 import { MetaTags } from "react-meta-tags";
-import ChildrenList from "../../components/children/ChildrenList";
 import Header from "../../components/header/Header";
+import IntroducerList from "../../components/introducer/IntroducerList";
 import Sidebar from "../../components/sidebar/Sidebar";
-import ChildrenContextProvider from "../../contexts/ChildrenContext";
+import IntroducerContextProvider from "../../contexts/IntroducerContext";
 import "./list.scss";
 
-const ListChildren = () => {
+const ListIntroducer = () => {
     return (
         <div className="list">
             <MetaTags>
-                <title>CYF Center | Trẻ em</title>
+                <title>CYF Center | Giới thiệu trẻ</title>
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
                 <Header />
                 <div className="main">
-                    <ChildrenContextProvider>
-                        <ChildrenList />
-                    </ChildrenContextProvider>
+                    <IntroducerContextProvider>
+                        <IntroducerList/>
+                    </IntroducerContextProvider>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ListChildren;
+export default ListIntroducer;

@@ -19,6 +19,7 @@ $paddingInput: 12px;
 
 .search__result {
     position: absolute;
+    z-index: 1;
     width: 100%;
     // min-height: 50px;
     max-height: 200px;

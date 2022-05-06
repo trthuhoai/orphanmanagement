@@ -1,59 +1,50 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { NurturerContext } from "../../contexts/NurturerContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const AccountCreate = () => {
-    const { addAccount } = useContext(AccountContext);
-    const [newAccount, setNewAccount] = useState({
+const NurturerCreate = () => {
+    const { addNurturer } = useContext(NurturerContext);
+    const [newNurturer, setNewNurturer] = useState({
         image: "",
         fullName: "",
-        date_of_birth: "",
+        dateOfBirth: "",
         gender: "",
-        roles: [],
         address: "",
         identification: "",
         phone: "",
         email: "",
-        password: "",
-        confirmPassword: "",
     });
     const onInputChange = (e) => {
-        setNewAccount({
-            ...newAccount,
+        setNewNurturer({
+            ...newNurturer,
             [e.target.name]: e.target.value,
         });
-        console.log(newAccount);
+        console.log(newNurturer);
     };
     const {
         image,
         fullName,
-        date_of_birth,
+        dateOfBirth,
         gender,
-        roles,
         address,
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
-    } = newAccount;
+    } = newNurturer;
     const handleSubmit = (e) => {
         e.preventDefault();
-        addAccount(
+        addNurturer(
             image,
             fullName,
-            date_of_birth,
+            dateOfBirth,
             gender,
-            roles,
             address,
             identification,
             phone,
-            email,
-            password,
-            confirmPassword
+            email
         );
     };
 
@@ -79,12 +70,12 @@ const AccountCreate = () => {
     };
     async function handleUploadImage() {
         if (!file) return;
-        const storageRef = ref(storage, `accounts/${generateString(100)}`);
+        const storageRef = ref(storage, `nurturers/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
-                    setNewAccount({
-                        ...newAccount,
+                    setNewNurturer({
+                        ...newNurturer,
                         image: url,
                     });
                     console.log(url);
@@ -98,7 +89,7 @@ const AccountCreate = () => {
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="accountImage"
+                    id="nurturerImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
@@ -107,7 +98,7 @@ const AccountCreate = () => {
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="accountImageFile"
+                        htmlFor="nurturerImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -118,7 +109,7 @@ const AccountCreate = () => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="accountImageFile"
+                        id="nurturerImageFile"
                         onChange={onFileChange}
                         required
                     />
@@ -131,7 +122,11 @@ const AccountCreate = () => {
                     </Button>
                 </Row>
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountCreate">
+            <Form
+                onSubmit={handleSubmit}
+                className="form"
+                id="nurturerCreate"
+            >
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -149,8 +144,8 @@ const AccountCreate = () => {
                             className="form-control"
                             type="text"
                             placeholder="Ngày sinh"
-                            name="date_of_birth"
-                            value={date_of_birth}
+                            name="dateOfBirth"
+                            value={dateOfBirth}
                             onChange={(e) => onInputChange(e)}
                             required
                         />
@@ -164,8 +159,8 @@ const AccountCreate = () => {
                             value={gender}
                             onChange={(e) => {
                                 onInputChange(e);
-                                setNewAccount({
-                                    ...newAccount,
+                                setNewNurturer({
+                                    ...newNurturer,
                                     gender:
                                         e.target.value === "true"
                                             ? true
@@ -179,38 +174,6 @@ const AccountCreate = () => {
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
-                    </Form.Group>
-                    <Form.Group as={Col} className="form-group">
-                        <select
-                            defaultValue="Phân quyền"
-                            className="form-select"
-                            name="roles"
-                            value={roles}
-                            onChange={(e) => {
-                                onInputChange(e);
-                                setNewAccount({
-                                    ...newAccount,
-                                    roles: [e.target.value],
-                                });
-                            }}
-                        >
-                            <option value={"Phân quyền"} hidden>
-                                Phân quyền
-                            </option>
-                            <option value={["ROLE_ADMIN"]}>
-                                Quản trị viên
-                            </option>
-                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
-                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
-                                Quản lý trung tâm
-                            </option>
-                            <option value={["ROLE_MANAGER_HR"]}>
-                                Quản lý nhân sự
-                            </option>
-                            <option value={["ROLE_MANAGER_CHILDREN"]}>
-                                Quản lý trẻ em
-                            </option>
-                        </select>
                     </Form.Group>
                 </Row>
 
@@ -263,40 +226,9 @@ const AccountCreate = () => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );
 };
 
-export default AccountCreate;
+export default NurturerCreate;

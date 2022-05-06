@@ -25,6 +25,9 @@ const ChildrenUpdate = ({ theChildren }) => {
     const [introducerId, setIntroducerId] = useState(0);
     const [nurturerId, setNurturerId] = useState(0);
 
+    const [introducer, setIntroducer] = useState({});
+    const [nurturer, setNurturer] = useState({});
+
     const { viewChildren } = useContext(ChildrenContext);
     useEffect(() => {
         viewChildren(id).then((result) => {
@@ -33,18 +36,31 @@ const ChildrenUpdate = ({ theChildren }) => {
             setDateOfBirth(result.dateOfBirth);
             setGender(result.gender);
             setIntroductoryDate(result.introductoryDate);
-            setAdoptiveDate(result.adoptiveDate ?? "");
+            setAdoptiveDate(result.adoptiveDate);
             setIntroducerId(result.introducerId);
-            setNurturerId(result.introducerId);
+            setIntroducer(
+                introducers.find(
+                    (introducer) => introducer.id === result.introducerId
+                )
+            );
+            setNurturerId(result.nurturerId);
+            setNurturer(
+                nurturers.find((nurturer) => nurturer.id === result.nurturerId)
+            );
         });
     }, []);
-    const [introducer, setIntroducer] = useState({});
+
     const getIntroducerId = (valueId) => {
         setIntroducerId(valueId);
         setIntroducer(
             introducers.find((introducer) => introducer.id === valueId)
         );
     };
+    const getNurturerId = (valueId) => {
+        setNurturerId(valueId);
+        setNurturer(nurturers.find((nurturer) => nurturer.id === valueId));
+    };
+   
     const { updateChildren } = useContext(ChildrenContext);
     const updatedChildren = {
         image,
@@ -222,7 +238,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                         getValueId={getIntroducerId}
                     />
                 </Form.Group>
-                {Object.keys(introducer).length !== 0 && (
+                {introducer && Object.keys(introducer).length !== 0 && (
                     <Form.Group className="mb-3 form-group search-item">
                         <img
                             src={
@@ -233,10 +249,31 @@ const ChildrenUpdate = ({ theChildren }) => {
                             className="search-item__image"
                         />
                         <div className="search-item__content">
-                            <p>
-                                {introducer.fullName || "Tên người giới thiệu"}
-                            </p>
-                            <span> {introducer.phone || "Số điện thoại"}</span>
+                            <p>{introducer.fullName}</p>
+                            <span> {introducer.phone}</span>
+                        </div>
+                    </Form.Group>
+                )}
+                <Form.Group as={Col} className="mb-3 form-group">
+                    <SearchBar
+                        placeholder={"Nhập tên người nhận nuôi"}
+                        data={nurturers}
+                        getValueId={getNurturerId}
+                    />
+                </Form.Group>
+                {nurturer && Object.keys(nurturer).length !== 0 && (
+                    <Form.Group className="mb-3 form-group search-item">
+                        <img
+                            src={
+                                nurturer.image ||
+                                "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                            }
+                            alt=""
+                            className="search-item__image"
+                        />
+                        <div className="search-item__content">
+                            <p>{nurturer.fullName}</p>
+                            <span> {nurturer.phone}</span>
                         </div>
                     </Form.Group>
                 )}

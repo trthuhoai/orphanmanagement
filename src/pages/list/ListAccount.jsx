@@ -5,7 +5,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import AccountContextProvider from "../../contexts/AccountContext";
 import "./list.scss";
 
-const List = () => {
+const ListAccount = () => {
     return (
         <div className="list">
             <MetaTags>
@@ -24,4 +24,4 @@ const List = () => {
     );
 };
 
-export default List;
+export default ListAccount;

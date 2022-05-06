@@ -38,22 +38,22 @@ const IntroducerContextProvider = (props) => {
     async function addIntroducer(
         image,
         fullName,
-        gender,
         dateOfBirth,
-        introductoryDate,
-        adoptiveDate,
-        introducerId,
-        nurturerId
+        gender,
+        address,
+        identification,
+        phone,
+        email
     ) {
         let raw = JSON.stringify({
             image,
             fullName,
-            gender,
             dateOfBirth,
-            introductoryDate,
-            adoptiveDate,
-            introducerId,
-            nurturerId,
+            gender,
+            address,
+            identification,
+            phone,
+            email,
         });
 
         const token = JSON.parse(localStorage.getItem("token"));
@@ -158,7 +158,7 @@ const IntroducerContextProvider = (props) => {
                 pages,
             }}
         >
-            {props.introducer}
+            {props.children}
         </IntroducerContext.Provider>
     );
 };

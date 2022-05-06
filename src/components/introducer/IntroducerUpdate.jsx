@@ -6,33 +6,29 @@ import {
 } from "firebase/storage";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { IntroducerContext } from "../../contexts/IntroducerContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const AccountUpdate = ({ theAccount }) => {
-    const id = theAccount.id;
+const IntroducerUpdate = ({ theIntroducer }) => {
+    const id = theIntroducer.id;
 
     const [image, setImage] = useState("");
     const [fullName, setFullName] = useState("");
-    const [date_of_birth, setDate_of_birth] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("");
     const [gender, setGender] = useState("");
-    const [roles, setRoles] = useState("");
     const [address, setAddress] = useState("");
     const [identification, setIdentification] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { viewAccount } = useContext(AccountContext);
+    const { viewIntroducer } = useContext(IntroducerContext);
     useEffect(() => {
-        viewAccount(id).then((result) => {
+        viewIntroducer(id).then((result) => {
             setImage(result.image);
             setFullName(result.fullName);
-            setDate_of_birth(result.date_of_birth);
+            setDateOfBirth(result.dateOfBirth);
             setGender(result.gender);
-            setRoles([result.roles[0].roleName]);
             setAddress(result.address);
             setIdentification(result.identification);
             setPhone(result.phone);
@@ -40,25 +36,22 @@ const AccountUpdate = ({ theAccount }) => {
         });
     }, []);
 
-    const { updateAccount } = useContext(AccountContext);
-    const updatedAccount = {
+    const { updateIntroducer } = useContext(IntroducerContext);
+    const updatedIntroducer = {
         image,
         fullName,
-        date_of_birth,
+        dateOfBirth,
         gender,
-        roles,
         address,
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedAccount);
-        updateAccount(id, updatedAccount);
+        console.log(updatedIntroducer);
+        updateIntroducer(id, updatedIntroducer);
     };
     // IMAGE UPDATE
     // generate random string for filename
@@ -93,10 +86,7 @@ const AccountUpdate = ({ theAccount }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(
-            storage,
-            `accounts/${generateString(100)}`
-        );
+        const storageRef = ref(storage, `introducers/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -111,7 +101,7 @@ const AccountUpdate = ({ theAccount }) => {
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="accountImage"
+                    id="introducerImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
@@ -121,7 +111,7 @@ const AccountUpdate = ({ theAccount }) => {
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="accountImageFile"
+                        htmlFor="introducerImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -132,7 +122,7 @@ const AccountUpdate = ({ theAccount }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="accountImageFile"
+                        id="introducerImageFile"
                         onChange={onFileChange}
                         required
                     />
@@ -145,7 +135,11 @@ const AccountUpdate = ({ theAccount }) => {
                     </Button>
                 </Row>
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
+            <Form
+                onSubmit={handleSubmit}
+                className="form"
+                id="introducerUpdate"
+            >
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -163,9 +157,9 @@ const AccountUpdate = ({ theAccount }) => {
                             className="form-control"
                             type="text"
                             placeholder="Ngày sinh"
-                            name="date_of_birth"
-                            value={date_of_birth}
-                            onChange={(e) => setDate_of_birth(e.target.value)}
+                            name="dateOfBirth"
+                            value={dateOfBirth}
+                            onChange={(e) => setDateOfBirth(e.target.value)}
                             required
                         />
                     </Form.Group>
@@ -185,31 +179,6 @@ const AccountUpdate = ({ theAccount }) => {
                             <option hidden>Giới tính</option>
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Select
-                            className="form-select"
-                            name="roles"
-                            onChange={(e) => {
-                                setRoles([e.target.value]);
-                            }}
-                            value={roles}
-                        >
-                            <option hidden>Phân quyền</option>
-                            <option value={["ROLE_ADMIN"]}>
-                                Quản trị viên
-                            </option>
-                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
-                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
-                                Quản lý trung tâm
-                            </option>
-                            <option value={["ROLE_MANAGER_HR"]}>
-                                Quản lý nhân sự
-                            </option>
-                            <option value={["ROLE_MANAGER_CHILDREN"]}>
-                                Quản lý trẻ em
-                            </option>
                         </Form.Select>
                     </Form.Group>
                 </Row>
@@ -263,40 +232,9 @@ const AccountUpdate = ({ theAccount }) => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );
 };
 
-export default AccountUpdate;
+export default IntroducerUpdate;

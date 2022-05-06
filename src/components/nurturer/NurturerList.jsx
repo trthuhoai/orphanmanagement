@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Account from "./Account";
-import AccountCreate from "./AccountCreate";
-import AccountPagination from "./AccountPagination";
+import Nurturer from "./Nurturer";
+import NurturerCreate from "./NurturerCreate";
+import NurturerPagination from "./NurturerPagination";
 
-const AccountList = () => {
-    const { accounts } = useContext(AccountContext);
+const NurturerList = () => {
+    const { nurturers } = useContext(NurturerContext);
 
     const [show, setShow] = useState(false);
 
@@ -17,30 +17,30 @@ const AccountList = () => {
 
     useEffect(() => {
         handleClose();
-    }, [accounts]);
+    }, [nurturers]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Thành viên</h2>
+                    <h2>Nhận nuôi trẻ</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm tài khoản
+                        Thêm người nhận nuôi
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phân quyền</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Số điện thoại</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id}>
-                                <Account account={account} />
+                        {nurturers.map((nurturer) => (
+                            <tr key={nurturer.id}>
+                                <Nurturer nurturer={nurturer} />
                             </tr>
                         ))}
                     </tbody>
@@ -52,10 +52,10 @@ const AccountList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm người nhận nuôi</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <AccountCreate />
+                        <NurturerCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,7 +67,7 @@ const AccountList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="accountCreate"
+                            form="nurturerCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -76,9 +76,9 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination />
+            <NurturerPagination />
         </>
     );
 };
 
-export default AccountList;
+export default NurturerList;
