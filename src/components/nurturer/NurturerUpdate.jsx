@@ -75,7 +75,7 @@ const NurturerUpdate = ({ theNurturer }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        if (image.includes("firebasestorage")) {
+        if (image && image.includes("firebasestorage")) {
             const pathFromURL = ref(storage, image)._location.path_;
             const desertRef = ref(storage, pathFromURL);
             await deleteObject(desertRef)
@@ -135,11 +135,7 @@ const NurturerUpdate = ({ theNurturer }) => {
                     </Button>
                 </Row>
             </Form.Group>
-            <Form
-                onSubmit={handleSubmit}
-                className="form"
-                id="nurturerUpdate"
-            >
+            <Form onSubmit={handleSubmit} className="form" id="nurturerUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"

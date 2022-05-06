@@ -82,7 +82,7 @@ const AccountUpdate = ({ theAccount }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        if (image.includes("firebasestorage")) {
+        if (image && image.includes("firebasestorage")) {
             const pathFromURL = ref(storage, image)._location.path_;
             const desertRef = ref(storage, pathFromURL);
             await deleteObject(desertRef)
@@ -93,10 +93,7 @@ const AccountUpdate = ({ theAccount }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(
-            storage,
-            `accounts/${generateString(100)}`
-        );
+        const storageRef = ref(storage, `accounts/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {

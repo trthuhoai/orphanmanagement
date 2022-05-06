@@ -10,7 +10,7 @@ const StorageContextProvider = (props) => {
         getStoragesList();
     }, []);
 
-    // GET ACCOUNTS LIST
+    // GET STORAGES LIST
     async function getStoragesList(page = 1) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
@@ -32,8 +32,8 @@ const StorageContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-   
-    // VIEW ACCOUNT DETAILS
+
+    // VIEW STORAGE DETAILS
     async function viewStorage(id) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
@@ -52,8 +52,30 @@ const StorageContextProvider = (props) => {
         result = await result.json();
         return result.data;
     }
-    
-    // DELETE ACCOUNT
+    // RESTORE STORAGE
+    async function restoreStorage(id) {
+        const token = JSON.parse(localStorage.getItem("token"));
+        let requestOptions = {
+            method: "PUT",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                getStoragesList()
+            })
+            .catch((error) => console.log("error", error));
+    }
+    // DELETE STORAGE
     async function deleteStorage(id) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
@@ -82,6 +104,7 @@ const StorageContextProvider = (props) => {
                 storages,
                 getStoragesList,
                 deleteStorage,
+                restoreStorage,
                 viewStorage,
                 pages,
             }}

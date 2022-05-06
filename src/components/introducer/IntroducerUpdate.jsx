@@ -75,7 +75,7 @@ const IntroducerUpdate = ({ theIntroducer }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        if (image.includes("firebasestorage")) {
+        if (image && image.includes("firebasestorage")) {
             const pathFromURL = ref(storage, image)._location.path_;
             const desertRef = ref(storage, pathFromURL);
             await deleteObject(desertRef)

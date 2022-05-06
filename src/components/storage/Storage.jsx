@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { StorageContext } from "../../contexts/StorageContext";
-// import StorageDetail from "./StorageDetail";
-// import StorageUpdate from "./StorageUpdate";
+import StorageDetail from "./StorageDetail";
 
 const Storage = ({ storage }) => {
     const { deleteStorage } = useContext(StorageContext);
+    const { restoreStorage } = useContext(StorageContext);
 
     useEffect(() => {
-        handleCloseUpdate();
+        handleCloseRestore();
         handleCloseDelete();
     }, [storage]);
     // MODAL DETAIL
@@ -16,10 +16,10 @@ const Storage = ({ storage }) => {
     const handleCloseDetail = () => setShowDetail(false);
     const handleShowDetail = () => setShowDetail(true);
 
-    // MODAL FORM UPDATE
-    const [showUpdate, setShowUpdate] = useState(false);
-    const handleCloseUpdate = () => setShowUpdate(false);
-    const handleShowUpdate = () => setShowUpdate(true);
+    // MODAL FORM Restore
+    const [showRestore, setShowRestore] = useState(false);
+    const handleCloseRestore = () => setShowRestore(false);
+    const handleShowRestore = () => setShowRestore(true);
 
     // MODAL CONFIRMATION DELETE
     const [showDelete, setShowDelete] = useState(false);
@@ -47,9 +47,9 @@ const Storage = ({ storage }) => {
                     onClick={handleShowDetail}
                 ></i>
                 <i
-                    title="Chỉnh sửa"
-                    className="bi bi-pencil-square icon icon__update"
-                    onClick={handleShowUpdate}
+                    title="Hoàn tác"
+                    className="bi bi-arrow-clockwise icon icon__restore"
+                    onClick={handleShowRestore}
                 ></i>
                 <i
                     className="bi bi-trash3 icon icon__delete"
@@ -69,11 +69,43 @@ const Storage = ({ storage }) => {
                     <Modal.Title>Thông tin tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    {/* <StorageDetail theStorage={storage} /> */}
+                    <StorageDetail theStorage={storage} />
                 </Modal.Body>
             </Modal>
             {/* MODAL RESTORE */}
-            
+            <Modal
+                show={showRestore}
+                onHide={handleCloseRestore}
+                centered
+                className="modal"
+            >
+                <Modal.Header closeButton className="modal__header">
+                    <Modal.Title>Khôi phục tài khoản</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal__body">
+                    <p className="confirm-message">
+                        {`Bạn có chắc chắn muốn khôi phục ${storage.fullName} không?`}
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={handleCloseRestore}
+                        className="btn btn--secondary btn__close"
+                    >
+                        Close
+                    </Button>
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            restoreStorage(storage.id);
+                        }}
+                        className="btn btn--primary btn__submit"
+                    >
+                        Xác nhận
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             {/* MODAL DELETE */}
             <Modal
                 show={showDelete}
@@ -86,7 +118,7 @@ const Storage = ({ storage }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Bạn có chắc chắn muốn xoá ${storage.fullName} khỏi danh sách không?`}
+                        {`Bạn có chắc chắn muốn xoá vĩnh viễn ${storage.fullName} khỏi kho lưu trữ không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>

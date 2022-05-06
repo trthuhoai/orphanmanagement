@@ -1,6 +1,7 @@
 @use "../../scss/abstracts/" as *;
 
 .sidebar {
+    position: relative;
     background-color: #0f1e54;
     flex: 1;
     height: 100vh;
@@ -45,5 +46,15 @@
                 opacity: 1;
             }
         }
+    }
+
+    .bottom {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-100%);
+        // display: block;
+        // width: 100%;
+        // text-align: center;
     }
 }

@@ -60,7 +60,7 @@ const ChildrenUpdate = ({ theChildren }) => {
         setNurturerId(valueId);
         setNurturer(nurturers.find((nurturer) => nurturer.id === valueId));
     };
-   
+
     const { updateChildren } = useContext(ChildrenContext);
     const updatedChildren = {
         image,
@@ -101,7 +101,7 @@ const ChildrenUpdate = ({ theChildren }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        if (image.includes("firebasestorage")) {
+        if (image && image.includes("firebasestorage")) {
             const pathFromURL = ref(storage, image)._location.path_;
             const desertRef = ref(storage, pathFromURL);
             await deleteObject(desertRef)

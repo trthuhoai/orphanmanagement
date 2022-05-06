@@ -20,6 +20,7 @@ const Sidebar = () => {
             </div>
             <div className="center">
                 <ul>
+                    <h2 className="title">Trung tâm</h2>
                     <NavLink
                         to="/account"
                         style={linkStyle}
@@ -29,7 +30,6 @@ const Sidebar = () => {
                     >
                         Tài khoản
                     </NavLink>
-                    <h2 className="title">Trung tâm</h2>
                     <NavLink
                         to="/children"
                         style={linkStyle}
@@ -56,6 +56,15 @@ const Sidebar = () => {
                         }
                     >
                         Trang thiết bị
+                    </NavLink>
+                    <NavLink
+                        to="/storage"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Lưu trữ
                     </NavLink>
                     <h2 className="title">Hoạt động</h2>
                     <NavLink
@@ -124,17 +133,7 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className="bottom">
-                <ul>
-                    <NavLink
-                        to="/storage"
-                        style={linkStyle}
-                        className={({ isActive }) =>
-                            isActive ? "link-active" : "link"
-                        }
-                    >
-                        Lưu tr
-                    </NavLink>
-                </ul>
+                <ul></ul>
             </div>
         </div>
     );

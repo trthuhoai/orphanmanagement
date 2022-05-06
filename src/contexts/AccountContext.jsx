@@ -126,11 +126,11 @@ const AccountContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-    // DELETE ACCOUNT
-    async function deleteAccount(id) {
+    // STORE ACCOUNT
+    async function storeAccount(id) {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
-            method: "DELETE",
+            method: "PUT",
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -139,7 +139,7 @@ const AccountContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
             requestOptions
         )
             .then((response) => response.text())
@@ -155,7 +155,7 @@ const AccountContextProvider = (props) => {
                 accounts,
                 getAccountsList,
                 addAccount,
-                deleteAccount,
+                storeAccount,
                 viewAccount,
                 updateAccount,
                 pages,

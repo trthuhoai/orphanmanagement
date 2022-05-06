@@ -5,7 +5,7 @@ import AccountDetail from "./AccountDetail";
 import AccountUpdate from "./AccountUpdate";
 
 const Account = ({ account }) => {
-    const { deleteAccount } = useContext(AccountContext);
+    const { storeAccount } = useContext(AccountContext);
 
     useEffect(() => {
         handleCloseUpdate();
@@ -52,7 +52,8 @@ const Account = ({ account }) => {
                     onClick={handleShowUpdate}
                 ></i>
                 <i
-                    className="bi bi-trash3 icon icon__delete"
+                    title="Lưu trữ"
+                    className="bi bi-archive icon icon__storage"
                     onClick={handleShowDelete}
                 ></i>
             </td>
@@ -115,7 +116,7 @@ const Account = ({ account }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Bạn có chắc chắn muốn xoá ${account.fullName} khỏi danh sách không?`}
+                        {`Tài khoản ${account.fullName} sẽ được lưu trữ và bị xoá vĩnh viễn trong 7 ngày. Bạn có muốn tiếp tục không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -129,7 +130,7 @@ const Account = ({ account }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            deleteAccount(account.id);
+                            storeAccount(account.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
