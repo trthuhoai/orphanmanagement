@@ -6,13 +6,15 @@ const StorageContextProvider = (props) => {
     const [storages, setStorages] = useState([]);
     const [pages, setPages] = useState([]);
 
+    const storagePage = JSON.parse(localStorage.getItem("storagePage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getStoragesList();
+        getStoragesList(1);
     }, []);
 
     // GET STORAGES LIST
-    async function getStoragesList(page = 1) {
-        const token = JSON.parse(localStorage.getItem("token"));
+    async function getStoragesList(storagePage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -22,7 +24,7 @@ const StorageContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${page}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${storagePage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -35,7 +37,6 @@ const StorageContextProvider = (props) => {
 
     // VIEW STORAGE DETAILS
     async function viewStorage(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -54,7 +55,6 @@ const StorageContextProvider = (props) => {
     }
     // RESTORE STORAGE
     async function restoreStorage(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -71,13 +71,12 @@ const StorageContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList()
+                getStoragesList(storagePage);
             })
             .catch((error) => console.log("error", error));
     }
     // DELETE STORAGE
     async function deleteStorage(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -94,7 +93,7 @@ const StorageContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList();
+                getStoragesList(storagePage);
             })
             .catch((error) => console.log("error", error));
     }

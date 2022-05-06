@@ -8,15 +8,17 @@ const ChildrenContextProvider = (props) => {
     const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
+    const childrenPage = JSON.parse(localStorage.getItem("childrenPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getChildrensList();
+        getChildrensList(1);
         getIntroducersList();
         getNurturersList();
     }, []);
 
     // GET CHILDRENS LIST
-    async function getChildrensList(page = 1) {
-        const token = JSON.parse(localStorage.getItem("token"));
+    async function getChildrensList(childrenPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -26,7 +28,7 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${page}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${childrenPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -39,7 +41,6 @@ const ChildrenContextProvider = (props) => {
     }
     // GET INTRODUCERS LIST
     async function getIntroducersList() {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -49,20 +50,19 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/all`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setIntroducers(result.data.result);
+                setIntroducers(result.data);
             })
             .catch((error) => console.log("error", error));
     }
 
     // GET NURTURERS LIST
     async function getNurturersList() {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -72,13 +72,13 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/all`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setNurturers(result.data.result);
+                setNurturers(result.data);
             })
             .catch((error) => console.log("error", error));
     }
@@ -104,7 +104,6 @@ const ChildrenContextProvider = (props) => {
             nurturerId,
         });
 
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "POST",
             headers: {
@@ -122,13 +121,12 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList();
+                getChildrensList(childrenPage);
             })
             .catch((error) => console.log("error", error));
     }
     // VIEW CHILDREN DETAILS
     async function viewChildren(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -148,7 +146,6 @@ const ChildrenContextProvider = (props) => {
     }
     //EDIT CHILDREN
     async function updateChildren(id, updatedChildren) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedChildren);
         let requestOptions = {
             method: "PUT",
@@ -167,13 +164,12 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList();
+                getChildrensList(childrenPage);
             })
             .catch((error) => console.log("error", error));
     }
     // DELETE CHILDREN
     async function deleteChildren(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -190,7 +186,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getChildrensList();
+                getChildrensList(childrenPage);
             })
             .catch((error) => console.log("error", error));
     }

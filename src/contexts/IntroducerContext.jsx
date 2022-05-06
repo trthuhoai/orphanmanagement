@@ -6,13 +6,15 @@ const IntroducerContextProvider = (props) => {
     const [introducers, setIntroducers] = useState([]);
     const [pages, setPages] = useState([]);
 
+    const introducerPage = JSON.parse(localStorage.getItem("introducerPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getIntroducersList();
+        getIntroducersList(1);
     }, []);
 
     // GET INTRODUCERS LIST
-    async function getIntroducersList(page = 1) {
-        const token = JSON.parse(localStorage.getItem("token"));
+    async function getIntroducersList(introducerPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -22,7 +24,7 @@ const IntroducerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer?page=${page}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer?page=${introducerPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -56,7 +58,6 @@ const IntroducerContextProvider = (props) => {
             email,
         });
 
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "POST",
             headers: {
@@ -74,13 +75,12 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList();
+                getIntroducersList(introducerPage);
             })
             .catch((error) => console.log("error", error));
     }
     // VIEW INTRODUCER DETAILS
     async function viewIntroducer(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -100,7 +100,6 @@ const IntroducerContextProvider = (props) => {
     }
     //EDIT INTRODUCER
     async function updateIntroducer(id, updatedIntroducer) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedIntroducer);
         let requestOptions = {
             method: "PUT",
@@ -119,13 +118,12 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList();
+                getIntroducersList(introducerPage);
             })
             .catch((error) => console.log("error", error));
     }
     // DELETE INTRODUCER
     async function deleteIntroducer(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -142,7 +140,7 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getIntroducersList();
+                getIntroducersList(introducerPage);
             })
             .catch((error) => console.log("error", error));
     }

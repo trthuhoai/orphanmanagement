@@ -9,6 +9,7 @@ const NurturerPagination = () => {
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
+        localStorage.setItem("nurturerPage", currentPage);
         getNurturersList(currentPage);
     };
 

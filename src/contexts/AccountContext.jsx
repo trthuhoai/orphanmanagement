@@ -6,13 +6,15 @@ const AccountContextProvider = (props) => {
     const [accounts, setAccounts] = useState([]);
     const [pages, setPages] = useState([]);
 
+    const accountPage = JSON.parse(localStorage.getItem("accountPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getAccountsList();
+        getAccountsList(1);
     }, []);
 
     // GET ACCOUNTS LIST
-    async function getAccountsList(page = 1) {
-        const token = JSON.parse(localStorage.getItem("token"));
+    async function getAccountsList(accountPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -22,7 +24,7 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${page}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${accountPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -60,7 +62,6 @@ const AccountContextProvider = (props) => {
             confirmPassword,
         });
 
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "POST",
             headers: {
@@ -78,13 +79,12 @@ const AccountContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getAccountsList();
+                getAccountsList(accountPage);
             })
             .catch((error) => console.log("error", error));
     }
     // VIEW ACCOUNT DETAILS
     async function viewAccount(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -103,7 +103,6 @@ const AccountContextProvider = (props) => {
     }
     //EDIT ACCOUNT
     async function updateAccount(id, updatedAccount) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedAccount);
         let requestOptions = {
             method: "PUT",
@@ -122,13 +121,12 @@ const AccountContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getAccountsList();
+                getAccountsList(accountPage);
             })
             .catch((error) => console.log("error", error));
     }
     // STORE ACCOUNT
     async function storeAccount(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -145,7 +143,7 @@ const AccountContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getAccountsList();
+                getAccountsList(accountPage);
             })
             .catch((error) => console.log("error", error));
     }

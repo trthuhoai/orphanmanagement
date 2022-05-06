@@ -15,14 +15,10 @@
         justify-content: space-between;
         align-items: center;
         padding: 8px 0;
-    }
 
-    &__title {
-        font-weight: 700;
-        font-size: $fontSizeLarge;
-        text-transform: uppercase;
-        margin-bottom: 0;
-        user-select: none;
+        h2{
+            margin-bottom: 0;
+        }
     }
 
     &__body {

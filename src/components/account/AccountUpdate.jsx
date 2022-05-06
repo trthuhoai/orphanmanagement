@@ -275,7 +275,6 @@ const AccountUpdate = ({ theAccount }) => {
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
                         />
                     </Form.Group>
 
@@ -287,7 +286,6 @@ const AccountUpdate = ({ theAccount }) => {
                             name="confirmPassword"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
                         />
                     </Form.Group>
                     {password !== confirmPassword && (

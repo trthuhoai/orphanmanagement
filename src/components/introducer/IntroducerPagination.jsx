@@ -9,6 +9,7 @@ const IntroducerPagination = () => {
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
+        localStorage.setItem("introducerPage", currentPage);
         getIntroducersList(currentPage);
     };
 

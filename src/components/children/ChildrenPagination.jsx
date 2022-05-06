@@ -9,6 +9,7 @@ const ChildrenPagination = () => {
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
+        localStorage.setItem("childrenPage", currentPage);
         getChildrensList(currentPage);
     };
 

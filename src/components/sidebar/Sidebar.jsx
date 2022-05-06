@@ -86,15 +86,6 @@ const Sidebar = () => {
                         Dã ngoại
                     </NavLink>
                     <NavLink
-                        to="/nurturer"
-                        style={linkStyle}
-                        className={({ isActive }) =>
-                            isActive ? "link-active" : "link"
-                        }
-                    >
-                        Nhận nuôi
-                    </NavLink>
-                    <NavLink
                         to="/introducer"
                         style={linkStyle}
                         className={({ isActive }) =>
@@ -103,6 +94,15 @@ const Sidebar = () => {
                     >
                         Giới thiệu trẻ
                     </NavLink>
+                    <NavLink
+                        to="/nurturer"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Nhận nuôi
+                    </NavLink>    
                     <NavLink
                         to="/feedback"
                         style={linkStyle}

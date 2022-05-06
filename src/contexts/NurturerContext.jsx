@@ -6,13 +6,15 @@ const NurturerContextProvider = (props) => {
     const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
+    const nurturerPage = JSON.parse(localStorage.getItem("nurturerPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+    
     useEffect(() => {
-        getNurturersList();
+        getNurturersList(1);
     }, []);
 
     // GET NURTURERS LIST
-    async function getNurturersList(page = 1) {
-        const token = JSON.parse(localStorage.getItem("token"));
+    async function getNurturersList(nurturerPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -22,7 +24,7 @@ const NurturerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${page}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${nurturerPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -56,7 +58,6 @@ const NurturerContextProvider = (props) => {
             email,
         });
 
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "POST",
             headers: {
@@ -74,13 +75,12 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList();
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
     // VIEW NURTURER DETAILS
     async function viewNurturer(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -100,7 +100,6 @@ const NurturerContextProvider = (props) => {
     }
     //EDIT NURTURER
     async function updateNurturer(id, updatedNurturer) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedNurturer);
         let requestOptions = {
             method: "PUT",
@@ -119,13 +118,12 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList();
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
     // DELETE NURTURER
     async function deleteNurturer(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -142,7 +140,7 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getNurturersList();
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
