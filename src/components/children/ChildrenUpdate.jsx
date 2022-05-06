@@ -17,6 +17,8 @@ const ChildrenUpdate = ({ theChildren }) => {
     const { nurturers } = useContext(ChildrenContext);
 
     const [image, setImage] = useState("");
+    const [imageSuccess, setImageSuccess] = useState("");
+
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [gender, setGender] = useState("");
@@ -118,6 +120,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                 .then((url) => {
                     console.log(url);
                     setImage(url);
+                    setImageSuccess("Tải ảnh lên thành công")
                 })
                 .catch((err) => console.log(err));
         });
@@ -160,6 +163,9 @@ const ChildrenUpdate = ({ theChildren }) => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form onSubmit={handleSubmit} className="form" id="childrenUpdate">
                 <Form.Group className="mb-3 form-group">

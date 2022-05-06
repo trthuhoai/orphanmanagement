@@ -14,6 +14,7 @@ const AccountUpdate = ({ theAccount }) => {
     const id = theAccount.id;
 
     const [image, setImage] = useState("");
+    const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
     const [date_of_birth, setDate_of_birth] = useState("");
     const [gender, setGender] = useState("");
@@ -99,6 +100,7 @@ const AccountUpdate = ({ theAccount }) => {
                 .then((url) => {
                     console.log(url);
                     setImage(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log(err));
         });
@@ -141,6 +143,9 @@ const AccountUpdate = ({ theAccount }) => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
                 <Form.Group className="mb-3 form-group">

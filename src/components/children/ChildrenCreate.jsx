@@ -22,6 +22,8 @@ const ChildrenCreate = () => {
         introducerId: 0,
         nurturerId: 0,
     });
+    const [imageSuccess, setImageSuccess] = useState("");
+
     const [introducerId, setIntroducerId] = useState(0);
     const [introducer, setIntroducer] = useState({});
     const getIntroducerId = (valueId) => {
@@ -96,6 +98,7 @@ const ChildrenCreate = () => {
                         image: url,
                     });
                     console.log(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log("err", err));
         });
@@ -137,6 +140,9 @@ const ChildrenCreate = () => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
 
             <Form.Group className="mb-3 form-group">

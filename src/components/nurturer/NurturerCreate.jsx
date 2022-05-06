@@ -17,6 +17,8 @@ const NurturerCreate = () => {
         phone: "",
         email: "",
     });
+    const [imageSuccess, setImageSuccess] = useState("");
+
     const onInputChange = (e) => {
         setNewNurturer({
             ...newNurturer,
@@ -79,6 +81,7 @@ const NurturerCreate = () => {
                         image: url,
                     });
                     console.log(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log("err", err));
         });
@@ -121,12 +124,11 @@ const NurturerCreate = () => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
-            <Form
-                onSubmit={handleSubmit}
-                className="form"
-                id="nurturerCreate"
-            >
+            <Form onSubmit={handleSubmit} className="form" id="nurturerCreate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"

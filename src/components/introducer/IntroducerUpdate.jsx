@@ -14,6 +14,7 @@ const IntroducerUpdate = ({ theIntroducer }) => {
     const id = theIntroducer.id;
 
     const [image, setImage] = useState("");
+    const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [gender, setGender] = useState("");
@@ -92,6 +93,7 @@ const IntroducerUpdate = ({ theIntroducer }) => {
                 .then((url) => {
                     console.log(url);
                     setImage(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log(err));
         });
@@ -134,6 +136,9 @@ const IntroducerUpdate = ({ theIntroducer }) => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form
                 onSubmit={handleSubmit}

@@ -20,6 +20,8 @@ const AccountCreate = () => {
         password: "",
         confirmPassword: "",
     });
+    const [imageSuccess, setImageSuccess] = useState("");
+
     const onInputChange = (e) => {
         setNewAccount({
             ...newAccount,
@@ -88,6 +90,7 @@ const AccountCreate = () => {
                         image: url,
                     });
                     console.log(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log("err", err));
         });
@@ -130,6 +133,9 @@ const AccountCreate = () => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form onSubmit={handleSubmit} className="form" id="accountCreate">
                 <Form.Group className="mb-3 form-group">

@@ -17,6 +17,8 @@ const IntroducerCreate = () => {
         phone: "",
         email: "",
     });
+    const [imageSuccess, setImageSuccess] = useState("");
+
     const onInputChange = (e) => {
         setNewIntroducer({
             ...newIntroducer,
@@ -79,6 +81,7 @@ const IntroducerCreate = () => {
                         image: url,
                     });
                     console.log(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log("err", err));
         });
@@ -121,6 +124,9 @@ const IntroducerCreate = () => {
                         ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form
                 onSubmit={handleSubmit}
