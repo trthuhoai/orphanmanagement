@@ -2,8 +2,12 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 // import { useState } from 'react'
 import { MetaTags } from 'react-meta-tags' 
+// import NavLink from "./nav_link";
+import { NavLink } from 'react-router-dom';
 // import { Component } from 'react/cjs/react.production.min'
 import "./home.scss";
+import { Button, Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Row, Container } from "reactstrap";
 
 export default class Home extends React.Component {
 
@@ -63,31 +67,62 @@ export default class Home extends React.Component {
                 <MetaTags>
                     <title>Trang chủ</title>
                 </MetaTags>
-                <div class="navbar" >
-		<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="topNav" >
-			<div class="container">
-				<div class="alignR">
-					<div class="pull-left socialNw">
-						<a href="/#"><span class="icon-twitter"></span></a> <a href="/#"><span
-							class="icon-facebook"></span></a> <a href="/#"><span
-							class="icon-youtube"></span></a> <a href="/#"><span
-							class="icon-tumblr"></span></a>
-					</div>
-						<a href="/"><span class="icon-home"></span> Trang chủ</a> 
-						<a href="/"><span class="icon-book"></span>Giới thiệu</a> 
-						<a href="/"><span class="icon-edit"></span> Thông tin KTX</a> 
-						
-						<a href="/"> <span class=""></span> Bảng giá KTX</a> 
-						{/* <a class="active" href="dangxuat"> <span class="icon-user"></span> Đăng xuất
-						</a> &emsp; &emsp; &emsp; Chào ${sessionScope.tensv } - ${sessionScope.user } */}
-				</div>
-			</div>
-		</div>
-	</div> 
-	</div>
-<br/>
+                {/* <div class="navbar" >
+
+	</div> */}
+{/* <br/> */}
+{/* <div class="header">
+		<h1 class="logo"><Link to="#">Flexbox</Link></h1>
+      {/* <ul class="main-nav">
+          <li><Link >Home</Link></li>
+          <li><Link to="#">About</Link></li>
+          <li><Link to="#">Portfolio</Link></li>
+          <li><Link to="#">Contact</Link></li>
+      </ul> 
+	</div>  margin-right: 39cm
+    */}
+    <Navbar  style={{ position: "fixed" }} bg="light" expand="lg">
+    <span className="logo" style={{ marginLeft: "2cm"}}>
+                        <span className="logo__name">CYF</span>
+                        <span className="logo-center" style={{ color: "#424252" }}>Center</span>
+                    </span>
+  <Container  style={{ marginright: "5cm", marginLeft: "13cm"}} >
+    {/* <Navbar.Brand href="#home">Logo</Navbar.Brand> */}
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
+    <Navbar style={{ position: "fixed" }}/>
+      <Nav  className="me-auto">
+        <NavLink activeClassName="active" className="aa" to="/">Trang chủ</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/info">Tin tức</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/tuthien">Làm từ thiện</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/ask">Hỏi đáp</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/login">Đăng nhập</NavLink>
+        {/* <Nav.Link href="#link">Giới thiệu</Nav.Link>
+        <Nav.Link href="/">Tin tức</Nav.Link>
+        <Nav.Link href="#link">Làm từ thiện</Nav.Link>
+        <Nav.Link href="/">Hỏi và đáp</Nav.Link>
+        <Nav.Link href="#link">Đánh giá</Nav.Link>
+        <Nav.Link href="/">Trang chủ</Nav.Link> */}
+        {/* <Nav.Link href="#link">Giới thiệu</Nav.Link>
+        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+        </NavDropdown> */}
+        <Link className="aa" to="/login">Đăng nhập</Link>
+      </Nav>
+      {/* <h6 > Trung tâm bảo trợ trẻ em CYF</h6> */}
+      <span className="logo">
+                        <span className="logo__name">CYF</span>
+                        <span className="logo-center" style={{ color: "#424252" }}>Center</span>
+                    </span>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
                 <header>
+               
                     {/* <img className='logo' src='./img/logo.png' /> */}
                     <nav className='nav-link'>
                         <ul className='main-nav'>
@@ -96,11 +131,11 @@ export default class Home extends React.Component {
                         </ul>
                     </nav>
                     <div className="hero-text-box row">
-                        <h1 className='h1-subhome'>
+                        {/* <h1 className='h1-subhome'>
                             Trung tâm bảo trợ trẻ em CYF
-                        </h1>
+                        </h1> */}
                         <form className='search-form'>
-                            <p>Hỗ trợ (24/7) : 0800 1234 678</p>
+                            {/* <p>Hỗ trợ (24/7) : 0800 1234 678</p> */}
                             {/* <input className='txbPlace' type="text" placeholder="Nhập tên địa điểm cần đặt khách sạn" />
                             <button className='button btnSearch'>Tìm kiếm</button> */}
                         </form>
@@ -109,22 +144,85 @@ export default class Home extends React.Component {
                 <section onLoad={() => {
                         document.querySelector('.loading').classList.add('hidden-loading')
                 }}>
-                    <p className='row loading'>Loading...</p>
-                    <Places data={this.state.response} />
+                    {/* <p className='row loading'>Loading...</p> */}
+                    {/* <Places data={this.state.response} /> */}
+                    <br></br>
+                    <br></br>
+<p className='p-info'>
+                    Thông tin chung về Trung tâm Bảo trợ trẻ em CYF
+<p>
+1. Thông tin chung:
+</p>
+- Tên đơn vị: Trung tâm Bảo trợ trẻ em CYF
+- Địa chỉ Trung tâm có 2 trụ sở:
 
-                    
-                    {/* <div className='row'>
-                        <Images img="./img/Hanoi.jpg" name="Hà Nội" src="/hanoi"/>
-                        <Images img="./img/Danang.jpg" name="Đà Nẵng" src="/danang"/>
-                        <Images img="./img/Saigon.jpg" name="Sài Gòn" src="/saigon"/>
-                    </div>
-                    <div className='row'>
-                        <Images img="./img/Hue.jpg" name="Huế" src="hue"/>
-                        <Images img="./img/Sapa.jpg" name="Sapa" src="sapa"/>
-                        <Images img="./img/NhaTrang.jpg" name="Nha Trang" src="nhatrang" />
-                    </div> */}
++ Trụ sở chính: Số 45 Bà Triệu, phường Hòa Khánh Bắc, quận Liên Chiểu, Đà Nẵng
+
+Điện thoại: 02433.5525651
+
++ Cơ sở 2: Thôn Đồng Dầu, xã Dục Tú, huyện Đông Anh, Hà Nội
+
+Điện thoại: 0243. 9613113
+
+- Web: ctxhvaqbtte.hanoi.gov.vn
+
+- Email: ttctxhqbtte_soldtbxh@hanoi.gov.vn
+
+Trung tâm Công tác xã hội và Quỹ Bảo trợ trẻ em Hà Nội được thành lập trên cơ sở hợp nhất 3 đơn vị đó là: Trung tâm Bảo trợ xã hội I Hà Nội, Trung tâm Cung cấp dịch vụ công tác xã hội Hà Nội và Quỹ Bảo trợ trẻ em Hà Nội theo Quyết định số 5326/QĐ-UBND ngày 22/12/2021 của UBND thành phố Hà Nội.
+<p >
+2. Chức năng, nhiệm vụ
+</p>
+Trung tâm Công tác xã hội và Quỹ Bảo trợ trẻ em Hà Nội có chức năng cung cấp các dịch vụ công tác xã hội; tập trung, tiếp nhận, quản lý, nuôi dưỡng người lang thang; đối tượng cần sự bảo vệ khẩn cấp; trẻ bị bỏ rơi; người cao tuổi, trẻ em bị đi lạc gia đình và các đối tượng khác nhau theo quy định; tiếp nhận các nguồn lực hỗ trợ của các tổ chức, cá nhân trong nước và nước ngoài; vận động, tiếp nhận, quản lý, sử dụng Quỹ Bảo trợ trẻ em Hà Nội để thực hiện mục đích bảo vệ chăm sóc và giáo dục trẻ em theo quy định của pháp luật. 
+<p >
+ 3. Tổ chức:
+ </p>
+-  Ban Giám đốc:
+<p className='p-info'>
+1. Đ/c Kiều Thị Hương - Giám đốc.
+</p>
+<p className='p-info'>
+2. Đ/c Nguyễn Tiến Trung - Phó giám đốc.
+</p>
+<p className='p-info'>
+3. Đ/c Vũ Thị Minh Tuyết - Phó giám đốc.
+</p>
+<p className='p-info'>
+4. Đ/c Nguyễn Văn Quảng - Phó giám đốc.
+</p>
+ -  Các phòng:
+ <p className='p-info'>
+1. Phòng Tổ chức Hành chính.
+</p>
+<p className='p-info'>
+2. Phòng Tư vấn và Trợ giúp.
+</p>
+<p className='p-info'>
+3. Phòng Tiếp nhận, quản lý và chăm sóc đối tượng.
+</p>
+<p className='p-info'>
+4. Phòng Y tế nuôi dưỡng.
+</p>
+<p className='p-info'>
+5. Phòng Quản lý Quỹ BTTE và Phát triển cộng đồng.
+</p>
+<p className='p-info'>
+6. Đội trật tự xã hội lưu động.
+</p>
+</p>
                 </section>
-                <footer>
+                
+                <Navbar  style={{ position: "fixed" }} bg="dark" expand="lg">
+                <Container  style={{ marginright: "20cm" }} >
+                    <div className='row'>
+                        <p>
+                            ssssssssss
+                            {/* Copyright &copy; 2021 by Khoa Nguyen. All rights reserved */}
+                        </p>
+                    </div>
+                    </Container>
+                    </Navbar>
+                <footer bg="dark">
+                <Container  style={{ marginright: "20cm" }} bg="dark">
                     <div className='row'>
                         <ul className="social-links">
                             <li><a href="#"><ion-icon name="logo-facebook" class="fb"></ion-icon></a></li>
@@ -135,59 +233,47 @@ export default class Home extends React.Component {
                     </div>
                     <div className='row'>
                         <p>
+                            ssssssssss
                             {/* Copyright &copy; 2021 by Khoa Nguyen. All rights reserved */}
                         </p>
                     </div>
+                    </Container>
                 </footer>
+                <div className="footer-dark">   
+                <div class="row">
+                <div class="col-sm-2 col-md-2 item"></div>
+                    <div class="col-sm-5 col-md-2 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="/#">Nuôi dạy trẻ</a></li>
+                            <li><a href="/#">Từ thiện</a></li>
+                            <li><a href="/#">Hoạt động</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="/#">Thông tin</a></li>
+                            <li><a href="/#">Liên hệ</a></li>
+                            <li><a href="/#">Quảng bá</a></li>
+                        </ul>
+                    </div>
+                    {/* <div class="col-md-6 item text">
+                        <h3>Company Name</h3>
+                        <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+                    </div> */}
+                    <div class="col item social"><a href="/#"><i class="icon ion-social-facebook"></i></a><a href="/#"><i class="icon ion-social-twitter"></i></a><a href="/#"><i class="icon ion-social-snapchat"></i></a><a href="/#"><i class="icon ion-social-instagram"></i></a></div>
+                </div>
+                <p class="copyright">CYF Center © 2022</p>
             </div>
-        )
-    }
-    
-}
-
-class Images extends React.Component {
-    render() {
-        return (
-            <div className='col span-1-of-3'>
-                <Link to={this.props.src}><img alt='' src={this.props.img} className='image-place' /></Link>
-                <p style={{margin: "0"}}>{this.props.name}</p>
-            </div>
-        )
-    }
-}
-
-class Places extends React.Component{
-    
-    render() {
-        return (
-            <div className='row'>
-                {this.props.data.map((item, index) => {
-                    let url = ''
-                    switch(item.id) {
-                        case 1: 
-                            url = '/hanoi'
-                            break
-                        case 2:
-                            url = '/saigon'
-                            break
-                        case 25:
-                            url = '/dalat'
-                            break
-                        case 26:
-                            url = '/hue'
-                            break
-                        case 47:
-                            url = '/vungtau'
-                            break
-                        default: 
-                            url = '/danang'
-                    }
-                    return <Images key={item.id} img={item.image} name={item.location} src={url}/>
-                })}
-                
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
             </div>
             
         )
     }
+    
 }
+
+
 
