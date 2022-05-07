@@ -8,7 +8,7 @@ const ChildrenContextProvider = (props) => {
     const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const childrenPage = JSON.parse(localStorage.getItem("childrenPage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const ChildrenContextProvider = (props) => {
     }, []);
 
     // GET CHILDRENS LIST
-    async function getChildrensList(childrenPage) {
+    async function getChildrensList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -28,7 +28,7 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${childrenPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -121,7 +121,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -164,7 +164,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -186,7 +186,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }

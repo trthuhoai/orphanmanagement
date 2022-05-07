@@ -6,7 +6,7 @@ const StorageContextProvider = (props) => {
     const [storages, setStorages] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const storagePage = JSON.parse(localStorage.getItem("storagePage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const StorageContextProvider = (props) => {
     }, []);
 
     // GET STORAGES LIST
-    async function getStoragesList(storagePage) {
+    async function getStoragesList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -24,7 +24,7 @@ const StorageContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${storagePage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -71,7 +71,7 @@ const StorageContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList(storagePage);
+                getStoragesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -93,7 +93,7 @@ const StorageContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList(storagePage);
+                getStoragesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }

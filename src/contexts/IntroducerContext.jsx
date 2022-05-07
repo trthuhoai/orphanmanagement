@@ -6,7 +6,7 @@ const IntroducerContextProvider = (props) => {
     const [introducers, setIntroducers] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const introducerPage = JSON.parse(localStorage.getItem("introducerPage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const IntroducerContextProvider = (props) => {
     }, []);
 
     // GET INTRODUCERS LIST
-    async function getIntroducersList(introducerPage) {
+    async function getIntroducersList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -24,7 +24,7 @@ const IntroducerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer?page=${introducerPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -75,7 +75,7 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(introducerPage);
+                getIntroducersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -118,7 +118,7 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(introducerPage);
+                getIntroducersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -140,7 +140,7 @@ const IntroducerContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(introducerPage);
+                getIntroducersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }

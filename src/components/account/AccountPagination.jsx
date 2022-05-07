@@ -9,7 +9,7 @@ const AccountPagination = () => {
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
-        localStorage.setItem("accountPage", currentPage);
+        localStorage.setItem("currentPage", currentPage);
         getAccountsList(currentPage);
     };
 

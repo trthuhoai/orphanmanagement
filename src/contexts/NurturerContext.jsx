@@ -6,7 +6,7 @@ const NurturerContextProvider = (props) => {
     const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const nurturerPage = JSON.parse(localStorage.getItem("nurturerPage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
     
     useEffect(() => {
@@ -14,7 +14,7 @@ const NurturerContextProvider = (props) => {
     }, []);
 
     // GET NURTURERS LIST
-    async function getNurturersList(nurturerPage) {
+    async function getNurturersList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -24,7 +24,7 @@ const NurturerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${nurturerPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -75,7 +75,7 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList(nurturerPage);
+                getNurturersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -118,7 +118,7 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList(nurturerPage);
+                getNurturersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -140,7 +140,7 @@ const NurturerContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getNurturersList(nurturerPage);
+                getNurturersList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
