@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./sidebar.scss";
 
 const Sidebar = () => {
@@ -19,57 +19,122 @@ const Sidebar = () => {
                 </Link>
             </div>
             <div className="center">
-                {currentUser.roles.includes("ROLE_ADMIN") ? (
-                    <ul>
-                        <h2 className="title">Tài khoản</h2>
-                        <Link to="/users" style={linkStyle}>
-                            <li className="item">Thành viên</li>
-                        </Link>
-                    </ul>
-                ) : currentUser.roles.includes("ROLE_MANAGER") ? (
-                    <>
-                        <ul>
-                            <h2 className="title">Trung tâm</h2>
-                            <Link to="/manager/children" style={linkStyle}>
-                                <li className="item">Trẻ em</li>
-                            </Link>
-                            <Link to="/manager/staff" style={linkStyle}>
-                                <li className="item">Nhân viên</li>
-                            </Link>
-                            <Link to="/manager/furniture" style={linkStyle}>
-                                <li className="item">Trang thiết bị</li>
-                            </Link>
-                        </ul>
-                        <ul>
-                            <h2 className="title">Hoạt động</h2>
-                            <Link to="/manager/charity" style={linkStyle}>
-                                <li className="item">Từ thiện</li>
-                            </Link>
-                            <Link to="/manager/picnic" style={linkStyle}>
-                                <li className="item">Dã ngoại</li>
-                            </Link>
-                            <Link to="/manager/adoption" style={linkStyle}>
-                                <li className="item">Nhận nuôi</li>
-                            </Link>
-                            <Link to="/manager/introduction" style={linkStyle}>
-                                <li className="item">Giới thiệu trẻ</li>
-                            </Link>
-                            <Link to="/manager/feedback" style={linkStyle}>
-                                <li className="item">Phản hồi</li>
-                            </Link>
-                            <Link to="/manager/statistics" style={linkStyle}>
-                                <li className="item">Thống kê</li>
-                            </Link>
-                            <Link to="/manager/notifications" style={linkStyle}>
-                                <li className="item">Thông báo</li>
-                            </Link>
-                        </ul>
-                    </>
-                ) : (
-                    ""
-                )}
+                <ul>
+                    <h2 className="title">Trung tâm</h2>
+                    <NavLink
+                        to="/account"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Tài khoản
+                    </NavLink>
+                    <NavLink
+                        to="/children"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Trẻ em
+                    </NavLink>
+                    <NavLink
+                        to="/staff"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Nhân viên
+                    </NavLink>
+                    <NavLink
+                        to="/furniture"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Trang thiết bị
+                    </NavLink>
+                    <NavLink
+                        to="/storage"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Lưu trữ
+                    </NavLink>
+                    <h2 className="title">Hoạt động</h2>
+                    <NavLink
+                        to="/charity"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Từ thiện
+                    </NavLink>
+                    <NavLink
+                        to="/picnic"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Dã ngoại
+                    </NavLink>
+                    <NavLink
+                        to="/introducer"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Giới thiệu trẻ
+                    </NavLink>
+                    <NavLink
+                        to="/nurturer"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Nhận nuôi
+                    </NavLink>    
+                    <NavLink
+                        to="/feedback"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Phản hồi
+                    </NavLink>
+                    <NavLink
+                        to="/statistic"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Thống kê
+                    </NavLink>
+                    <NavLink
+                        to="/notification"
+                        style={linkStyle}
+                        className={({ isActive }) =>
+                            isActive ? "link-active" : "link"
+                        }
+                    >
+                        Thông báo
+                    </NavLink>
+                </ul>
             </div>
-            <div className="bottom"></div>
+            <div className="bottom">
+                <ul></ul>
+            </div>
         </div>
     );
 };

@@ -1,46 +1,46 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Children from "./Children";
-import ChildrenCreate from "./ChildrenCreate";
-import ChildrenPagination from "./ChildrenPagination";
-import "./_children.scss";
+import Nurturer from "./Nurturer";
+import NurturerCreate from "./NurturerCreate";
+import NurturerPagination from "./NurturerPagination";
 
-const ChildrenList = () => {
-    const { childrens } = useContext(ChildrenContext);
+const NurturerList = () => {
+    const { nurturers } = useContext(NurturerContext);
 
     const [show, setShow] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
         handleClose();
-    }, [childrens]);
+    }, [nurturers]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Trẻ em</h2>
+                    <h2>Nhận nuôi trẻ</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm trẻ em
+                        Thêm người nhận nuôi
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Ngày sinh</th>
-                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Số điện thoại</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
+                        {nurturers.map((nurturer) => (
+                            <tr key={nurturer.id}>
+                                <Nurturer nurturer={nurturer} />
                             </tr>
                         ))}
                     </tbody>
@@ -52,10 +52,10 @@ const ChildrenList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm người nhận nuôi</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <ChildrenCreate />
+                        <NurturerCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,7 +67,7 @@ const ChildrenList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="childrenCreate"
+                            form="nurturerCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -76,9 +76,9 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <NurturerPagination />
         </>
     );
 };
 
-export default ChildrenList;
+export default NurturerList;

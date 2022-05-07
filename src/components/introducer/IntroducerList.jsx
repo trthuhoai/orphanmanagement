@@ -1,46 +1,46 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Children from "./Children";
-import ChildrenCreate from "./ChildrenCreate";
-import ChildrenPagination from "./ChildrenPagination";
-import "./_children.scss";
+import Introducer from "./Introducer";
+import IntroducerCreate from "./IntroducerCreate";
+import IntroducerPagination from "./IntroducerPagination";
 
-const ChildrenList = () => {
-    const { childrens } = useContext(ChildrenContext);
+const IntroducerList = () => {
+    const { introducers } = useContext(IntroducerContext);
 
     const [show, setShow] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
         handleClose();
-    }, [childrens]);
+    }, [introducers]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Trẻ em</h2>
+                    <h2>Giới thiệu trẻ</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm trẻ em
+                        Thêm người giới thiệu
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Ngày sinh</th>
-                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Số điện thoại</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
+                        {introducers.map((introducer) => (
+                            <tr key={introducer.id}>
+                                <Introducer introducer={introducer} />
                             </tr>
                         ))}
                     </tbody>
@@ -52,10 +52,10 @@ const ChildrenList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm người giới thiệu</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <ChildrenCreate />
+                        <IntroducerCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,7 +67,7 @@ const ChildrenList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="childrenCreate"
+                            form="introducerCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -76,9 +76,9 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <IntroducerPagination />
         </>
     );
 };
 
-export default ChildrenList;
+export default IntroducerList;

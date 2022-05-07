@@ -1,16 +1,17 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { NurturerContext } from "../../contexts/NurturerContext";
+import "../../scss/abstracts/_card.scss";
 
-const ChildrenDetail = ({ theChildren }) => {
-    const id = theChildren.id;
+const NurturerDetail = ({ theNurturer }) => {
+    const id = theNurturer.id;
 
-    const [detailChildren, setDetailChildren] = useState({});
+    const [detailNurturer, setDetailNurturer] = useState({});
 
-    const { viewChildren } = useContext(ChildrenContext);
+    const { viewNurturer } = useContext(NurturerContext);
     useEffect(() => {
-        viewChildren(id).then((result) => {
-            setDetailChildren(result);
+        viewNurturer(id).then((result) => {
+            setDetailNurturer(result);
         });
     }, []);
 
@@ -21,21 +22,19 @@ const ChildrenDetail = ({ theChildren }) => {
                     className="card__image"
                     variant="top"
                     src={
-                        detailChildren.image ||
+                        detailNurturer.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                 />
                 <div>
                     <Card.Title className="card__title">
-                        {detailChildren.fullName}
+                        {detailNurturer.fullName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted card__subtitle">
-                        {detailChildren.gender ? "Nam" : "Nữ"}
+                        {detailNurturer.address}
                     </Card.Subtitle>
                     <Card.Text className="card-text">
-                        {detailChildren.status === "WAIT_TO_RECEIVE"
-                            ? "Đang ở trung tâm"
-                            : "Đã được nhận nuôi"}
+                        {detailNurturer.email}
                     </Card.Text>
                 </div>
             </Card.Header>
@@ -43,42 +42,38 @@ const ChildrenDetail = ({ theChildren }) => {
                 <ListGroup variant="flush" className="list-group">
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
+                            Giới tính
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailNurturer.gender === true
+                                ? "Nam"
+                                : detailNurturer.gender === false
+                                ? "Nữ"
+                                : ""}
+                        </p>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
                             Ngày sinh
                         </span>
                         <p className="list-group__item-content">
-                            {detailChildren.dateOfBirth}
+                            {detailNurturer.dateOfBirth}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Ngày vào trung tâm
+                            CMND/CCCD
                         </span>
                         <p className="list-group__item-content">
-                            {detailChildren.introductoryDate}
+                            {detailNurturer.identification}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Người giới thiệu
+                            Số điện thoại
                         </span>
                         <p className="list-group__item-content">
-                            {detailChildren.nameOfIntroducer}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Ngày được nhận nuôi
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailChildren.adoptiveDate}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Người nhận nuôi
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailChildren.nameOfNurturer}
+                            {detailNurturer.phone}
                         </p>
                     </ListGroup.Item>
                 </ListGroup>
@@ -87,4 +82,4 @@ const ChildrenDetail = ({ theChildren }) => {
     );
 };
 
-export default ChildrenDetail;
+export default NurturerDetail;

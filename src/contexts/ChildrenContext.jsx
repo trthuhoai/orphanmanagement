@@ -4,13 +4,21 @@ export const ChildrenContext = createContext();
 
 const ChildrenContextProvider = (props) => {
     const [childrens, setChildrens] = useState([]);
+    const [introducers, setIntroducers] = useState([]);
+    const [nurturers, setNurturers] = useState([]);
+    const [pages, setPages] = useState([]);
+
+    const childrenPage = JSON.parse(localStorage.getItem("childrenPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getChildrensList();
+        getChildrensList(1);
+        getIntroducersList();
+        getNurturersList();
     }, []);
 
-    // GET ChildrenS LIST
-    async function getChildrensList() {
-        const token = JSON.parse(localStorage.getItem("token"));
+    // GET CHILDRENS LIST
+    async function getChildrensList(childrenPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -20,43 +28,82 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/children",
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${childrenPage}`,
             requestOptions
         )
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
-                setChildrens(JSON.parse(result).data.result);
+                console.log(result);
+                setChildrens(result.data.result);
+                setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
-    // ADD Children
+    // GET INTRODUCERS LIST
+    async function getIntroducersList() {
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/all`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setIntroducers(result.data);
+            })
+            .catch((error) => console.log("error", error));
+    }
+
+    // GET NURTURERS LIST
+    async function getNurturersList() {
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/all`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setNurturers(result.data);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    // ADD CHILDREN
     async function addChildren(
         image,
         fullName,
-        date_of_birth,
         gender,
-        roles,
-        address,
-        identification,
-        phone,
-        email,
-        password,
-        confirmPassword
+        dateOfBirth,
+        introductoryDate,
+        adoptiveDate,
+        introducerId,
+        nurturerId
     ) {
         let raw = JSON.stringify({
             image,
             fullName,
-            date_of_birth,
             gender,
-            roles,
-            address,
-            identification,
-            phone,
-            email,
-            password,
-            confirmPassword,
+            dateOfBirth,
+            introductoryDate,
+            adoptiveDate,
+            introducerId,
+            nurturerId,
         });
-        const token = JSON.parse(localStorage.getItem("token"));
+
         let requestOptions = {
             method: "POST",
             headers: {
@@ -68,32 +115,18 @@ const ChildrenContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/children",
             requestOptions
         )
             .then((response) => response.json())
-            .then((result) => console.log(result))
+            .then((result) => {
+                console.log(result);
+                getChildrensList(childrenPage);
+            })
             .catch((error) => console.log("error", error));
-        setChildrens([
-            ...childrens,
-            {
-                image,
-                fullName,
-                date_of_birth,
-                gender,
-                roles,
-                address,
-                identification,
-                phone,
-                email,
-                password,
-                confirmPassword,
-            },
-        ]);
     }
-    // VIEW Children DETAILS
+    // VIEW CHILDREN DETAILS
     async function viewChildren(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -103,20 +136,16 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
 
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+        let result = await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children/${id}`,
             requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(JSON.parse(result).data);
-                setChildrens(JSON.parse(result).data);
-            })
-            .catch((error) => console.log("error", error));
+        );
+
+        result = await result.json();
+        return result.data;
     }
-    //EDIT Children
+    //EDIT CHILDREN
     async function updateChildren(id, updatedChildren) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedChildren);
         let requestOptions = {
             method: "PUT",
@@ -129,47 +158,50 @@ const ChildrenContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children/${id}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                getChildrensList(childrenPage);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    // DELETE CHILDREN
+    async function deleteChildren(id) {
+        let requestOptions = {
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children/${id}`,
             requestOptions
         )
             .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((result) => {
+                console.log(result);
+                getChildrensList(childrenPage);
+            })
             .catch((error) => console.log("error", error));
-        setChildrens(
-            childrens.map((Children) =>
-                Children.id === id ? updatedChildren : Children
-            )
-        );
-    }
-    // DELETE Children
-    async function deleteChildren(id) {
-        // const token = JSON.parse(localStorage.getItem("token"));
-        // let requestOptions = {
-        //     method: "DELETE",
-        //     headers: {
-        //         Authorization: "Bearer " + token,
-        //         "Content-Type": "application/json",
-        //     },
-        //     redirect: "follow",
-        // };
-
-        // await fetch(
-        //     `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
-        //     requestOptions
-        // )
-        //     .then((response) => response.text())
-        //     // .then((result) => console.log(result))
-        //     .catch((error) => console.log("error", error));
-        setChildrens(childrens.filter((Children) => Children.id !== id));
     }
     return (
         <ChildrenContext.Provider
             value={{
                 childrens,
+                introducers,
+                nurturers,
+                getChildrensList,
                 addChildren,
                 deleteChildren,
                 viewChildren,
                 updateChildren,
+                pages,
             }}
         >
             {props.children}

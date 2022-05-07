@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./header.scss";
 
@@ -16,11 +15,7 @@ const Header = () => {
             <div className="user">
                 <section className="info">
                     <span className="info__username">
-                        {currentUser.roles.includes("ROLE_ADMIN")
-                            ? "Admin"
-                            : currentUser.roles.includes("ROLE_MANAGER")
-                            ? "Manager"
-                            : ""}
+                        {currentUser.roles[0].description}
                     </span>
                     <img
                         src={

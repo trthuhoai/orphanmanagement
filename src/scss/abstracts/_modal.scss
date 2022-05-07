@@ -1,5 +1,9 @@
 @use "./variables" as *;
 
+.modal{
+    color: $mainColor;
+}
+
 .modal__header {
     height: 48px;
 }

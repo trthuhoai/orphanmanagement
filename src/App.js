@@ -2,6 +2,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListAccount from "./pages/list/ListAccount";
 import Home from "./pages/home/Home";
 import ListFurniture from "./pages/list/ListFurniture";
+import ListChildren from "./pages/list/ListChildren";
+import ListIntroducer from "./pages/list/ListIntroducer";
+import ListNurturer from "./pages/list/ListNurturer";
+import ListStorage from "./pages/list/ListStorage";
 import Login from "./pages/login/Login";
 import "./scss/App.scss";
 
@@ -10,26 +14,15 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/admin" element={<ListAccount/>}/>
-                    <Route path="/admin/users" element={<ListAccount/>}/>
-                    <Route path="/manager/children" element={<ListAccount/>}/> 
-                    <Route path="/manager/furniture" element={<ListFurniture/>}/>         
+                    <Route path="/" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/account" element={<ListAccount />} />
+                    <Route path="/children" element={<ListChildren />} />
+                    <Route path="/introducer" element={<ListIntroducer />} />
+                    <Route path="/nurturer" element={<ListNurturer />} />
+                    <Route path="/storage" element={<ListStorage />} />
+                    <Route path="/furniture" element={<ListFurniture/>}/>    
                 </Routes>
-                {/* <Routes>
-                    <Route index element={<Login />} />
-                </Routes>
-                <Routes>
-                    <Route path="/admin">
-                        <Route index element={<ListAccount />} />
-                        {/* <Route path="/admin/users"></Route> */}
-                    {/* </Route>
-                    <Route path="/manager">
-                        {/* <Route path="/manager/children" index element={<List />} /> */}
-                        {/* <Route path="/admin/users"></Route> 
-                    </Route>
-                </Routes> */} 
             </BrowserRouter>
         </div>
     );

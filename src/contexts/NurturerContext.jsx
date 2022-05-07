@@ -1,20 +1,20 @@
 import { createContext, useEffect, useState } from "react";
 
-export const AccountContext = createContext();
+export const NurturerContext = createContext();
 
-const AccountContextProvider = (props) => {
-    const [accounts, setAccounts] = useState([]);
+const NurturerContextProvider = (props) => {
+    const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const accountPage = JSON.parse(localStorage.getItem("accountPage"));
+    const nurturerPage = JSON.parse(localStorage.getItem("nurturerPage"));
     const token = JSON.parse(localStorage.getItem("token"));
-
+    
     useEffect(() => {
-        getAccountsList(1);
+        getNurturersList(1);
     }, []);
 
-    // GET ACCOUNTS LIST
-    async function getAccountsList(accountPage) {
+    // GET NURTURERS LIST
+    async function getNurturersList(nurturerPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -24,44 +24,39 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${accountPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${nurturerPage}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
-                setAccounts(result.data.result);
+                console.log(result);
+                setNurturers(result.data.result);
                 setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
-    // ADD ACCOUNT
-    async function addAccount(
+
+    // ADD NURTURER
+    async function addNurturer(
         image,
         fullName,
-        date_of_birth,
+        dateOfBirth,
         gender,
-        roles,
         address,
         identification,
         phone,
-        email,
-        password,
-        confirmPassword
+        email
     ) {
         let raw = JSON.stringify({
             image,
             fullName,
-            date_of_birth,
+            dateOfBirth,
             gender,
-            roles,
             address,
             identification,
             phone,
             email,
-            password,
-            confirmPassword,
         });
-        const token = JSON.parse(localStorage.getItem("token"));
 
         let requestOptions = {
             method: "POST",
@@ -74,18 +69,18 @@ const AccountContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer",
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getAccountsList(accountPage);
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // VIEW ACCOUNT DETAILS
-    async function viewAccount(id) {
+    // VIEW NURTURER DETAILS
+    async function viewNurturer(id) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -96,15 +91,16 @@ const AccountContextProvider = (props) => {
         };
 
         let result = await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
             requestOptions
         );
+
         result = await result.json();
         return result.data;
     }
-    //EDIT ACCOUNT
-    async function updateAccount(id, updatedAccount) {
-        let raw = JSON.stringify(updatedAccount);
+    //EDIT NURTURER
+    async function updateNurturer(id, updatedNurturer) {
+        let raw = JSON.stringify(updatedNurturer);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -116,20 +112,20 @@ const AccountContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getAccountsList(accountPage);
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // STORE ACCOUNT
-    async function storeAccount(id) {
+    // DELETE NURTURER
+    async function deleteNurturer(id) {
         let requestOptions = {
-            method: "PUT",
+            method: "DELETE",
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -138,31 +134,31 @@ const AccountContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getAccountsList(accountPage);
+                getNurturersList(nurturerPage);
             })
             .catch((error) => console.log("error", error));
     }
     return (
-        <AccountContext.Provider
+        <NurturerContext.Provider
             value={{
-                accounts,
-                getAccountsList,
-                addAccount,
-                storeAccount,
-                viewAccount,
-                updateAccount,
+                nurturers,
+                getNurturersList,
+                addNurturer,
+                deleteNurturer,
+                viewNurturer,
+                updateNurturer,
                 pages,
             }}
         >
             {props.children}
-        </AccountContext.Provider>
+        </NurturerContext.Provider>
     );
 };
 
-export default AccountContextProvider;
+export default NurturerContextProvider;

@@ -1,25 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
-import AccountDetail from "./AccountDetail";
-import AccountUpdate from "./AccountUpdate";
+import { StorageContext } from "../../contexts/StorageContext";
+import StorageDetail from "./StorageDetail";
 
-const Account = ({ account }) => {
-    const { storeAccount } = useContext(AccountContext);
+const Storage = ({ storage }) => {
+    const { deleteStorage } = useContext(StorageContext);
+    const { restoreStorage } = useContext(StorageContext);
 
     useEffect(() => {
-        handleCloseUpdate();
+        handleCloseRestore();
         handleCloseDelete();
-    }, [account]);
+    }, [storage]);
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
     const handleShowDetail = () => setShowDetail(true);
 
-    // MODAL FORM UPDATE
-    const [showUpdate, setShowUpdate] = useState(false);
-    const handleCloseUpdate = () => setShowUpdate(false);
-    const handleShowUpdate = () => setShowUpdate(true);
+    // MODAL FORM Restore
+    const [showRestore, setShowRestore] = useState(false);
+    const handleCloseRestore = () => setShowRestore(false);
+    const handleShowRestore = () => setShowRestore(true);
 
     // MODAL CONFIRMATION DELETE
     const [showDelete, setShowDelete] = useState(false);
@@ -31,15 +31,15 @@ const Account = ({ account }) => {
             <td>
                 <img
                     src={
-                        account.image ||
+                        storage.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                     alt=""
                 />
-                {account.fullName}
+                {storage.fullName}
             </td>
-            <td>{account.email} </td>
-            <td>{account.roles[0].description}</td>
+            <td>{storage.email} </td>
+            <td>{storage.roles[0].description}</td>
             <td>
                 <i
                     title="Xem chi tiết"
@@ -47,13 +47,12 @@ const Account = ({ account }) => {
                     onClick={handleShowDetail}
                 ></i>
                 <i
-                    title="Chỉnh sửa"
-                    className="bi bi-pencil-square icon icon__update"
-                    onClick={handleShowUpdate}
+                    title="Hoàn tác"
+                    className="bi bi-arrow-clockwise icon icon__restore"
+                    onClick={handleShowRestore}
                 ></i>
                 <i
-                    title="Lưu trữ"
-                    className="bi bi-archive icon icon__storage"
+                    className="bi bi-trash3 icon icon__delete"
                     onClick={handleShowDelete}
                 ></i>
             </td>
@@ -70,34 +69,37 @@ const Account = ({ account }) => {
                     <Modal.Title>Thông tin tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountDetail theAccount={account} />
+                    <StorageDetail theStorage={storage} />
                 </Modal.Body>
             </Modal>
-            {/* MODAL UPDATE */}
+            {/* MODAL RESTORE */}
             <Modal
-                show={showUpdate}
-                onHide={handleCloseUpdate}
+                show={showRestore}
+                onHide={handleCloseRestore}
                 centered
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                    <Modal.Title>Khôi phục tài khoản</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountUpdate theAccount={account} />
+                    <p className="confirm-message">
+                        {`Bạn có chắc chắn muốn khôi phục ${storage.fullName} không?`}
+                    </p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
                         variant="secondary"
-                        onClick={handleCloseUpdate}
+                        onClick={handleCloseRestore}
                         className="btn btn--secondary btn__close"
                     >
                         Close
                     </Button>
                     <Button
-                        form="accountUpdate"
-                        variant="success"
-                        type="submit"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            restoreStorage(storage.id);
+                        }}
                         className="btn btn--primary btn__submit"
                     >
                         Xác nhận
@@ -116,7 +118,7 @@ const Account = ({ account }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Tài khoản ${account.fullName} sẽ được lưu trữ và bị xoá vĩnh viễn trong 7 ngày. Bạn có muốn tiếp tục không?`}
+                        {`Bạn có chắc chắn muốn xoá vĩnh viễn ${storage.fullName} khỏi kho lưu trữ không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -130,7 +132,7 @@ const Account = ({ account }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            storeAccount(account.id);
+                            deleteStorage(storage.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
@@ -142,4 +144,4 @@ const Account = ({ account }) => {
     );
 };
 
-export default Account;
+export default Storage;

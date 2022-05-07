@@ -1,51 +1,51 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Children from "./Children";
-import ChildrenCreate from "./ChildrenCreate";
-import ChildrenPagination from "./ChildrenPagination";
-import "./_children.scss";
+import Storage from "./Storage";
+// import StorageCreate from "./StorageCreate";
+// import StoragePagination from "./StoragePagination";
 
-const ChildrenList = () => {
-    const { childrens } = useContext(ChildrenContext);
+const StorageList = () => {
+    const { storages } = useContext(StorageContext);
 
     const [show, setShow] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
         handleClose();
-    }, [childrens]);
+    }, [storages]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Trẻ em</h2>
+                    <h2>Thành viên</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm trẻ em
+                        Thêm tài khoản
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
                             <th scope="col">Họ và tên</th>
-                            <th scope="col">Ngày sinh</th>
-                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phân quyền</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
+                        {storages.map((storage) => (
+                            <tr key={storage.id}>
+                                <Storage storage={storage} />
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <Modal
+                {/* <Modal
                     show={show}
                     onHide={handleClose}
                     centered
@@ -55,7 +55,7 @@ const ChildrenList = () => {
                         <Modal.Title>Thêm tài khoản</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <ChildrenCreate />
+                        <StorageCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,18 +67,18 @@ const ChildrenList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="childrenCreate"
+                            form="storageCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
                             Xác nhận
                         </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
             </div>
-            <ChildrenPagination />
+            {/* <StoragePagination /> */}
         </>
     );
 };
 
-export default ChildrenList;
+export default StorageList;

@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
-import AccountDetail from "./AccountDetail";
-import AccountUpdate from "./AccountUpdate";
+import { NurturerContext } from "../../contexts/NurturerContext";
+import NurturerDetail from "./NurturerDetail";
+import NurturerUpdate from "./NurturerUpdate";
 
-const Account = ({ account }) => {
-    const { storeAccount } = useContext(AccountContext);
+const Nurturer = ({ nurturer }) => {
+    const { deleteNurturer } = useContext(NurturerContext);
 
     useEffect(() => {
         handleCloseUpdate();
         handleCloseDelete();
-    }, [account]);
+    }, [nurturer]);
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
@@ -31,15 +31,15 @@ const Account = ({ account }) => {
             <td>
                 <img
                     src={
-                        account.image ||
+                        nurturer.image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                     alt=""
                 />
-                {account.fullName}
+                {nurturer.fullName}
             </td>
-            <td>{account.email} </td>
-            <td>{account.roles[0].description}</td>
+            <td>{nurturer.address} </td>
+            <td>{nurturer.phone}</td>
             <td>
                 <i
                     title="Xem chi tiết"
@@ -52,8 +52,7 @@ const Account = ({ account }) => {
                     onClick={handleShowUpdate}
                 ></i>
                 <i
-                    title="Lưu trữ"
-                    className="bi bi-archive icon icon__storage"
+                    className="bi bi-trash3 icon icon__delete"
                     onClick={handleShowDelete}
                 ></i>
             </td>
@@ -67,10 +66,10 @@ const Account = ({ account }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Thông tin tài khoản</Modal.Title>
+                    <Modal.Title>Thông tin người giới thiệu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountDetail theAccount={account} />
+                    <NurturerDetail theNurturer={nurturer} />
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}
@@ -81,10 +80,10 @@ const Account = ({ account }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                    <Modal.Title>Cập nhật người giới thiệu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountUpdate theAccount={account} />
+                    <NurturerUpdate theNurturer={nurturer} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -95,7 +94,7 @@ const Account = ({ account }) => {
                         Close
                     </Button>
                     <Button
-                        form="accountUpdate"
+                        form="nurturerUpdate"
                         variant="success"
                         type="submit"
                         className="btn btn--primary btn__submit"
@@ -112,11 +111,11 @@ const Account = ({ account }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Xoá tài khoản</Modal.Title>
+                    <Modal.Title>Xoá người giới thiệu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Tài khoản ${account.fullName} sẽ được lưu trữ và bị xoá vĩnh viễn trong 7 ngày. Bạn có muốn tiếp tục không?`}
+                        {`Bạn có chắc chắn muốn xoá ${nurturer.fullName} khỏi danh sách không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -130,7 +129,7 @@ const Account = ({ account }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            storeAccount(account.id);
+                            deleteNurturer(nurturer.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
@@ -142,4 +141,4 @@ const Account = ({ account }) => {
     );
 };
 
-export default Account;
+export default Nurturer;
