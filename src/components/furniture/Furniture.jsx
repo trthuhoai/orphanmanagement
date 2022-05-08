@@ -38,16 +38,14 @@ const Furniture = ({ furniture }) => {
                 />
                 {furniture.nameFurniture}
             </td>
-            <td>{furniture.status} </td>
+            <td>{furniture.goodQuantity} </td>
             <td>
-                {furniture.quantity}
-                {/* {furniture.roles.includes("ROLE_ADMIN") ||
-                furniture.roles.includes("admin")
-                    ? "Admin"
-                    : furniture.roles.includes("ROLE_MANAGER") ||
-                      furniture.roles.includes("manager")
-                    ? "Manager"
-                    : ""} */}
+                {furniture.brokenQuantity}
+ 
+            </td>
+            <td>
+                {furniture.status}
+ 
             </td>
             <td>
                  <i

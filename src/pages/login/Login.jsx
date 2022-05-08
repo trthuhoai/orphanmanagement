@@ -52,10 +52,10 @@ export default function Login() {
                         navigate("/account");
                         break;
                     case "ROLE_MANAGER_LOGISTIC":
-                        navigate("/manager");
+                        navigate("/furniture");
                         break;
                     case "ROLE_MANAGER_HR":
-                        navigate("/manager/furniture");
+                        navigate("/hr");
                         break;
                     case "ROLE_MANAGER_CHILDREN":
                         navigate("/children");

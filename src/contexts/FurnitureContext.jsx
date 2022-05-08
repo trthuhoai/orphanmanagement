@@ -38,14 +38,16 @@ const FurnitureContextProvider = (props) => {
     async function addFurniture(
         image,
         nameFurniture,
-        quantity,
-        status
+        status,
+        goodQuantity,
+        brokenQuantity
     ) {
         let raw = JSON.stringify({
             image,
             nameFurniture,
-            quantity,
-            status
+            status,
+            goodQuantity,
+            brokenQuantity
         });
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {

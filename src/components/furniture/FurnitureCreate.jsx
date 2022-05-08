@@ -14,8 +14,9 @@ const FormCreate = () => {
     const [newFurniture, setNewFurniture] = useState({
         image: "",
         nameFurniture: "",
-        status: "",
-        quantity: 0
+        status: " ",
+        goodQuantity: 0,
+        brokenQuantity: 0
     });
     const onInputChange = (e) => {
         setNewFurniture({
@@ -28,7 +29,9 @@ const FormCreate = () => {
         image,
         nameFurniture,
         status,
-        quantity
+        goodQuantity,
+        brokenQuantity
+
 
     } = newFurniture;
     const handleSubmit = (e) => {
@@ -37,15 +40,16 @@ const FormCreate = () => {
         addFurniture(
             image,
             nameFurniture,
-            quantity,
-            status
+            status,   
+            goodQuantity,
+            brokenQuantity
            
         );
         if(addResult){
             setErrorMessage("Thêm thông tin thiết bị thành công!")
         }
         else{
-            setErrorMessage("Chưa")
+            setErrorMessage("Lỗi thêm thiết bị!")
         }
     };
 
@@ -133,10 +137,43 @@ const FormCreate = () => {
                         required
                     />
                 </Form.Group>
-                <Row className="mb-3">
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        placeholder="Số lượng sử dụng tốt"
+                        name="goodQuantity"
+                        // value={nameFurniture}
+                        onChange={(e) => onInputChange(e)}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        placeholder="Số lượng hư hỏng"
+                        name="brokenQuantity"
+                        // value={nameFurniture}
+                        onChange={(e) => onInputChange(e)}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="test"
+                        placeholder="Ghi chú"
+                        name="status"
+                        // value={nameFurniture}
+                        onChange={(e) => onInputChange(e)}
+                        
+                    />
+                </Form.Group>
+                {/* <Row className="mb-3">
                  
                     <Form.Group as={Col} className="form-group">
-                        <Form.Select
+                        {/* <Form.Select
                             defaultValue="GOOD"
                             className="form-select"
                             name="status"
@@ -161,7 +198,7 @@ const FormCreate = () => {
                             </option>
                             <option value={["GOOD"]}>Sử dụng tốt</option>
                             <option value={["NEED_FIX"]}>Cần sửa chữa</option>
-                        </Form.Select>
+                        </Form.Select> *
                     </Form.Group>
                     <Form.Group as={Col} className="form-group">
                         <Form.Control
@@ -174,7 +211,7 @@ const FormCreate = () => {
                             required
                         />
                     </Form.Group>
-                </Row>
+                </Row> */}
                 <Row className="mb-6">
                     <p style={{ color: "red" }}>
                         {errorMessage && (

@@ -36,8 +36,9 @@ const FurnitureList = () => {
                 <thead>
                     <tr>
                         <th scope="col">Tên trang thiết bị</th>
-                        <th scope="col">Tình trạng</th>
-                        <th scope="col">Số lượng</th>
+                        <th scope="col">Số lượng hoạt động tốt</th>
+                        <th scope="col">Số lượng bị hỏng</th>
+                        <th scope="col">Ghi chú</th>
                         <th scope="col">Chức năng</th>
                     </tr>
                 </thead>
