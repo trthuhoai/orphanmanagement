@@ -8,6 +8,7 @@ const Sidebar = () => {
         color: "#fff",
         textDecoration: "none",
     };
+    
     return (
         <div className="sidebar">
             <div className="top">
@@ -102,7 +103,7 @@ const Sidebar = () => {
                         }
                     >
                         Nhận nuôi
-                    </NavLink>    
+                    </NavLink>
                     <NavLink
                         to="/feedback"
                         style={linkStyle}

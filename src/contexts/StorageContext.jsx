@@ -10,6 +10,7 @@ const StorageContextProvider = (props) => {
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
         getStoragesList(1);
     }, []);
 
@@ -87,7 +88,7 @@ const StorageContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
         )
             .then((response) => response.text())

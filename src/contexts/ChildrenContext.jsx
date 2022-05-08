@@ -12,6 +12,8 @@ const ChildrenContextProvider = (props) => {
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
+
         getChildrensList(1);
         getIntroducersList();
         getNurturersList();

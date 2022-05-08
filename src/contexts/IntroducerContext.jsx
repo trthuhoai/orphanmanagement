@@ -10,6 +10,7 @@ const IntroducerContextProvider = (props) => {
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
         getIntroducersList(1);
     }, []);
 

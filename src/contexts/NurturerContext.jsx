@@ -8,8 +8,9 @@ const NurturerContextProvider = (props) => {
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
-    
+
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
         getNurturersList(1);
     }, []);
 

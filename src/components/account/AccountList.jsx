@@ -23,7 +23,7 @@ const AccountList = () => {
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Thành viên</h2>
+                    <h2>Tài khoản</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm tài khoản
                     </Button>
