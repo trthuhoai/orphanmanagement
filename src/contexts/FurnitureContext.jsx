@@ -1,19 +1,41 @@
 import { createContext, useEffect, useState } from "react";
-import FurnitureList from "../components/furniture/FurnitureList";
 
 export const FurnitureContext = createContext();
 
 const FurnitureContextProvider = (props) => {
     const [furnitures, setFurnitures] = useState([]);
     const [addResult, setAddResult] = useState("false");
+    const [pages, setPages] = useState([]);
+    const furniturePage = JSON.parse(localStorage.getItem("furniturePage"));
     const [detailAccounts, setDetailAccounts] = useState({});
 
     useEffect(() => {
-        getFurnituresList();
+        getFurnituresList(1);
     }, []);
-
+    async function getFurnituresList(furniturePage) {
+        const token = JSON.parse(localStorage.getItem("token"));
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture?page=${furniturePage}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result)
+                setFurnitures(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
     // GET ACCOUNTS LIST
-    async function getFurnituresList() {
+    async function getFurnituresList1() {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
@@ -71,6 +93,7 @@ const FurnitureContextProvider = (props) => {
                 {
                     setAddResult("true");
                 }
+                getFurnituresList();
                 //setFurnitures([...furnitures, result.data]);
             })
             .catch((error) => console.log("error", error));
@@ -157,11 +180,13 @@ const FurnitureContextProvider = (props) => {
             value={{
                 // accounts,
                 furnitures,
+                getFurnituresList,
                 addFurniture,
                 addResult,
                 deleteFurniture,
                 viewFurniture,
                 updateFurniture,
+                pages
             }}
         >
             {/* <div className="App">

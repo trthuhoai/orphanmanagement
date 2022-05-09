@@ -18,6 +18,7 @@ const FormCreate = () => {
         goodQuantity: 0,
         brokenQuantity: 0
     });
+    const [imageSuccess, setImageSuccess] = useState("");
     const onInputChange = (e) => {
         setNewFurniture({
             ...newFurniture,

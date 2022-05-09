@@ -63,7 +63,7 @@ const FurnitureDetail = ({ theFurniture }) => {
                 <ListGroup variant="flush" className="list-group">
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Số lượng
+                            Số lượng sử dụng tốt
                         </span>
                         <p className="list-group__item-content">
                             {/* {detailAccount.gender === true
@@ -71,12 +71,20 @@ const FurnitureDetail = ({ theFurniture }) => {
                                 : detailAccount.gender === false
                                 ? "Nữ"
                                 : ""} */}
-                                {detailFurniture.quantity}
+                                {detailFurniture.goodQuantity}
                         </p>
                     </ListGroup.Item>
                     <ListGroup.Item className="list-group__item">
                         <span className="list-group__item-heading">
-                            Tình trạng
+                            Số lượng hư hỏng
+                        </span>
+                        <p className="list-group__item-content">
+                            {detailFurniture.brokenQuantity} 
+                        </p>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="list-group__item">
+                        <span className="list-group__item-heading">
+                            Ghi chú
                         </span>
                         <p className="list-group__item-content">
                             {detailFurniture.status} 

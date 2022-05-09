@@ -19,7 +19,8 @@ const FurnitureUpdate = ({ theFurniture }) => {
     const [image, setImage] = useState("");
     const [nameFurniture, setNameFurniture] = useState("");
     const [status, setStatus] = useState("");
-    const [quantity, setQuantity] = useState(0);
+    const [goodQuantity, setGoodQuantity] = useState(0);
+    const [brokenQuantity, setBrokenQuantity] = useState(0);
     // const [roles, setRoles] = useState("");
     // const [address, setAddress] = useState("");
     // const [identification, setIdentification] = useState("");
@@ -48,12 +49,13 @@ const FurnitureUpdate = ({ theFurniture }) => {
                 setImage(result.image);
                 setNameFurniture(result.nameFurniture);
                 setStatus(result.status);
-                setQuantity(result.quantity);
+                setGoodQuantity(result.goodQuantity);
+                setBrokenQuantity(result.brokenQuantity);
                 console.log(
                     result.image,
                     result.nameFurniture,
                     result.status,
-                    result.quantity
+                    result.goodQuantity
                 );
             })
             .catch((error) => console.log("error", error));
@@ -61,16 +63,17 @@ const FurnitureUpdate = ({ theFurniture }) => {
 
     const { updateFurniture } = useContext(FurnitureContext);
 
-    const updatedAccount = {
+    const updatedFurniture = {
         image,
         nameFurniture,
         status,
-        quantity
+        goodQuantity,
+        brokenQuantity
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateFurniture(id, updatedAccount);
+        updateFurniture(id, updatedFurniture);
     };
 
     // IMAGE UPDATE
@@ -155,27 +158,49 @@ const FurnitureUpdate = ({ theFurniture }) => {
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="Họ và tên"
+                        placeholder="Tên thiết bị"
                         name="nameFurniture"
                         value={nameFurniture}
                         onChange={(e) => setNameFurniture(e.target.value)}
                         required
                     />
                 </Form.Group>
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        placeholder="Số lượng sử dụng tốt"
+                        name="goodQuantity"
+                        value={goodQuantity}
+                        onChange={(e) => setGoodQuantity(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        placeholder="Số lượng hư hỏng"
+                        name="brokenQuantity"
+                        value={brokenQuantity}
+                        onChange={(e) => setBrokenQuantity(e.target.value)}
+                        required
+                    />
+                </Form.Group>
                 <Row className="mb-3">
-                    {/* <Form.Group as={Col} className="form-group">
+                    <Form.Group as={Col} className="form-group">
                         <Form.Control
                             className="form-control"
                             type="text"
                             placeholder="Tình trạng"
                             name="status"
                             value={status}
-                            onChange={(e) => setStatus(e.target.value)}
+                            onChange={(e) => setStatus(e.target.value)+" "}
                             required
                         />
-                    </Form.Group> */}
+                    </Form.Group>
 
-                    <Form.Group as={Col} className="form-group">
+                    {/* <Form.Group as={Col} className="form-group">
                         <Form.Select
                             defaultValue="GOOD"
                             className="form-select"
@@ -193,19 +218,20 @@ const FurnitureUpdate = ({ theFurniture }) => {
                             <option value={"GOOD"}>Sử dụng tốt</option>
                             <option value={"NEED_FIX"}>Cần sửa chữa</option>
                         </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3 form-group">
-                    <Form.Control
+                    </Form.Group> */}
+                    {/* <Form.Group className="mb-3 form-group"> */}
+                    {/* <Form.Control
                         className="form-control"
                         type="text"
                         placeholder="Số lượng"
                         name="quantity"
-                        value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
+                        value={goodQuantity}
+                        onChange={(e) => setGoodQuantity(e.target.value)}
                         required
                     />
-                </Form.Group>
+                </Form.Group> */}
                 </Row>
+                
 
                 
             </Form>

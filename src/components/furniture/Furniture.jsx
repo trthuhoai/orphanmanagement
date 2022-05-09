@@ -1,16 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext,useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
-import AccountDetail from "./AccountDetail";
 import FurnitureDetail from "./FurnitureDetail";
-import AccountUpdate from "./AccountUpdate";
 import FurnitureUpdate from "./FurnitureUpdate";
 
 const Furniture = ({ furniture }) => {
     // const { deleteAccount } = useContext(AccountContext);
     const { deleteFurniture } = useContext(FurnitureContext);
     const { updateFurniture } = useContext(FurnitureContext);
+///////////////////1111
+    const { storeAccount } = useContext(FurnitureContext);
+
+    useEffect(() => {
+        handleCloseUpdate();
+        handleCloseDelete();
+    }, [furniture]);
+//////////////11111
     // // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
@@ -84,7 +89,7 @@ const Furniture = ({ furniture }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                    <Modal.Title>Cập nhật thông tin thiết bị</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <FurnitureUpdate theFurniture={furniture} />

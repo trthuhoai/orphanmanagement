@@ -1,13 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Account from "./Account";
 import Furniture from "./Furniture";
-import AccountCreate from "./AccountCreate";
 import FurnitureCreate from "./FurnitureCreate";
+import FurniturePagination from "./FurniturePagination";
 // import "./_account.scss";
 
 const FurnitureList = () => {
@@ -20,11 +18,12 @@ const FurnitureList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     // setErrorMessage("addResult");
-    useEffect(() => {
-        handleClose();
-    }, [furnitures]);
+    // useEffect(() => {
+    //     handleClose();
+    // }, [furnitures]);
 
-    return (
+    return ( <>
+
         <div className="table">
             <div className="table__top">
                 <h2>Danh sách trang thiết bị</h2>
@@ -85,6 +84,8 @@ const FurnitureList = () => {
                 </Modal.Footer>
             </Modal>
         </div>
+           <FurniturePagination />
+           </>
     );
 };
 

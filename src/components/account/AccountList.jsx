@@ -15,9 +15,9 @@ const AccountList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    useEffect(() => {
-        handleClose();
-    }, [accounts]);
+    // useEffect(() => {
+    //     handleClose();
+    // }, [accounts]);
 
     return (
         <>
