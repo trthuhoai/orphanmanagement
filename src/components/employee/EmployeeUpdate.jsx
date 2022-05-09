@@ -4,18 +4,17 @@ import {
     ref,
     uploadBytes,
 } from "firebase/storage";
-import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import { AccountContext } from "../../contexts/AccountContext";
+import { EmployeeContext } from "../../contexts/EmployeeContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const AccountUpdate = ({ theAccount }) => {
-    const id = theAccount.id;
+const EmployeeUpdate = ({ theEmployee }) => {
+    const id = theEmployee.id;
 
     const [image, setImage] = useState("");
+
     const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
     const [date_of_birth, setDate_of_birth] = useState("");
@@ -28,9 +27,9 @@ const AccountUpdate = ({ theAccount }) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { viewAccount } = useContext(AccountContext);
+    const { viewEmployee } = useContext(EmployeeContext);
     useEffect(() => {
-        viewAccount(id).then((result) => {
+        viewEmployee(id).then((result) => {
             setImage(result.image);
             setFullName(result.fullName);
             setDate_of_birth(result.date_of_birth);
@@ -43,8 +42,8 @@ const AccountUpdate = ({ theAccount }) => {
         });
     }, []);
 
-    const { updateAccount } = useContext(AccountContext);
-    const updatedAccount = {
+    const { updateEmployee } = useContext(EmployeeContext);
+    const updatedEmployee = {
         image,
         fullName,
         date_of_birth,
@@ -60,8 +59,8 @@ const AccountUpdate = ({ theAccount }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedAccount);
-        updateAccount(id, updatedAccount);
+        console.log(updatedEmployee);
+        updateEmployee(id, updatedEmployee);
     };
     // IMAGE UPDATE
     // generate random string for filename
@@ -96,7 +95,7 @@ const AccountUpdate = ({ theAccount }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(storage, `accounts/${generateString(100)}`);
+        const storageRef = ref(storage, `employees/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -107,13 +106,12 @@ const AccountUpdate = ({ theAccount }) => {
                 .catch((err) => console.log(err));
         });
     }
-
     return (
         <>
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="accountImage"
+                    id="employeeImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
@@ -123,7 +121,7 @@ const AccountUpdate = ({ theAccount }) => {
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="accountImageFile"
+                        htmlFor="employeeImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -134,7 +132,7 @@ const AccountUpdate = ({ theAccount }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="accountImageFile"
+                        id="employeeImageFile"
                         onChange={onFileChange}
                         required
                     />
@@ -150,7 +148,7 @@ const AccountUpdate = ({ theAccount }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="employeeUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -164,19 +162,13 @@ const AccountUpdate = ({ theAccount }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <DatePicker
+                        <Form.Control
                             className="form-control"
-                            placeholderText="Ngày sinh"
+                            type="text"
+                            placeholder="Ngày sinh"
+                            name="date_of_birth"
                             value={date_of_birth}
-                            showYearDropdown
-                            scrollableYearDropdown
-                            yearDropdownItemNumber={100}
-                            dateFormat="dd/MM/yyyy"
-                            onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDate_of_birth(resultDate);
-                            }}
+                            onChange={(e) => setDate_of_birth(e.target.value)}
                             required
                         />
                     </Form.Group>
@@ -308,4 +300,4 @@ const AccountUpdate = ({ theAccount }) => {
     );
 };
 
-export default AccountUpdate;
+export default EmployeeUpdate;

@@ -34,7 +34,11 @@ const NurturerContextProvider = (props) => {
                 setNurturers(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setNurturers([]);
+                getNurturersList(currentPage - 1);
+            });
     }
 
     // ADD NURTURER

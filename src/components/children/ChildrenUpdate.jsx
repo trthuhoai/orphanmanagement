@@ -4,8 +4,10 @@ import {
     ref,
     uploadBytes,
 } from "firebase/storage";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -17,6 +19,7 @@ const ChildrenUpdate = ({ theChildren }) => {
     const { nurturers } = useContext(ChildrenContext);
 
     const [image, setImage] = useState("");
+
     const [imageSuccess, setImageSuccess] = useState("");
 
     const [fullName, setFullName] = useState("");
@@ -37,15 +40,15 @@ const ChildrenUpdate = ({ theChildren }) => {
             setFullName(result.fullName);
             setDateOfBirth(result.dateOfBirth);
             setGender(result.gender);
-            setIntroductoryDate(result.introductoryDate);
-            setAdoptiveDate(result.adoptiveDate);
-            setIntroducerId(result.introducerId);
+            setIntroductoryDate(result.introductoryDate || "");
+            setAdoptiveDate(result.adoptiveDate || "");
+            setIntroducerId(result.introducerId || 0);
             setIntroducer(
                 introducers.find(
                     (introducer) => introducer.id === result.introducerId
                 )
             );
-            setNurturerId(result.nurturerId);
+            setNurturerId(result.nurturerId || 0);
             setNurturer(
                 nurturers.find((nurturer) => nurturer.id === result.nurturerId)
             );
@@ -120,7 +123,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                 .then((url) => {
                     console.log(url);
                     setImage(url);
-                    setImageSuccess("Tải ảnh lên thành công")
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log(err));
         });
@@ -181,13 +184,19 @@ const ChildrenUpdate = ({ theChildren }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="dateOfBirth"
+                            placeholderText="Ngày sinh"
                             value={dateOfBirth}
-                            onChange={(e) => setDateOfBirth(e.target.value)}
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setDateOfBirth(resultDate);
+                            }}
                             required
                         />
                     </Form.Group>
@@ -213,27 +222,37 @@ const ChildrenUpdate = ({ theChildren }) => {
                 </Row>
 
                 <Row className="mb-3">
-                    <Form.Group as={Col} className=" form-group">
-                        <Form.Control
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày vào trung tâm"
-                            name="introductoryDate"
+                            placeholderText="Ngày vào trung tâm"
                             value={introductoryDate}
-                            onChange={(e) =>
-                                setIntroductoryDate(e.target.value)
-                            }
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setIntroductoryDate(resultDate);
+                            }}
                             required
                         />
                     </Form.Group>
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày được nhận nuôi"
-                            name="adoptiveDate"
+                            placeholderText="Ngày nhận nuôi"
                             value={adoptiveDate}
-                            onChange={(e) => setAdoptiveDate(e.target.value)}
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setAdoptiveDate(resultDate);
+                            }}
                         />
                     </Form.Group>
                 </Row>

@@ -33,7 +33,11 @@ const AccountContextProvider = (props) => {
                 setAccounts(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setAccounts([]);
+                getAccountsList(currentPage - 1);
+            });
     }
     // ADD ACCOUNT
     async function addAccount(

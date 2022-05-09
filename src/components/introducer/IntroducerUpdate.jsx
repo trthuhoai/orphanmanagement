@@ -3,7 +3,8 @@ import {
     getDownloadURL,
     ref,
     uploadBytes,
-} from "firebase/storage";
+} from "firebase/storage";import moment from "moment";
+import DatePicker from "react-datepicker";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
@@ -14,6 +15,7 @@ const IntroducerUpdate = ({ theIntroducer }) => {
     const id = theIntroducer.id;
 
     const [image, setImage] = useState("");
+
     const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -158,13 +160,19 @@ const IntroducerUpdate = ({ theIntroducer }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="dateOfBirth"
+                            placeholderText="Ngày sinh"
                             value={dateOfBirth}
-                            onChange={(e) => setDateOfBirth(e.target.value)}
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setDateOfBirth(resultDate);
+                            }}
                             required
                         />
                     </Form.Group>

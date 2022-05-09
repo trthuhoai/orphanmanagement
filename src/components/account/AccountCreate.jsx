@@ -1,6 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import moment from "moment";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { AccountContext } from "../../contexts/AccountContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -20,6 +22,7 @@ const AccountCreate = () => {
         password: "",
         confirmPassword: "",
     });
+
     const [imageSuccess, setImageSuccess] = useState("");
 
     const onInputChange = (e) => {
@@ -151,18 +154,26 @@ const AccountCreate = () => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="date_of_birth"
+                            placeholderText="Ngày sinh"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
                             value={date_of_birth}
-                            onChange={(e) => onInputChange(e)}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setNewAccount({
+                                    ...newAccount,
+                                    date_of_birth: resultDate,
+                                });
+                            }}
                             required
                         />
                     </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
+                    {/* <Form.Group as={Col} className="form-group">
                         <Form.Select
                             defaultValue="Giới tính"
                             className="form-select"
@@ -185,7 +196,7 @@ const AccountCreate = () => {
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
-                    </Form.Group>
+                    </Form.Group> */}
                     <Form.Group as={Col} className="form-group">
                         <select
                             defaultValue="Phân quyền"

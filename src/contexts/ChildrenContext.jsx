@@ -39,7 +39,11 @@ const ChildrenContextProvider = (props) => {
                 setChildrens(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setChildrens([]);
+                getChildrensList(currentPage - 1);
+            });
     }
     // GET INTRODUCERS LIST
     async function getIntroducersList() {

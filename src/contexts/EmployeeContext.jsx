@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 
-export const IntroducerContext = createContext();
+export const EmployeeContext = createContext();
 
-const IntroducerContextProvider = (props) => {
-    const [introducers, setIntroducers] = useState([]);
+const EmployeeContextProvider = (props) => {
+    const [employees, setEmployees] = useState([]);
     const [pages, setPages] = useState([]);
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
@@ -11,11 +11,11 @@ const IntroducerContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getIntroducersList(1);
+        getEmployeesList(1);
     }, []);
 
-    // GET INTRODUCERS LIST
-    async function getIntroducersList(currentPage) {
+    // GET ACCOUNTS LIST
+    async function getEmployeesList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -25,28 +25,24 @@ const IntroducerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer?page=${currentPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
-                setIntroducers(result.data.result);
+                setEmployees(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => {
-                console.log("error", error);
-                setIntroducers([]);
-                getIntroducersList(currentPage - 1);
-            });
+            .catch((error) => { console.log("error", error); setEmployees([]);
+            getEmployeesList(currentPage - 1);});
     }
-
-    // ADD INTRODUCER
-    async function addIntroducer(
+    // ADD ACCOUNT
+    async function addEmployee(
         image,
         fullName,
-        dateOfBirth,
+        date_of_birth,
         gender,
+        roles,
         address,
         identification,
         phone,
@@ -55,8 +51,9 @@ const IntroducerContextProvider = (props) => {
         let raw = JSON.stringify({
             image,
             fullName,
-            dateOfBirth,
+            date_of_birth,
             gender,
+            roles,
             address,
             identification,
             phone,
@@ -74,18 +71,18 @@ const IntroducerContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/introducer",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/employee",
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // VIEW INTRODUCER DETAILS
-    async function viewIntroducer(id) {
+    // VIEW ACCOUNT DETAILS
+    async function viewEmployee(id) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -96,16 +93,15 @@ const IntroducerContextProvider = (props) => {
         };
 
         let result = await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee/${id}`,
             requestOptions
         );
-
         result = await result.json();
         return result.data;
     }
-    //EDIT INTRODUCER
-    async function updateIntroducer(id, updatedIntroducer) {
-        let raw = JSON.stringify(updatedIntroducer);
+    //EDIT ACCOUNT
+    async function updateEmployee(id, updatedEmployee) {
+        let raw = JSON.stringify(updatedEmployee);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -117,20 +113,20 @@ const IntroducerContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee/${id}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // DELETE INTRODUCER
-    async function deleteIntroducer(id) {
+    // STORE ACCOUNT
+    async function storeEmployee(id) {
         let requestOptions = {
-            method: "DELETE",
+            method: "PUT",
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -139,31 +135,31 @@ const IntroducerContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getIntroducersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
     return (
-        <IntroducerContext.Provider
+        <EmployeeContext.Provider
             value={{
-                introducers,
-                getIntroducersList,
-                addIntroducer,
-                deleteIntroducer,
-                viewIntroducer,
-                updateIntroducer,
+                employees,
+                getEmployeesList,
+                addEmployee,
+                storeEmployee,
+                viewEmployee,
+                updateEmployee,
                 pages,
             }}
         >
             {props.children}
-        </IntroducerContext.Provider>
+        </EmployeeContext.Provider>
     );
 };
 
-export default IntroducerContextProvider;
+export default EmployeeContextProvider;

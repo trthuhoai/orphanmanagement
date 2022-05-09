@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ListEmployee from "./pages/list/ListEmployee";
 import ListAccount from "./pages/list/ListAccount";
 import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/introducer" element={<ListIntroducer />} />
                     <Route path="/nurturer" element={<ListNurturer />} />
                     <Route path="/storage" element={<ListStorage />} />
+                    <Route path="/employee" element={<ListEmployee />} />
                 </Routes>
             </BrowserRouter>
         </div>

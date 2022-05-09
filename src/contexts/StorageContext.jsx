@@ -33,7 +33,11 @@ const StorageContextProvider = (props) => {
                 setStorages(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setStorages([]);
+                getStoragesList(currentPage - 1);
+            });
     }
 
     // VIEW STORAGE DETAILS

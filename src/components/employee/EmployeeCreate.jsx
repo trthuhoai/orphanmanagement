@@ -1,50 +1,38 @@
-import {
-    deleteObject,
-    getDownloadURL,
-    ref,
-    uploadBytes,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { AccountContext } from "../../contexts/AccountContext";
+import { EmployeeContext } from "../../contexts/EmployeeContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const AccountUpdate = ({ theAccount }) => {
-    const id = theAccount.id;
+const EmployeeCreate = () => {
+    const { addEmployee } = useContext(EmployeeContext);
+    const [newEmployee, setNewEmployee] = useState({
+        image: "",
+        fullName: "",
+        date_of_birth: "",
+        gender: "",
+        roles: [],
+        address: "",
+        identification: "",
+        phone: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
 
-    const [image, setImage] = useState("");
     const [imageSuccess, setImageSuccess] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [date_of_birth, setDate_of_birth] = useState("");
-    const [gender, setGender] = useState("");
-    const [roles, setRoles] = useState("");
-    const [address, setAddress] = useState("");
-    const [identification, setIdentification] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { viewAccount } = useContext(AccountContext);
-    useEffect(() => {
-        viewAccount(id).then((result) => {
-            setImage(result.image);
-            setFullName(result.fullName);
-            setDate_of_birth(result.date_of_birth);
-            setGender(result.gender);
-            setRoles([result.roles[0].roleName]);
-            setAddress(result.address);
-            setIdentification(result.identification);
-            setPhone(result.phone);
-            setEmail(result.email);
+    const onInputChange = (e) => {
+        setNewEmployee({
+            ...newEmployee,
+            [e.target.name]: e.target.value,
         });
-    }, []);
-
-    const { updateAccount } = useContext(AccountContext);
-    const updatedAccount = {
+        console.log(newEmployee);
+    };
+    const {
         image,
         fullName,
         date_of_birth,
@@ -56,14 +44,25 @@ const AccountUpdate = ({ theAccount }) => {
         email,
         password,
         confirmPassword,
-    };
-
+    } = newEmployee;
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedAccount);
-        updateAccount(id, updatedAccount);
+        addEmployee(
+            image,
+            fullName,
+            date_of_birth,
+            gender,
+            roles,
+            address,
+            identification,
+            phone,
+            email,
+            password,
+            confirmPassword
+        );
     };
-    // IMAGE UPDATE
+
+    // IMAGE UPLOAD
     // generate random string for filename
     function generateString(length) {
         const characters =
@@ -83,28 +82,20 @@ const AccountUpdate = ({ theAccount }) => {
             setFile(e.target.files[0]);
         }
     };
-    async function handleUpdateImage() {
+    async function handleUploadImage() {
         if (!file) return;
-        if (image && image.includes("firebasestorage")) {
-            const pathFromURL = ref(storage, image)._location.path_;
-            const desertRef = ref(storage, pathFromURL);
-            await deleteObject(desertRef)
-                .then(() => {
-                    console.log("File deleted successfully");
-                })
-                .catch((error) => {
-                    console.log("Uh-oh, an error occurred!", error);
-                });
-        }
-        const storageRef = ref(storage, `accounts/${generateString(100)}`);
+        const storageRef = ref(storage, `employees/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
+                    setNewEmployee({
+                        ...newEmployee,
+                        image: url,
+                    });
                     console.log(url);
-                    setImage(url);
                     setImageSuccess("Tải ảnh lên thành công");
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log("err", err));
         });
     }
 
@@ -113,17 +104,16 @@ const AccountUpdate = ({ theAccount }) => {
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="accountImage"
+                    id="employeeImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
-                        image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="accountImageFile"
+                        htmlFor="employeeImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -134,13 +124,13 @@ const AccountUpdate = ({ theAccount }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="accountImageFile"
+                        id="employeeImageFile"
                         onChange={onFileChange}
                         required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
-                        onClick={handleUpdateImage}
+                        onClick={handleUploadImage}
                     >
                         <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
                         ảnh
@@ -150,7 +140,7 @@ const AccountUpdate = ({ theAccount }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="employeeCreate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -158,7 +148,7 @@ const AccountUpdate = ({ theAccount }) => {
                         placeholder="Họ và tên"
                         name="fullName"
                         value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
+                        onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
@@ -167,15 +157,18 @@ const AccountUpdate = ({ theAccount }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày sinh"
-                            value={date_of_birth}
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
+                            value={date_of_birth}
                             onChange={(date) => {
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
-                                setDate_of_birth(resultDate);
+                                setNewEmployee({
+                                    ...newEmployee,
+                                    dateOfBirth: resultDate,
+                                });
                             }}
                             required
                         />
@@ -183,31 +176,45 @@ const AccountUpdate = ({ theAccount }) => {
 
                     <Form.Group as={Col} className="form-group">
                         <Form.Select
-                            className="form-select form-select__gender"
+                            defaultValue="Giới tính"
+                            className="form-select"
                             name="gender"
-                            onChange={(e) => {
-                                console.log(e.target.value);
-                                setGender(
-                                    e.target.value === "true" ? true : false
-                                );
-                            }}
                             value={gender}
+                            onChange={(e) => {
+                                onInputChange(e);
+                                setNewEmployee({
+                                    ...newEmployee,
+                                    gender:
+                                        e.target.value === "true"
+                                            ? true
+                                            : false,
+                                });
+                            }}
                         >
-                            <option hidden>Giới tính</option>
+                            <option value={"Giới tính"} hidden>
+                                Giới tính
+                            </option>
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} className="form-group">
-                        <Form.Select
+                        <select
+                            defaultValue="Phân quyền"
                             className="form-select"
                             name="roles"
-                            onChange={(e) => {
-                                setRoles([e.target.value]);
-                            }}
                             value={roles}
+                            onChange={(e) => {
+                                onInputChange(e);
+                                setNewEmployee({
+                                    ...newEmployee,
+                                    roles: [e.target.value],
+                                });
+                            }}
                         >
-                            <option hidden>Phân quyền</option>
+                            <option value={"Phân quyền"} hidden>
+                                Phân quyền
+                            </option>
                             <option value={["ROLE_ADMIN"]}>
                                 Quản trị viên
                             </option>
@@ -221,7 +228,7 @@ const AccountUpdate = ({ theAccount }) => {
                             <option value={["ROLE_MANAGER_CHILDREN"]}>
                                 Quản lý trẻ em
                             </option>
-                        </Form.Select>
+                        </select>
                     </Form.Group>
                 </Row>
 
@@ -232,7 +239,7 @@ const AccountUpdate = ({ theAccount }) => {
                         placeholder="Địa chỉ"
                         name="address"
                         value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
@@ -245,7 +252,7 @@ const AccountUpdate = ({ theAccount }) => {
                             placeholder="CMND/CCCD"
                             name="identification"
                             value={identification}
-                            onChange={(e) => setIdentification(e.target.value)}
+                            onChange={(e) => onInputChange(e)}
                             required
                         />
                     </Form.Group>
@@ -257,7 +264,7 @@ const AccountUpdate = ({ theAccount }) => {
                             placeholder="Số điện thoại"
                             name="phone"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={(e) => onInputChange(e)}
                             required
                         />
                     </Form.Group>
@@ -270,7 +277,7 @@ const AccountUpdate = ({ theAccount }) => {
                         placeholder="Email"
                         name="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
@@ -283,7 +290,8 @@ const AccountUpdate = ({ theAccount }) => {
                             placeholder="Mật khẩu"
                             name="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => onInputChange(e)}
+                            required
                         />
                     </Form.Group>
 
@@ -294,7 +302,8 @@ const AccountUpdate = ({ theAccount }) => {
                             placeholder="Xác nhận mật khẩu"
                             name="confirmPassword"
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={(e) => onInputChange(e)}
+                            required
                         />
                     </Form.Group>
                     {password !== confirmPassword && (
@@ -308,4 +317,4 @@ const AccountUpdate = ({ theAccount }) => {
     );
 };
 
-export default AccountUpdate;
+export default EmployeeCreate;

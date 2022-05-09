@@ -41,7 +41,7 @@ const Sidebar = () => {
                         Trẻ em
                     </NavLink>
                     <NavLink
-                        to="/staff"
+                        to="/employee"
                         style={linkStyle}
                         className={({ isActive }) =>
                             isActive ? "link-active" : "link"

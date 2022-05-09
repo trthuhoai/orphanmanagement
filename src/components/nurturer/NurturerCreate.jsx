@@ -1,6 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import moment from "moment";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -17,6 +19,7 @@ const NurturerCreate = () => {
         phone: "",
         email: "",
     });
+
     const [imageSuccess, setImageSuccess] = useState("");
 
     const onInputChange = (e) => {
@@ -142,13 +145,22 @@ const NurturerCreate = () => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="dateOfBirth"
+                            placeholderText="Ngày sinh"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
                             value={dateOfBirth}
-                            onChange={(e) => onInputChange(e)}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setNewNurturer({
+                                    ...newNurturer,
+                                    dateOfBirth: resultDate,
+                                });
+                            }}
                             required
                         />
                     </Form.Group>

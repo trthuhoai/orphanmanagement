@@ -1,6 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import moment from "moment";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -22,6 +24,7 @@ const ChildrenCreate = () => {
         introducerId: 0,
         nurturerId: 0,
     });
+
     const [imageSuccess, setImageSuccess] = useState("");
 
     const [introducerId, setIntroducerId] = useState(0);
@@ -158,13 +161,22 @@ const ChildrenCreate = () => {
             </Form.Group>
             <Row className="mb-3">
                 <Form.Group as={Col} className="form-group">
-                    <Form.Control
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày sinh"
-                        name="dateOfBirth"
+                        placeholderText="Ngày sinh"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
                         value={dateOfBirth}
-                        onChange={(e) => onInputChange(e)}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                dateOfBirth: resultDate,
+                            });
+                        }}
                         required
                     />
                 </Form.Group>
@@ -192,26 +204,44 @@ const ChildrenCreate = () => {
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group as={Col} className=" form-group">
-                    <Form.Control
+                <Form.Group as={Col} className="form-group">
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày vào trung tâm"
-                        name="introductoryDate"
+                        placeholderText="Ngày vào trung tâm"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
                         value={introductoryDate}
-                        onChange={(e) => onInputChange(e)}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                introductoryDate: resultDate,
+                            });
+                        }}
                         required
                     />
                 </Form.Group>
-                <Form.Group as={Col} className=" form-group">
-                    <Form.Control
+                <Form.Group as={Col} className="form-group">
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày nhận nuôi"
-                        name="adoptiveDate"
+                        placeholderText="Ngày nhận nuôi"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
                         value={adoptiveDate}
-                        onChange={(e) => onInputChange(e)}
-                        // required
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                adoptiveDate: resultDate,
+                            });
+                        }}
+                        required
                     />
                 </Form.Group>
             </Row>
