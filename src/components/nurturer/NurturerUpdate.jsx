@@ -16,7 +16,6 @@ const NurturerUpdate = ({ theNurturer }) => {
     const id = theNurturer.id;
 
     const [image, setImage] = useState("");
-
     const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -129,7 +128,6 @@ const NurturerUpdate = ({ theNurturer }) => {
                         name="image"
                         id="nurturerImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -160,7 +158,13 @@ const NurturerUpdate = ({ theNurturer }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày sinh"
-                            value={dateOfBirth}
+                            selected={
+                                new Date(
+                                    dateOfBirth.substring(6, 11),
+                                    dateOfBirth.substring(3, 5) - 1,
+                                    dateOfBirth.substring(0, 2)
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}

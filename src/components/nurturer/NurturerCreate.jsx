@@ -21,6 +21,7 @@ const NurturerCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
     const onInputChange = (e) => {
         setNewNurturer({
@@ -117,7 +118,6 @@ const NurturerCreate = () => {
                         name="image"
                         id="nurturerImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -152,7 +152,7 @@ const NurturerCreate = () => {
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
-                            value={dateOfBirth}
+                            selected={pickerDate}
                             onChange={(date) => {
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
@@ -160,6 +160,7 @@ const NurturerCreate = () => {
                                     ...newNurturer,
                                     dateOfBirth: resultDate,
                                 });
+                                setPickerDate(date);
                             }}
                             required
                         />

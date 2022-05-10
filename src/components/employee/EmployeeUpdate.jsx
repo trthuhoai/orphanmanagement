@@ -134,7 +134,6 @@ const EmployeeUpdate = ({ theEmployee }) => {
                         name="image"
                         id="employeeImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -167,7 +166,13 @@ const EmployeeUpdate = ({ theEmployee }) => {
                             type="text"
                             placeholder="Ngày sinh"
                             name="date_of_birth"
-                            value={date_of_birth}
+                            selected={
+                                new Date(
+                                    date_of_birth.substring(6, 11),
+                                    date_of_birth.substring(3, 5) - 1,
+                                    date_of_birth.substring(0, 2)
+                                )
+                            }
                             onChange={(e) => setDate_of_birth(e.target.value)}
                             required
                         />

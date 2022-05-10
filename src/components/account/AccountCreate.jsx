@@ -24,6 +24,7 @@ const AccountCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
     const onInputChange = (e) => {
         setNewAccount({
@@ -126,7 +127,6 @@ const AccountCreate = () => {
                         name="image"
                         id="accountImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -161,7 +161,7 @@ const AccountCreate = () => {
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
-                            value={date_of_birth}
+                            selected={pickerDate}
                             onChange={(date) => {
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
@@ -169,6 +169,7 @@ const AccountCreate = () => {
                                     ...newAccount,
                                     date_of_birth: resultDate,
                                 });
+                                setPickerDate(date);
                             }}
                             required
                         />

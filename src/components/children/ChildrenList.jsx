@@ -52,7 +52,7 @@ const ChildrenList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm trẻ em</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
                         <ChildrenCreate />

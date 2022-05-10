@@ -5,6 +5,7 @@ import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
 import ListStorage from "./pages/list/ListStorage";
+import Statistic from "./pages/statistic/Statistic"
 import Login from "./pages/login/Login";
 import "./scss/App.scss";
 
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/nurturer" element={<ListNurturer />} />
                     <Route path="/storage" element={<ListStorage />} />
                     <Route path="/employee" element={<ListEmployee />} />
+                    <Route path="/statistic" element={<Statistic />} />
                 </Routes>
             </BrowserRouter>
         </div>

@@ -3,10 +3,11 @@ import {
     getDownloadURL,
     ref,
     uploadBytes,
-} from "firebase/storage";import moment from "moment";
-import DatePicker from "react-datepicker";
+} from "firebase/storage";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -128,7 +129,6 @@ const IntroducerUpdate = ({ theIntroducer }) => {
                         name="image"
                         id="introducerImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -163,7 +163,13 @@ const IntroducerUpdate = ({ theIntroducer }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày sinh"
-                            value={dateOfBirth}
+                            selected={
+                                new Date(
+                                    dateOfBirth.substring(6, 11),
+                                    dateOfBirth.substring(3, 5) - 1,
+                                    dateOfBirth.substring(0, 2)
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}

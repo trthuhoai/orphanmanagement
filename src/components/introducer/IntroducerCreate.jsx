@@ -21,6 +21,7 @@ const IntroducerCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
     const onInputChange = (e) => {
         setNewIntroducer({
@@ -117,7 +118,6 @@ const IntroducerCreate = () => {
                         name="image"
                         id="introducerImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -156,7 +156,7 @@ const IntroducerCreate = () => {
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
-                            value={dateOfBirth}
+                            selected={pickerDate}
                             onChange={(date) => {
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
@@ -164,6 +164,7 @@ const IntroducerCreate = () => {
                                     ...newIntroducer,
                                     dateOfBirth: resultDate,
                                 });
+                                setPickerDate(date);
                             }}
                             required
                         />

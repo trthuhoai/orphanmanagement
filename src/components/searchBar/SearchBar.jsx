@@ -26,7 +26,7 @@ export const SearchBar = ({ placeholder, data, getValueId }) => {
     };
 
     return (
-        <div className="search">
+        <div className="search search-form">
             <div className="search__input">
                 <input
                     type="text"
@@ -39,7 +39,15 @@ export const SearchBar = ({ placeholder, data, getValueId }) => {
                         }, 500);
                     }}
                 />
-                <i className="bi bi-search icon icon__search"></i>
+                {!searchWord && (
+                    <i className="bi bi-search icon icon__search"></i>
+                )}
+                {searchWord && (
+                    <i
+                        className="bi bi-x-lg icon icon__clear"
+                        onClick={() => setSearchWord("")}
+                    ></i>
+                )}
             </div>
             {suggestions && (
                 <div className="search__result">

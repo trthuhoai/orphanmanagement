@@ -21,7 +21,6 @@ const ChildrenUpdate = ({ theChildren }) => {
     const [image, setImage] = useState("");
 
     const [imageSuccess, setImageSuccess] = useState("");
-
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [gender, setGender] = useState("");
@@ -156,7 +155,6 @@ const ChildrenUpdate = ({ theChildren }) => {
                         name="image"
                         id="childrenImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -187,7 +185,13 @@ const ChildrenUpdate = ({ theChildren }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày sinh"
-                            value={dateOfBirth}
+                            selected={
+                                new Date(
+                                    dateOfBirth.substring(6, 11),
+                                    dateOfBirth.substring(3, 5) - 1,
+                                    dateOfBirth.substring(0, 2)
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
@@ -226,7 +230,13 @@ const ChildrenUpdate = ({ theChildren }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày vào trung tâm"
-                            value={introductoryDate}
+                            selected={
+                                new Date(
+                                    introductoryDate.substring(6, 11),
+                                    introductoryDate.substring(3, 5) - 1,
+                                    introductoryDate.substring(0, 2)
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
@@ -243,7 +253,13 @@ const ChildrenUpdate = ({ theChildren }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày nhận nuôi"
-                            value={adoptiveDate}
+                            selected={
+                                new Date(
+                                    adoptiveDate.substring(6, 11),
+                                    adoptiveDate.substring(3, 5) - 1,
+                                    adoptiveDate.substring(0, 2)
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
@@ -275,7 +291,13 @@ const ChildrenUpdate = ({ theChildren }) => {
                         />
                         <div className="search-item__content">
                             <p>{introducer.fullName}</p>
-                            <span> {introducer.phone}</span>
+                            <i
+                                className="bi bi-trash3 icon icon__delete"
+                                onClick={() => {
+                                    setIntroducerId(0);
+                                    setIntroducer({});
+                                }}
+                            ></i>
                         </div>
                     </Form.Group>
                 )}
@@ -298,7 +320,13 @@ const ChildrenUpdate = ({ theChildren }) => {
                         />
                         <div className="search-item__content">
                             <p>{nurturer.fullName}</p>
-                            <span> {nurturer.phone}</span>
+                            <i
+                                className="bi bi-trash3 icon icon__delete"
+                                onClick={() => {
+                                    setNurturerId(0);
+                                    setNurturer({});
+                                }}
+                            ></i>
                         </div>
                     </Form.Group>
                 )}

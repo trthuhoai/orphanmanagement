@@ -167,7 +167,13 @@ const AccountUpdate = ({ theAccount }) => {
                         <DatePicker
                             className="form-control"
                             placeholderText="Ngày sinh"
-                            value={date_of_birth}
+                            selected={
+                                new Date(
+                                    date_of_birth.substring(6, 11),
+                                    date_of_birth.substring(3, 5) - 1,
+                                    date_of_birth.substring(0, 2),
+                                )
+                            }
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}

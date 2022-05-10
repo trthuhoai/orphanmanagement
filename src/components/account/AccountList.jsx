@@ -76,7 +76,7 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination />
+            <AccountPagination/>
         </>
     );
 };

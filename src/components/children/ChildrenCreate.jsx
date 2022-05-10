@@ -26,6 +26,9 @@ const ChildrenCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
+    const [pickerIntroDate, setPickerIntroDate] = useState();
+    const [pickerAdopDate, setPickerAdopDate] = useState();
 
     const [introducerId, setIntroducerId] = useState(0);
     const [introducer, setIntroducer] = useState({});
@@ -133,7 +136,6 @@ const ChildrenCreate = () => {
                         name="image"
                         id="childrenImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -168,7 +170,7 @@ const ChildrenCreate = () => {
                         scrollableYearDropdown
                         yearDropdownItemNumber={100}
                         dateFormat="dd/MM/yyyy"
-                        value={dateOfBirth}
+                        selected={pickerDate}
                         onChange={(date) => {
                             const resultDate =
                                 moment(date).format("DD/MM/YYYY");
@@ -176,6 +178,7 @@ const ChildrenCreate = () => {
                                 ...newChildren,
                                 dateOfBirth: resultDate,
                             });
+                            setPickerDate(date);
                         }}
                         required
                     />
@@ -212,7 +215,7 @@ const ChildrenCreate = () => {
                         scrollableYearDropdown
                         yearDropdownItemNumber={100}
                         dateFormat="dd/MM/yyyy"
-                        value={introductoryDate}
+                        selected={pickerIntroDate}
                         onChange={(date) => {
                             const resultDate =
                                 moment(date).format("DD/MM/YYYY");
@@ -220,6 +223,7 @@ const ChildrenCreate = () => {
                                 ...newChildren,
                                 introductoryDate: resultDate,
                             });
+                            setPickerIntroDate(date);
                         }}
                         required
                     />
@@ -232,7 +236,7 @@ const ChildrenCreate = () => {
                         scrollableYearDropdown
                         yearDropdownItemNumber={100}
                         dateFormat="dd/MM/yyyy"
-                        value={adoptiveDate}
+                        selected={pickerAdopDate}
                         onChange={(date) => {
                             const resultDate =
                                 moment(date).format("DD/MM/YYYY");
@@ -240,6 +244,7 @@ const ChildrenCreate = () => {
                                 ...newChildren,
                                 adoptiveDate: resultDate,
                             });
+                            setPickerAdopDate(date);
                         }}
                         required
                     />
@@ -264,7 +269,13 @@ const ChildrenCreate = () => {
                     />
                     <div className="search-item__content">
                         <p>{introducer.fullName}</p>
-                        <span> {introducer.phone}</span>
+                        <i
+                            className="bi bi-trash3 icon icon__delete"
+                            onClick={() => {
+                                setIntroducerId(0);
+                                setIntroducer({});
+                            }}
+                        ></i>
                     </div>
                 </Form.Group>
             )}
@@ -287,7 +298,13 @@ const ChildrenCreate = () => {
                     />
                     <div className="search-item__content">
                         <p>{nurturer.fullName}</p>
-                        <span> {nurturer.phone}</span>
+                        <i
+                            className="bi bi-trash3 icon icon__delete"
+                            onClick={() => {
+                                setNurturerId(0);
+                                setNurturer({});
+                            }}
+                        ></i>
                     </div>
                 </Form.Group>
             )}

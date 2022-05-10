@@ -24,6 +24,7 @@ const EmployeeCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
     const onInputChange = (e) => {
         setNewEmployee({
@@ -126,7 +127,6 @@ const EmployeeCreate = () => {
                         name="image"
                         id="employeeImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -161,14 +161,15 @@ const EmployeeCreate = () => {
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
-                            value={date_of_birth}
+                            selected={pickerDate}
                             onChange={(date) => {
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
                                 setNewEmployee({
                                     ...newEmployee,
-                                    dateOfBirth: resultDate,
+                                    date_of_birth: resultDate,
                                 });
+                                setPickerDate(date);
                             }}
                             required
                         />
