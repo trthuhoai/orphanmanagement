@@ -10,6 +10,7 @@ import AccountPagination from "./AccountPagination";
 
 const AccountList = () => {
     const { accounts } = useContext(AccountContext);
+    const { searchAccount } = useContext(AccountContext);
 
     const [show, setShow] = useState(false);
 
@@ -27,7 +28,7 @@ const AccountList = () => {
                     <h2>Tài khoản</h2>
                     <SearchList
                         placeholder={"Nhập tài khoản cần tìm"}
-                        data={accounts}
+                        searchValue={searchAccount}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm tài khoản

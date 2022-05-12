@@ -152,6 +152,34 @@ const AccountContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
+    //SEARCH ACCOUNT
+    async function searchAccount(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/admin/search",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setAccounts(result.data.result);
+                setPages(result.data.pages)
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <AccountContext.Provider
             value={{
@@ -161,6 +189,7 @@ const AccountContextProvider = (props) => {
                 storeAccount,
                 viewAccount,
                 updateAccount,
+                searchAccount,
                 pages,
             }}
         >
