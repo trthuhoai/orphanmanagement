@@ -1,0 +1,28 @@
+@use "../../scss/abstracts/" as *;
+
+.widget {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 236px;
+    width: 100%;
+}
+
+.widget__item {
+    flex-grow: 1;
+    @include flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: $secondaryColor;
+    color: $mainColor;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(15, 30, 84, 0.15);
+    transition: transform 0.2s linear;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
