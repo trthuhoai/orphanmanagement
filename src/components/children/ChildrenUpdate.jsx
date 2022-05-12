@@ -11,7 +11,7 @@ import DatePicker from "react-datepicker";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
-import { SearchBar } from "../searchBar/SearchBar";
+import { SearchBar } from "../search/SearchBar";
 
 const ChildrenUpdate = ({ theChildren }) => {
     const id = theChildren.id;
@@ -197,6 +197,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
+                                console.log(date);
                                 const resultDate =
                                     moment(date).format("DD/MM/YYYY");
                                 setDateOfBirth(resultDate);
@@ -254,6 +255,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                             className="form-control"
                             placeholderText="Ngày nhận nuôi"
                             selected={
+                                adoptiveDate &&
                                 new Date(
                                     adoptiveDate.substring(6, 11),
                                     adoptiveDate.substring(3, 5) - 1,
@@ -325,6 +327,7 @@ const ChildrenUpdate = ({ theChildren }) => {
                                 onClick={() => {
                                     setNurturerId(0);
                                     setNurturer({});
+                                    setAdoptiveDate("");
                                 }}
                             ></i>
                         </div>

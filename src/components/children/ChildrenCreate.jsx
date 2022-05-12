@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
-import { SearchBar } from "../searchBar/SearchBar";
+import { SearchBar } from "../search/SearchBar";
 import "./_children.scss";
 
 const ChildrenCreate = () => {
@@ -27,8 +27,8 @@ const ChildrenCreate = () => {
 
     const [imageSuccess, setImageSuccess] = useState("");
     const [pickerDate, setPickerDate] = useState("");
-    const [pickerIntroDate, setPickerIntroDate] = useState();
-    const [pickerAdopDate, setPickerAdopDate] = useState();
+    const [pickerIntroDate, setPickerIntroDate] = useState("");
+    const [pickerAdopDate, setPickerAdopDate] = useState("");
 
     const [introducerId, setIntroducerId] = useState(0);
     const [introducer, setIntroducer] = useState({});
@@ -303,6 +303,10 @@ const ChildrenCreate = () => {
                             onClick={() => {
                                 setNurturerId(0);
                                 setNurturer({});
+                                setNewChildren({
+                                    ...newChildren,
+                                    adoptiveDate: "",
+                                });
                             }}
                         ></i>
                     </div>
