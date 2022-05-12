@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Account from "./Account";
 import AccountCreate from "./AccountCreate";
 import AccountPagination from "./AccountPagination";
@@ -24,6 +25,10 @@ const AccountList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Tài khoản</h2>
+                    <SearchList
+                        placeholder={"Nhập tài khoản cần tìm"}
+                        data={accounts}
+                    ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm tài khoản
                     </Button>
@@ -76,7 +81,7 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination/>
+            <AccountPagination />
         </>
     );
 };
