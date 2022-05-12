@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import "./search.scss";
 
-const SearchList = ({ placeholder, data, getValue }) => {
+const SearchList = ({ placeholder, searchValue }) => {
     const [searchWord, setSearchWord] = useState("");
-    const [results, setResults] = useState([]);
 
     const handleFilter = (e) => {
         const searchWord = e.target.value;
-        let matches = [];
-        if (searchWord === "") {
-            setResults([]);
-        } else {
-            matches = data.filter((value) =>
-                value.fullName.toLowerCase().includes(searchWord.toLowerCase())
-            );
-            setResults(matches);
-        }
+        // if (searchWord === "") {
+        //     searchValue(searchWord);
+        // }
         setSearchWord(searchWord);
+    };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        searchValue(searchWord);
     };
 
     return (
@@ -27,15 +25,10 @@ const SearchList = ({ placeholder, data, getValue }) => {
                     placeholder={placeholder}
                     onChange={handleFilter}
                     value={searchWord}
-                    onBlur={() => {
-                        setTimeout(() => {
-                            setResults([]);
-                        }, 500);
-                    }}
                 />
                 <i
                     className="bi bi-search icon icon__search"
-                    onClick={() => console.log(results)}
+                    onClick={handleSearch}
                 ></i>
             </div>
         </div>
