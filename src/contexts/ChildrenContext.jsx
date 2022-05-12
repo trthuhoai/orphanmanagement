@@ -196,7 +196,7 @@ const ChildrenContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH ACCOUNT
+    //SEARCH CHILDREN
     async function searchChildren(keyword) {
         let raw = JSON.stringify({
             keyword,

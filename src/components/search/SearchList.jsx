@@ -23,8 +23,13 @@ const SearchList = ({ placeholder, searchValue }) => {
                 <input
                     type="text"
                     placeholder={placeholder}
-                    onChange={handleFilter}
                     value={searchWord}
+                    onChange={handleFilter}
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            searchValue(searchWord);
+                        }
+                    }}
                 />
                 <i
                     className="bi bi-search icon icon__search"

@@ -16,8 +16,8 @@ const Widget = () => {
             description: "Trẻ em",
         },
         {
-            amount: amountChildren,
-            description: "Hoạt động từ thiện",
+            amount: 0,
+            description: "No data",
         },
     ];
     return (

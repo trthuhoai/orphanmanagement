@@ -1,29 +1,24 @@
-import { useContext, useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { useContext } from "react";
 import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Storage from "./Storage";
-// import StorageCreate from "./StorageCreate";
 import StoragePagination from "./StoragePagination";
 
 const StorageList = () => {
     const { storages } = useContext(StorageContext);
-
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    useEffect(() => {
-        handleClose();
-    }, [storages]);
+    const { searchStorage } = useContext(StorageContext);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
                     <h2>Lưu trữ</h2>
+                    <SearchList
+                        placeholder={"Tìm kiếm nhân viên "}
+                        searchValue={searchStorage}
+                    ></SearchList>
                 </div>
                 <table className="table__body">
                     <thead>

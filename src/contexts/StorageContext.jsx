@@ -102,6 +102,34 @@ const StorageContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
+    //SEARCH STORAGE
+    async function searchStorage(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/admin/search/deleted",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setStorages(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <StorageContext.Provider
             value={{
@@ -110,6 +138,7 @@ const StorageContextProvider = (props) => {
                 deleteStorage,
                 restoreStorage,
                 viewStorage,
+                searchStorage,
                 pages,
             }}
         >

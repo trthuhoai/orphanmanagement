@@ -27,7 +27,7 @@ const ChildrenList = () => {
                 <div className="table__top">
                     <h2>Trẻ em</h2>
                     <SearchList
-                        placeholder={"Nhập trẻ em cần tìm"}
+                        placeholder={"Tìm kiếm trẻ em "}
                         searchValue={searchChildren}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>

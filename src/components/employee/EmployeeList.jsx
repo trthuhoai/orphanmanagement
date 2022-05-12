@@ -3,12 +3,14 @@ import { Button, Modal } from "react-bootstrap";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Employee from "./Employee";
 import EmployeeCreate from "./EmployeeCreate";
 import EmployeePagination from "./EmployeePagination";
 
 const EmployeeList = () => {
     const { employees } = useContext(EmployeeContext);
+    const { searchEmployee } = useContext(EmployeeContext);
 
     const [show, setShow] = useState(false);
 
@@ -24,6 +26,10 @@ const EmployeeList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Nhân viên</h2>
+                    <SearchList
+                        placeholder={"Tìm kiếm nhân viên "}
+                        searchValue={searchEmployee}
+                    ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm nhân viên
                     </Button>

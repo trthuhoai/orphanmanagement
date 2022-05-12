@@ -11,6 +11,7 @@ $paddingInput: 12px;
         border: 1px solid $mainColor;
         border-radius: 8px;
         padding: 0 12px;
+
         input {
             width: calc(100% - #{$paddingInput});
         }
@@ -55,5 +56,9 @@ $paddingInput: 12px;
     &__input {
         background-color: $secondaryColor;
         padding: 0 12px;
+
+        input {
+            width: 240px;
+        }
     }
 }

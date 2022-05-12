@@ -27,7 +27,7 @@ const AccountList = () => {
                 <div className="table__top">
                     <h2>Tài khoản</h2>
                     <SearchList
-                        placeholder={"Nhập tài khoản cần tìm"}
+                        placeholder={"Tìm kiếm tài khoản "}
                         searchValue={searchAccount}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>

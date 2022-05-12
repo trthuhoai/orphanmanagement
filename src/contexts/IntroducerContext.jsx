@@ -149,6 +149,34 @@ const IntroducerContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
+    //SEARCH INTRODUCER
+    async function searchIntroducer(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/introducer/search",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setIntroducers(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <IntroducerContext.Provider
             value={{
@@ -158,6 +186,7 @@ const IntroducerContextProvider = (props) => {
                 deleteIntroducer,
                 viewIntroducer,
                 updateIntroducer,
+                searchIntroducer,
                 pages,
             }}
         >

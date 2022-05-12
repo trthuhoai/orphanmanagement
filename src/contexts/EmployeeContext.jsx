@@ -33,8 +33,11 @@ const EmployeeContextProvider = (props) => {
                 setEmployees(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => { console.log("error", error); setEmployees([]);
-            getEmployeesList(currentPage - 1);});
+            .catch((error) => {
+                console.log("error", error);
+                setEmployees([]);
+                getEmployeesList(currentPage - 1);
+            });
     }
     // ADD ACCOUNT
     async function addEmployee(
@@ -145,6 +148,34 @@ const EmployeeContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
+    //SEARCH EMPLOYEE
+    async function searchEmployee(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/employee/search",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setEmployees(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <EmployeeContext.Provider
             value={{
@@ -154,6 +185,7 @@ const EmployeeContextProvider = (props) => {
                 storeEmployee,
                 viewEmployee,
                 updateEmployee,
+                searchEmployee,
                 pages,
             }}
         >
