@@ -196,6 +196,34 @@ const ChildrenContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
+    //SEARCH ACCOUNT
+    async function searchChildren(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/children/search",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setChildrens(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <ChildrenContext.Provider
             value={{
@@ -207,6 +235,7 @@ const ChildrenContextProvider = (props) => {
                 deleteChildren,
                 viewChildren,
                 updateChildren,
+                searchChildren,
                 pages,
             }}
         >
