@@ -4,7 +4,7 @@ import { MetaTags } from 'react-meta-tags'
 import { NavLink } from 'react-router-dom';
 import "./news.scss";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Row, Container } from "reactstrap";
+import { Row, Container } from "react-bootstrap";
 
 export default class Home extends React.Component {
 

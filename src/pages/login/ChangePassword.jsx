@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MetaTags } from "react-meta-tags";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./login.scss";
 
 export default function ChangePassword() {
@@ -10,6 +10,13 @@ export default function ChangePassword() {
     const [announcement, setAnnouncement] = useState("");
 
     const navigate = useNavigate();
+
+    const currentRoutes = useLocation();
+    let email = currentRoutes.search.substring(
+        currentRoutes.search.indexOf("=") + 1
+    );
+
+    console.log(currentRoutes, email);
 
     async function login() {
         let raw = JSON.stringify({
@@ -28,7 +35,7 @@ export default function ChangePassword() {
         };
 
         fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/auth/change-password",
+            `https://orphanmanagement.herokuapp.com/api/v1/auth/change-password?email=${email}`,
             requestOptions
         )
             .then((response) => response.json())
