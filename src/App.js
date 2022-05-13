@@ -6,6 +6,8 @@ import ListAccount from "./pages/list/ListAccount";
 import ListCharity from "./pages/list/ListCharity";
 import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
+import News from "./pages/news/News";
+import Charity from "./pages/charity/Charity";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
 import ListIntroducer from "./pages/list/ListIntroducer";
@@ -24,9 +26,11 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/news" element={<News />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/resetpassword" element={<ResetPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
+                    <Route path="/make-charity" element={<Charity />} />
                     <Route path="/account" element={<ListAccount />} />
                     <Route path="/children" element={<ListChildren />} />
                     <Route path="/introducer" element={<ListIntroducer />} />
