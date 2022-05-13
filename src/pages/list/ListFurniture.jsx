@@ -1,13 +1,9 @@
 import { MetaTags } from "react-meta-tags";
 import { Navigate } from 'react-router-dom';
-import AccountList from "../../components/account/AccountList";
 import FurnitureList from "../../components/furniture/FurnitureList";
-import ChildrenList from "../../components/children/ChildrenList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
-import AccountContextProvider from "../../contexts/AccountContext";
 import FurnitureContextProvider from "../../contexts/FurnitureContext";
-import ChildrenContextProvider from "../../contexts/ChildrenContext";
 import "./list.scss";
 
 const List = () => {
@@ -27,9 +23,6 @@ const List = () => {
                     <FurnitureContextProvider>
                         <FurnitureList />
                     </FurnitureContextProvider>
-                    {/* <ChildrenContextProvider>
-                        <ChildrenList/>
-                    </ChildrenContextProvider> */}
                 </div>
             </div>
         </div>

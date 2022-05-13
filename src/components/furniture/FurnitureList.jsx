@@ -8,13 +8,10 @@ import "./_furniture.scss";
 import Furniture from "./Furniture";
 import FurnitureCreate from "./FurnitureCreate";
 import FurniturePagination from "./FurniturePagination";
-// import "./_account.scss";
 
 const FurnitureList = () => {
    
-    // const { accounts } = useContext(AccountContext);
     const { furnitures,addResult } = useContext(FurnitureContext);
-    // const { addResult } = useContext(FurnitureContext);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState(addResult);
@@ -23,11 +20,6 @@ const FurnitureList = () => {
     const handleReDirect=()=>{
         navigate("/furniture/request");
     };
-    // setErrorMessage("addResult");
-    // useEffect(() => {
-    //     handleClose();
-    // }, [furnitures]);
-
     return ( <>
 
         <div className="table">
@@ -66,14 +58,6 @@ const FurnitureList = () => {
                     <FurnitureCreate />
                 </Modal.Body>
                 <Modal.Footer>
-               
-                    {/* <Row className="mb-6">
-                    <p style={{ color: "red" }}>
-                        {errorMessage && (
-                            <div className="error"> {errorMessage} </div>
-                        )}
-                    </p>
-                        </Row> */}
                     <Button
                         variant="secondary"
                         onClick={handleClose}

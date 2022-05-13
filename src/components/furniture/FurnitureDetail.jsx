@@ -47,16 +47,6 @@ const FurnitureDetail = ({ theFurniture }) => {
                     <Card.Title className="card__title">
                         {detailFurniture.nameFurniture}
                     </Card.Title>
-                    {/* <Card.Subtitle className="mb-2 text-muted card__subtitle">
-                        {detailAccount.roles.includes("ROLE_ADMIN")
-                            ? "Admin"
-                            : detailAccount.roles.includes("ROLE_MANAGER")
-                            ? "Manager"
-                            : ""}
-                    </Card.Subtitle>
-                    <Card.Text className="card-text">
-                        {detailAccount.email}
-                    </Card.Text> */}
                 </div>
             </Card.Header>
             <Card.Body className="card__body">
@@ -66,11 +56,6 @@ const FurnitureDetail = ({ theFurniture }) => {
                             Số lượng sử dụng tốt
                         </span>
                         <p className="list-group__item-content">
-                            {/* {detailAccount.gender === true
-                                ? "Nam"
-                                : detailAccount.gender === false
-                                ? "Nữ"
-                                : ""} */}
                                 {detailFurniture.goodQuantity}
                         </p>
                     </ListGroup.Item>
@@ -90,30 +75,6 @@ const FurnitureDetail = ({ theFurniture }) => {
                             {detailFurniture.status} 
                         </p>
                     </ListGroup.Item>
-                    {/* <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            CMND/CCCD
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailAccount.identification}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Số điện thoại
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailAccount.phone}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Địa chỉ
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailAccount.address}
-                        </p>
-                    </ListGroup.Item> */}
                 </ListGroup>
             </Card.Body>
         </Card>

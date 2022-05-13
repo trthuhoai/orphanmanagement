@@ -8,14 +8,12 @@ const Furniture = ({ furniture }) => {
     // const { deleteAccount } = useContext(AccountContext);
     const { deleteFurniture } = useContext(FurnitureContext);
     const { updateFurniture } = useContext(FurnitureContext);
-///////////////////1111
     const { storeAccount } = useContext(FurnitureContext);
 
     useEffect(() => {
         handleCloseUpdate();
         handleCloseDelete();
     }, [furniture]);
-//////////////11111
     // // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);

@@ -23,25 +23,9 @@ const FurnitureUpdate = ({ theFurniture }) => {
     useEffect(() => {
         viewFurniture(id).then((result)=>{
             getDetailFurniture();
-            // setImage(result.image);
-            // setNameFurniture(result.nameFurniture);
-            // setStatus(result.status);
-            // setGoodQuantity(result.goodQuantity);
-            // setBrokenQuantity(result.brokenQuantity);
         })
         
     }, []);
-
-    
-
-  
-    // const [roles, setRoles] = useState("");
-    // const [address, setAddress] = useState("");
-    // const [identification, setIdentification] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [confirmPassword, setConfirmPassword] = useState("");
     async function getDetailFurniture() {
         const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
@@ -134,26 +118,6 @@ const FurnitureUpdate = ({ theFurniture }) => {
                 .catch((err) => console.log(err));
         });
     }
-    // async function handleUpdateImage() {
-    //     if (!file) return;
-    //     const pathFromURL = ref(storage, image)._location.path_;
-    //     const desertRef = ref(storage, pathFromURL);
-    //     await deleteObject(desertRef)
-    //         .then(() => {
-    //             console.log("File deleted successfully");
-    //         })
-    //         .catch((error) => {
-    //             console.log("Uh-oh, an error occurred!", error);
-    //         });
-    //     const storageRef = ref(storage, generateString(100));
-    //     await uploadBytes(storageRef, file).then(() => {
-    //         getDownloadURL(storageRef)
-    //             .then((url) => {
-    //                 console.log(url);
-    //             })
-    //             .catch((err) => console.log(err));
-    //     });
-    // }
     return (
         <>
             <Form.Group className="mb-3 form-group">
@@ -241,41 +205,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
                             // required
                         />
                     </Form.Group>
-
-                    {/* <Form.Group as={Col} className="form-group">
-                        <Form.Select
-                            defaultValue="GOOD"
-                            className="form-select"
-                            name="status"
-                            value={status}
-                            onChange={(e) =>
-                                setStatus(
-                                    e.target.value 
-                                )
-                            }
-                        >
-                            <option selected hidden>
-                                Tình trạng
-                            </option>
-                            <option value={"GOOD"}>Sử dụng tốt</option>
-                            <option value={"NEED_FIX"}>Cần sửa chữa</option>
-                        </Form.Select>
-                    </Form.Group> */}
-                    {/* <Form.Group className="mb-3 form-group"> */}
-                    {/* <Form.Control
-                        className="form-control"
-                        type="text"
-                        placeholder="Số lượng"
-                        name="quantity"
-                        value={goodQuantity}
-                        onChange={(e) => setGoodQuantity(e.target.value)}
-                        required
-                    />
-                </Form.Group> */}
                 </Row>
-                
-
-                
             </Form>
         </>
     );

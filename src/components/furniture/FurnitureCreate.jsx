@@ -10,7 +10,6 @@ import "../../scss/abstracts/_form.scss";
 const FormCreate = () => {
     const { addResult,addFurniture } = useContext(FurnitureContext);
     const [errorMessage, setErrorMessage] = useState("");
-    // const { addFurniture } = useContext(FurnitureContext);
     const [newFurniture, setNewFurniture] = useState({
         image: "",
         nameFurniture: "",
@@ -133,7 +132,6 @@ const FormCreate = () => {
                         type="text"
                         placeholder="Tên thiết bị"
                         name="nameFurniture"
-                        // value={nameFurniture}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
@@ -144,7 +142,6 @@ const FormCreate = () => {
                         type="number"
                         placeholder="Số lượng sử dụng tốt"
                         name="goodQuantity"
-                        // value={nameFurniture}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
@@ -155,7 +152,6 @@ const FormCreate = () => {
                         type="number"
                         placeholder="Số lượng hư hỏng"
                         name="brokenQuantity"
-                        // value={nameFurniture}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
@@ -166,53 +162,10 @@ const FormCreate = () => {
                         type="test"
                         placeholder="Ghi chú"
                         name="status"
-                        // value={nameFurniture}
                         onChange={(e) => onInputChange(e)}
                         
                     />
                 </Form.Group>
-                {/* <Row className="mb-3">
-                 
-                    <Form.Group as={Col} className="form-group">
-                        {/* <Form.Select
-                            defaultValue="GOOD"
-                            className="form-select"
-                            name="status"
-                            // value={status}
-                            onChange={(e) => {
-                                let tempGender =
-                                    e.target.value;
-                                console.log(tempGender);
-                                onInputChange(e);
-                                setNewFurniture({
-                                    ...newFurniture,
-                                    status: tempGender,
-                                });
-                                console.log(
-                                    typeof e.target.value,
-                                    e.target.value
-                                );
-                            }}
-                        >
-                            <option selected hidden>
-                                Tình trạng
-                            </option>
-                            <option value={["GOOD"]}>Sử dụng tốt</option>
-                            <option value={["NEED_FIX"]}>Cần sửa chữa</option>
-                        </Form.Select> *
-                    </Form.Group>
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="number"
-                            placeholder="Số lượng"
-                            name="quantity"
-                            // value={quantity}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                </Row> */}
                 <Row className="mb-6">
                     <p style={{ color: "red" }}>
                         {errorMessage && (
@@ -220,111 +173,6 @@ const FormCreate = () => {
                         )}
                     </p>
                         </Row>
-
-                {/* <Form.Group className="mb-3 form-group">
-                    <Form.Select
-                        defaultValue="Phân quyền"
-                        className="form-select"
-                        name="roles"
-                        value={roles}
-                        onChange={(e) => {
-                            let tempRoles = [e.target.value];
-                            onInputChange(e);
-                            setNewAccount({
-                                ...newAccount,
-                                roles: tempRoles,
-                            });
-                        }}
-                    >
-                        <option selected hidden>
-                            Phân quyền
-                        </option>
-                        <option value={["admin"]}>Admin</option>
-                        <option value={["manager"]}>Manager</option>
-                    </Form.Select>
-                </Form.Group> */}
-                
-
-                {/* <Form.Group className="mb-3 form-group">
-                    <Form.Control
-                        className="form-control"
-                        type="text"
-                        placeholder="Địa chỉ"
-                        name="address"
-                        value={address}
-                        onChange={(e) => onInputChange(e)}
-                        required
-                    />
-                </Form.Group> */}
-
-                {/* <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="CMND/CCCD"
-                            name="identification"
-                            value={identification}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="Số điện thoại"
-                            name="phone"
-                            value={phone}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
-
-                <Form.Group className="mb-3 form-group">
-                    <Form.Control
-                        className="form-control"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => onInputChange(e)}
-                        required
-                    />
-                </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row> */}
             </Form>
         </>
     );
