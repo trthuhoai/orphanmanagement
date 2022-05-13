@@ -176,7 +176,7 @@ const AccountContextProvider = (props) => {
             .then((result) => {
                 console.log(result);
                 setAccounts(result.data.result);
-                setPages(result.data.pages)
+                setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
