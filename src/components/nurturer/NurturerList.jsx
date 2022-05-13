@@ -3,12 +3,14 @@ import { Button, Modal } from "react-bootstrap";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Nurturer from "./Nurturer";
 import NurturerCreate from "./NurturerCreate";
 import NurturerPagination from "./NurturerPagination";
 
 const NurturerList = () => {
     const { nurturers } = useContext(NurturerContext);
+    const { searchNurturer } = useContext(NurturerContext);
 
     const [show, setShow] = useState(false);
 
@@ -24,6 +26,10 @@ const NurturerList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Nhận nuôi trẻ</h2>
+                    <SearchList
+                        placeholder={"Tìm kiếm người nhận nuôi "}
+                        searchValue={searchNurturer}
+                    ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người nhận nuôi
                     </Button>

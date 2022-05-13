@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const ChildrenPagination = () => {
-    const { getChildrensList } = useContext(ChildrenContext);
-    const { pages } = useContext(ChildrenContext);
+const StoragePagination = () => {
+    const { getStoragesList } = useContext(StorageContext);
+    const { pages } = useContext(StorageContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getChildrensList(currentPage);
+        getStoragesList(currentPage);
     };
 
     return (
@@ -36,4 +36,4 @@ const ChildrenPagination = () => {
     );
 };
 
-export default ChildrenPagination;
+export default StoragePagination;

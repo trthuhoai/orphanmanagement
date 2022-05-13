@@ -8,17 +8,19 @@ const ChildrenContextProvider = (props) => {
     const [nurturers, setNurturers] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const childrenPage = JSON.parse(localStorage.getItem("childrenPage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
+
         getChildrensList(1);
         getIntroducersList();
         getNurturersList();
     }, []);
 
     // GET CHILDRENS LIST
-    async function getChildrensList(childrenPage) {
+    async function getChildrensList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -28,7 +30,7 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${childrenPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -37,7 +39,11 @@ const ChildrenContextProvider = (props) => {
                 setChildrens(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setChildrens([]);
+                getChildrensList(currentPage - 1);
+            });
     }
     // GET INTRODUCERS LIST
     async function getIntroducersList() {
@@ -121,7 +127,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -164,7 +170,7 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -186,7 +192,35 @@ const ChildrenContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getChildrensList(childrenPage);
+                getChildrensList(currentPage);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    //SEARCH CHILDREN
+    async function searchChildren(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/children/search",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setChildrens(result.data.result);
+                setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
@@ -201,6 +235,7 @@ const ChildrenContextProvider = (props) => {
                 deleteChildren,
                 viewChildren,
                 updateChildren,
+                searchChildren,
                 pages,
             }}
         >

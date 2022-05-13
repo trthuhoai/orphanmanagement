@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Children from "./Children";
 import ChildrenCreate from "./ChildrenCreate";
 import ChildrenPagination from "./ChildrenPagination";
@@ -10,6 +11,7 @@ import "./_children.scss";
 
 const ChildrenList = () => {
     const { childrens } = useContext(ChildrenContext);
+    const { searchChildren } = useContext(ChildrenContext);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -24,6 +26,10 @@ const ChildrenList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Trẻ em</h2>
+                    <SearchList
+                        placeholder={"Tìm kiếm trẻ em "}
+                        searchValue={searchChildren}
+                    ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm trẻ em
                     </Button>
@@ -52,7 +58,7 @@ const ChildrenList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm trẻ em</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
                         <ChildrenCreate />

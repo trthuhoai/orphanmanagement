@@ -6,15 +6,16 @@ const StorageContextProvider = (props) => {
     const [storages, setStorages] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const storagePage = JSON.parse(localStorage.getItem("storagePage"));
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
+        localStorage.setItem("currentPage", 1);
         getStoragesList(1);
     }, []);
 
     // GET STORAGES LIST
-    async function getStoragesList(storagePage) {
+    async function getStoragesList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -24,7 +25,7 @@ const StorageContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${storagePage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -32,7 +33,11 @@ const StorageContextProvider = (props) => {
                 setStorages(result.data.result);
                 setPages(result.data.pages);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+                console.log("error", error);
+                setStorages([]);
+                getStoragesList(currentPage - 1);
+            });
     }
 
     // VIEW STORAGE DETAILS
@@ -71,7 +76,7 @@ const StorageContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList(storagePage);
+                getStoragesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
@@ -87,13 +92,41 @@ const StorageContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getStoragesList(storagePage);
+                getStoragesList(currentPage);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    //SEARCH STORAGE
+    async function searchStorage(keyword) {
+        let raw = JSON.stringify({
+            keyword,
+        });
+
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
+
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/admin/search/deleted",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setStorages(result.data.result);
+                setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
@@ -105,6 +138,7 @@ const StorageContextProvider = (props) => {
                 deleteStorage,
                 restoreStorage,
                 viewStorage,
+                searchStorage,
                 pages,
             }}
         >

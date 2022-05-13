@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ListEmployee from "./pages/list/ListEmployee";
 import ListAccount from "./pages/list/ListAccount";
 import Home from "./pages/home/Home";
 import ListFurniture from "./pages/list/ListFurniture";
@@ -7,6 +8,7 @@ import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
 import ListStorage from "./pages/list/ListStorage";
+import Statistic from "./pages/statistic/Statistic"
 import Login from "./pages/login/Login";
 import "./scss/App.scss";
 
@@ -24,6 +26,8 @@ function App() {
                     <Route path="/storage" element={<ListStorage />} />
                     <Route path="/furniture" element={<ListFurniture/>}/>    
                     <Route path="/furniture/request" element={<ListFurnitureRequest/>}/> 
+                    <Route path="/employee" element={<ListEmployee />} />
+                    <Route path="/statistic" element={<Statistic />} />
                 </Routes>
             </BrowserRouter>
         </div>

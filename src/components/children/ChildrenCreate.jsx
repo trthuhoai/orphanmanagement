@@ -1,10 +1,12 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import moment from "moment";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
-import { SearchBar } from "../searchBar/SearchBar";
+import { SearchBar } from "../search/SearchBar";
 import "./_children.scss";
 
 const ChildrenCreate = () => {
@@ -22,7 +24,11 @@ const ChildrenCreate = () => {
         introducerId: 0,
         nurturerId: 0,
     });
+
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
+    const [pickerIntroDate, setPickerIntroDate] = useState("");
+    const [pickerAdopDate, setPickerAdopDate] = useState("");
 
     const [introducerId, setIntroducerId] = useState(0);
     const [introducer, setIntroducer] = useState({});
@@ -130,7 +136,6 @@ const ChildrenCreate = () => {
                         name="image"
                         id="childrenImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -158,13 +163,23 @@ const ChildrenCreate = () => {
             </Form.Group>
             <Row className="mb-3">
                 <Form.Group as={Col} className="form-group">
-                    <Form.Control
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày sinh"
-                        name="dateOfBirth"
-                        value={dateOfBirth}
-                        onChange={(e) => onInputChange(e)}
+                        placeholderText="Ngày sinh"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
+                        selected={pickerDate}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                dateOfBirth: resultDate,
+                            });
+                            setPickerDate(date);
+                        }}
                         required
                     />
                 </Form.Group>
@@ -192,26 +207,46 @@ const ChildrenCreate = () => {
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <Form.Group as={Col} className=" form-group">
-                    <Form.Control
+                <Form.Group as={Col} className="form-group">
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày vào trung tâm"
-                        name="introductoryDate"
-                        value={introductoryDate}
-                        onChange={(e) => onInputChange(e)}
+                        placeholderText="Ngày vào trung tâm"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
+                        selected={pickerIntroDate}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                introductoryDate: resultDate,
+                            });
+                            setPickerIntroDate(date);
+                        }}
                         required
                     />
                 </Form.Group>
-                <Form.Group as={Col} className=" form-group">
-                    <Form.Control
+                <Form.Group as={Col} className="form-group">
+                    <DatePicker
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày nhận nuôi"
-                        name="adoptiveDate"
-                        value={adoptiveDate}
-                        onChange={(e) => onInputChange(e)}
-                        // required
+                        placeholderText="Ngày nhận nuôi"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
+                        selected={pickerAdopDate}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewChildren({
+                                ...newChildren,
+                                adoptiveDate: resultDate,
+                            });
+                            setPickerAdopDate(date);
+                        }}
+                        required
                     />
                 </Form.Group>
             </Row>
@@ -234,7 +269,13 @@ const ChildrenCreate = () => {
                     />
                     <div className="search-item__content">
                         <p>{introducer.fullName}</p>
-                        <span> {introducer.phone}</span>
+                        <i
+                            className="bi bi-trash3 icon icon__delete"
+                            onClick={() => {
+                                setIntroducerId(0);
+                                setIntroducer({});
+                            }}
+                        ></i>
                     </div>
                 </Form.Group>
             )}
@@ -257,7 +298,17 @@ const ChildrenCreate = () => {
                     />
                     <div className="search-item__content">
                         <p>{nurturer.fullName}</p>
-                        <span> {nurturer.phone}</span>
+                        <i
+                            className="bi bi-trash3 icon icon__delete"
+                            onClick={() => {
+                                setNurturerId(0);
+                                setNurturer({});
+                                setNewChildren({
+                                    ...newChildren,
+                                    adoptiveDate: "",
+                                });
+                            }}
+                        ></i>
                     </div>
                 </Form.Group>
             )}

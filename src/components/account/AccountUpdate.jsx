@@ -4,8 +4,10 @@ import {
     ref,
     uploadBytes,
 } from "firebase/storage";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { AccountContext } from "../../contexts/AccountContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -105,6 +107,7 @@ const AccountUpdate = ({ theAccount }) => {
                 .catch((err) => console.log(err));
         });
     }
+
     return (
         <>
             <Form.Group className="mb-3 form-group">
@@ -161,13 +164,25 @@ const AccountUpdate = ({ theAccount }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="date_of_birth"
-                            value={date_of_birth}
-                            onChange={(e) => setDate_of_birth(e.target.value)}
+                            placeholderText="Ngày sinh"
+                            selected={
+                                new Date(
+                                    date_of_birth.substring(6, 11),
+                                    date_of_birth.substring(3, 5) - 1,
+                                    date_of_birth.substring(0, 2),
+                                )
+                            }
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setDate_of_birth(resultDate);
+                            }}
                             required
                         />
                     </Form.Group>

@@ -27,7 +27,7 @@ export default function Login() {
             }
         );
         result = await result.json();
-        console.log(result)
+        console.log(result);
         if (result.code === 200) {
             localStorage.setItem("token", JSON.stringify(result.data.token));
             const token = JSON.parse(localStorage.getItem("token"));
@@ -63,7 +63,7 @@ export default function Login() {
                     default:
                         break;
                 }
-            })
+            });
         } else {
             if (result.message === "Unauthorized") {
                 setErrorMessage("Bạn đã nhập sai mật khẩu!");

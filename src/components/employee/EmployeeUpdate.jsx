@@ -4,34 +4,37 @@ import {
     ref,
     uploadBytes,
 } from "firebase/storage";
-import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import { NurturerContext } from "../../contexts/NurturerContext";
+import { EmployeeContext } from "../../contexts/EmployeeContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const NurturerUpdate = ({ theNurturer }) => {
-    const id = theNurturer.id;
+const EmployeeUpdate = ({ theEmployee }) => {
+    const id = theEmployee.id;
 
     const [image, setImage] = useState("");
+
     const [imageSuccess, setImageSuccess] = useState("");
     const [fullName, setFullName] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [date_of_birth, setDate_of_birth] = useState("");
     const [gender, setGender] = useState("");
+    const [roles, setRoles] = useState("");
     const [address, setAddress] = useState("");
     const [identification, setIdentification] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { viewNurturer } = useContext(NurturerContext);
+    const { viewEmployee } = useContext(EmployeeContext);
     useEffect(() => {
-        viewNurturer(id).then((result) => {
+        viewEmployee(id).then((result) => {
             setImage(result.image);
             setFullName(result.fullName);
-            setDateOfBirth(result.dateOfBirth);
+            setDate_of_birth(result.date_of_birth);
             setGender(result.gender);
+            setRoles([result.roles[0].roleName]);
             setAddress(result.address);
             setIdentification(result.identification);
             setPhone(result.phone);
@@ -39,22 +42,25 @@ const NurturerUpdate = ({ theNurturer }) => {
         });
     }, []);
 
-    const { updateNurturer } = useContext(NurturerContext);
-    const updatedNurturer = {
+    const { updateEmployee } = useContext(EmployeeContext);
+    const updatedEmployee = {
         image,
         fullName,
-        dateOfBirth,
+        date_of_birth,
         gender,
+        roles,
         address,
         identification,
         phone,
         email,
+        password,
+        confirmPassword,
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedNurturer);
-        updateNurturer(id, updatedNurturer);
+        console.log(updatedEmployee);
+        updateEmployee(id, updatedEmployee);
     };
     // IMAGE UPDATE
     // generate random string for filename
@@ -89,7 +95,7 @@ const NurturerUpdate = ({ theNurturer }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(storage, `nurturers/${generateString(100)}`);
+        const storageRef = ref(storage, `employees/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -105,7 +111,7 @@ const NurturerUpdate = ({ theNurturer }) => {
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="nurturerImage"
+                    id="employeeImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
@@ -115,7 +121,7 @@ const NurturerUpdate = ({ theNurturer }) => {
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="nurturerImageFile"
+                        htmlFor="employeeImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -126,7 +132,7 @@ const NurturerUpdate = ({ theNurturer }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="nurturerImageFile"
+                        id="employeeImageFile"
                         onChange={onFileChange}
                     />
                     <Button
@@ -141,7 +147,7 @@ const NurturerUpdate = ({ theNurturer }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="nurturerUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="employeeUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -155,25 +161,19 @@ const NurturerUpdate = ({ theNurturer }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <DatePicker
+                        <Form.Control
                             className="form-control"
-                            placeholderText="Ngày sinh"
+                            type="text"
+                            placeholder="Ngày sinh"
+                            name="date_of_birth"
                             selected={
                                 new Date(
-                                    dateOfBirth.substring(6, 11),
-                                    dateOfBirth.substring(3, 5) - 1,
-                                    dateOfBirth.substring(0, 2)
+                                    date_of_birth.substring(6, 11),
+                                    date_of_birth.substring(3, 5) - 1,
+                                    date_of_birth.substring(0, 2)
                                 )
                             }
-                            showYearDropdown
-                            scrollableYearDropdown
-                            yearDropdownItemNumber={100}
-                            dateFormat="dd/MM/yyyy"
-                            onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDateOfBirth(resultDate);
-                            }}
+                            onChange={(e) => setDate_of_birth(e.target.value)}
                             required
                         />
                     </Form.Group>
@@ -193,6 +193,31 @@ const NurturerUpdate = ({ theNurturer }) => {
                             <option hidden>Giới tính</option>
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} className="form-group">
+                        <Form.Select
+                            className="form-select"
+                            name="roles"
+                            onChange={(e) => {
+                                setRoles([e.target.value]);
+                            }}
+                            value={roles}
+                        >
+                            <option hidden>Phân quyền</option>
+                            <option value={["ROLE_ADMIN"]}>
+                                Quản trị viên
+                            </option>
+                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
+                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
+                                Quản lý trung tâm
+                            </option>
+                            <option value={["ROLE_MANAGER_HR"]}>
+                                Quản lý nhân sự
+                            </option>
+                            <option value={["ROLE_MANAGER_CHILDREN"]}>
+                                Quản lý trẻ em
+                            </option>
                         </Form.Select>
                     </Form.Group>
                 </Row>
@@ -246,9 +271,38 @@ const NurturerUpdate = ({ theNurturer }) => {
                         required
                     />
                 </Form.Group>
+
+                <Row className="mb-3">
+                    <Form.Group as={Col} className="form-group">
+                        <Form.Control
+                            className="form-control"
+                            type="password"
+                            placeholder="Mật khẩu"
+                            name="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} className="form-group">
+                        <Form.Control
+                            className="form-control"
+                            type="password"
+                            placeholder="Xác nhận mật khẩu"
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    {password !== confirmPassword && (
+                        <p className="password__match">
+                            Mật khẩu không trùng khớp.
+                        </p>
+                    )}
+                </Row>
             </Form>
         </>
     );
 };
 
-export default NurturerUpdate;
+export default EmployeeUpdate;

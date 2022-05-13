@@ -1,6 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import moment from "moment";
 import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
@@ -17,7 +19,9 @@ const IntroducerCreate = () => {
         phone: "",
         email: "",
     });
+
     const [imageSuccess, setImageSuccess] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
     const onInputChange = (e) => {
         setNewIntroducer({
@@ -114,7 +118,6 @@ const IntroducerCreate = () => {
                         name="image"
                         id="introducerImageFile"
                         onChange={onFileChange}
-                        required
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
@@ -146,13 +149,23 @@ const IntroducerCreate = () => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="dateOfBirth"
-                            value={dateOfBirth}
-                            onChange={(e) => onInputChange(e)}
+                            placeholderText="Ngày sinh"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            selected={pickerDate}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setNewIntroducer({
+                                    ...newIntroducer,
+                                    dateOfBirth: resultDate,
+                                });
+                                setPickerDate(date);
+                            }}
                             required
                         />
                     </Form.Group>

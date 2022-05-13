@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./searchBar.scss";
+import "./search.scss";
 
 export const SearchBar = ({ placeholder, data, getValueId }) => {
     const [searchWord, setSearchWord] = useState("");
@@ -39,10 +39,18 @@ export const SearchBar = ({ placeholder, data, getValueId }) => {
                         }, 500);
                     }}
                 />
-                <i className="bi bi-search icon icon__search"></i>
+                {!searchWord && (
+                    <i className="bi bi-search icon icon__search"></i>
+                )}
+                {searchWord && (
+                    <i
+                        className="bi bi-x-lg icon icon__clear"
+                        onClick={() => setSearchWord("")}
+                    ></i>
+                )}
             </div>
             {suggestions && (
-                <div className="search__result">
+                <div className="search__suggestion">
                     {suggestions.map((value, key) => (
                         <p
                             className="search__item"

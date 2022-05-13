@@ -8,6 +8,7 @@ const Sidebar = () => {
         color: "#fff",
         textDecoration: "none",
     };
+    
     return (
         <div className="sidebar">
             <div className="top">
@@ -40,7 +41,7 @@ const Sidebar = () => {
                         Trẻ em
                     </NavLink>
                     <NavLink
-                        to="/staff"
+                        to="/employee"
                         style={linkStyle}
                         className={({ isActive }) =>
                             isActive ? "link-active" : "link"
@@ -102,7 +103,7 @@ const Sidebar = () => {
                         }
                     >
                         Nhận nuôi
-                    </NavLink>    
+                    </NavLink>
                     <NavLink
                         to="/feedback"
                         style={linkStyle}

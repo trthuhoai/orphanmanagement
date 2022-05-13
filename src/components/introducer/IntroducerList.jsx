@@ -3,12 +3,14 @@ import { Button, Modal } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import SearchList from "../search/SearchList";
 import Introducer from "./Introducer";
 import IntroducerCreate from "./IntroducerCreate";
 import IntroducerPagination from "./IntroducerPagination";
 
 const IntroducerList = () => {
     const { introducers } = useContext(IntroducerContext);
+    const { searchIntroducer } = useContext(IntroducerContext);
 
     const [show, setShow] = useState(false);
 
@@ -24,6 +26,10 @@ const IntroducerList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Giới thiệu trẻ</h2>
+                    <SearchList
+                        placeholder={"Tìm kiếm người giới thiệu "}
+                        searchValue={searchIntroducer}
+                    ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người giới thiệu
                     </Button>

@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const ChildrenPagination = () => {
-    const { getChildrensList } = useContext(ChildrenContext);
-    const { pages } = useContext(ChildrenContext);
+const EmployeePagination = () => {
+    const { getEmployeesList } = useContext(EmployeeContext);
+    const { pages } = useContext(EmployeeContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getChildrensList(currentPage);
+        getEmployeesList(currentPage);
     };
 
     return (
@@ -36,4 +36,4 @@ const ChildrenPagination = () => {
     );
 };
 
-export default ChildrenPagination;
+export default EmployeePagination;

@@ -1,37 +1,37 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
 import SearchList from "../search/SearchList";
-import Account from "./Account";
-import AccountCreate from "./AccountCreate";
-import AccountPagination from "./AccountPagination";
+import Employee from "./Employee";
+import EmployeeCreate from "./EmployeeCreate";
+import EmployeePagination from "./EmployeePagination";
 
-const AccountList = () => {
-    const { accounts } = useContext(AccountContext);
-    const { searchAccount } = useContext(AccountContext);
+const EmployeeList = () => {
+    const { employees } = useContext(EmployeeContext);
+    const { searchEmployee } = useContext(EmployeeContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // useEffect(() => {
-    //     handleClose();
-    // }, [accounts]);
+    useEffect(() => {
+        handleClose();
+    }, [employees]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Tài khoản</h2>
+                    <h2>Nhân viên</h2>
                     <SearchList
-                        placeholder={"Tìm kiếm tài khoản "}
-                        searchValue={searchAccount}
+                        placeholder={"Tìm kiếm nhân viên "}
+                        searchValue={searchEmployee}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm tài khoản
+                        Thêm nhân viên
                     </Button>
                 </div>
                 <table className="table__body">
@@ -39,14 +39,14 @@ const AccountList = () => {
                         <tr>
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phân quyền</th>
+                            <th scope="col">Số điện thoại</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id}>
-                                <Account account={account} />
+                        {employees.map((employee) => (
+                            <tr key={employee.id}>
+                                <Employee employee={employee} />
                             </tr>
                         ))}
                     </tbody>
@@ -58,10 +58,10 @@ const AccountList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm tài khoản</Modal.Title>
+                        <Modal.Title>Thêm nhân viên</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <AccountCreate />
+                        <EmployeeCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -73,7 +73,7 @@ const AccountList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="accountCreate"
+                            form="employeeCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -82,9 +82,9 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination />
+            <EmployeePagination />
         </>
     );
 };
 
-export default AccountList;
+export default EmployeeList;

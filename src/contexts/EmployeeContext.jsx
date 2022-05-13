@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 
-export const NurturerContext = createContext();
+export const EmployeeContext = createContext();
 
-const NurturerContextProvider = (props) => {
-    const [nurturers, setNurturers] = useState([]);
+const EmployeeContextProvider = (props) => {
+    const [employees, setEmployees] = useState([]);
     const [pages, setPages] = useState([]);
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
@@ -11,11 +11,11 @@ const NurturerContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getNurturersList(1);
+        getEmployeesList(1);
     }, []);
 
-    // GET NURTURERS LIST
-    async function getNurturersList(currentPage) {
+    // GET ACCOUNTS LIST
+    async function getEmployeesList(currentPage) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -25,28 +25,27 @@ const NurturerContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${currentPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee?page=${currentPage}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
-                setNurturers(result.data.result);
+                setEmployees(result.data.result);
                 setPages(result.data.pages);
             })
             .catch((error) => {
                 console.log("error", error);
-                setNurturers([]);
-                getNurturersList(currentPage - 1);
+                setEmployees([]);
+                getEmployeesList(currentPage - 1);
             });
     }
-
-    // ADD NURTURER
-    async function addNurturer(
+    // ADD ACCOUNT
+    async function addEmployee(
         image,
         fullName,
-        dateOfBirth,
+        date_of_birth,
         gender,
+        roles,
         address,
         identification,
         phone,
@@ -55,8 +54,9 @@ const NurturerContextProvider = (props) => {
         let raw = JSON.stringify({
             image,
             fullName,
-            dateOfBirth,
+            date_of_birth,
             gender,
+            roles,
             address,
             identification,
             phone,
@@ -74,18 +74,18 @@ const NurturerContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/employee",
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // VIEW NURTURER DETAILS
-    async function viewNurturer(id) {
+    // VIEW ACCOUNT DETAILS
+    async function viewEmployee(id) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -96,16 +96,15 @@ const NurturerContextProvider = (props) => {
         };
 
         let result = await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee/${id}`,
             requestOptions
         );
-
         result = await result.json();
         return result.data;
     }
-    //EDIT NURTURER
-    async function updateNurturer(id, updatedNurturer) {
-        let raw = JSON.stringify(updatedNurturer);
+    //EDIT ACCOUNT
+    async function updateEmployee(id, updatedEmployee) {
+        let raw = JSON.stringify(updatedEmployee);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -117,20 +116,20 @@ const NurturerContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/employee/${id}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getNurturersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // DELETE NURTURER
-    async function deleteNurturer(id) {
+    // STORE ACCOUNT
+    async function storeEmployee(id) {
         let requestOptions = {
-            method: "DELETE",
+            method: "PUT",
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -139,18 +138,18 @@ const NurturerContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getNurturersList(currentPage);
+                getEmployeesList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH NURTURER
-    async function searchNurturer(keyword) {
+    //SEARCH EMPLOYEE
+    async function searchEmployee(keyword) {
         let raw = JSON.stringify({
             keyword,
         });
@@ -166,33 +165,33 @@ const NurturerContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/search",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/employee/search",
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setNurturers(result.data.result);
+                setEmployees(result.data.result);
                 setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
     return (
-        <NurturerContext.Provider
+        <EmployeeContext.Provider
             value={{
-                nurturers,
-                getNurturersList,
-                addNurturer,
-                deleteNurturer,
-                viewNurturer,
-                updateNurturer,
-                searchNurturer,
+                employees,
+                getEmployeesList,
+                addEmployee,
+                storeEmployee,
+                viewEmployee,
+                updateEmployee,
+                searchEmployee,
                 pages,
             }}
         >
             {props.children}
-        </NurturerContext.Provider>
+        </EmployeeContext.Provider>
     );
 };
 
-export default NurturerContextProvider;
+export default EmployeeContextProvider;
