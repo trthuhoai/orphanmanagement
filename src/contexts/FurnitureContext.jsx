@@ -110,18 +110,20 @@ const FurnitureContextProvider = (props) => {
             redirect: "follow",
         };
 
-        await fetch(
+        let result=await fetch(
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(result);
+        );
+            // .then((response) => response.text())
+            // .then((result) => {
+            //     console.log(result);
+            result = await result.json();
+            return result.data;
 
                 //Cần fix để hiển thi ds thay đổi sau khi add
                // setAccounts(JSON.parse(result).data);
-            })
-            .catch((error) => console.log("error", error));
+            // })
+            // .catch((error) => console.log("error", error));
     }
     //UPDATE ACCOUNT
     async function updateFurniture(id, updatedFurniture) {

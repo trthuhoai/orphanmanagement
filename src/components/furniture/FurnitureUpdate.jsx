@@ -1,5 +1,6 @@
 import {
-    deleteObject, getDownloadURL,
+    deleteObject, 
+    getDownloadURL,
     ref,
     uploadBytes
 } from "firebase/storage";
@@ -12,15 +13,28 @@ import "../../scss/abstracts/_form.scss";
 const FurnitureUpdate = ({ theFurniture }) => {
     const id = theFurniture.furnitureId;
 
-    useEffect(() => {
-        getDetailFurniture();
-    }, []);
-
     const [image, setImage] = useState("");
+    const [imageSuccess, setImageSuccess] = useState("");
     const [nameFurniture, setNameFurniture] = useState("");
     const [status, setStatus] = useState("");
     const [goodQuantity, setGoodQuantity] = useState(0);
     const [brokenQuantity, setBrokenQuantity] = useState(0);
+    const { viewFurniture } = useContext(FurnitureContext);
+    useEffect(() => {
+        viewFurniture(id).then((result)=>{
+            getDetailFurniture();
+            // setImage(result.image);
+            // setNameFurniture(result.nameFurniture);
+            // setStatus(result.status);
+            // setGoodQuantity(result.goodQuantity);
+            // setBrokenQuantity(result.brokenQuantity);
+        })
+        
+    }, []);
+
+    
+
+  
     // const [roles, setRoles] = useState("");
     // const [address, setAddress] = useState("");
     // const [identification, setIdentification] = useState("");
@@ -90,7 +104,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
         }
         return result;
     }
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState("");
     const onFileChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -98,24 +112,48 @@ const FurnitureUpdate = ({ theFurniture }) => {
     };
     async function handleUpdateImage() {
         if (!file) return;
-        const pathFromURL = ref(storage, image)._location.path_;
-        const desertRef = ref(storage, pathFromURL);
-        await deleteObject(desertRef)
-            .then(() => {
-                console.log("File deleted successfully");
-            })
-            .catch((error) => {
-                console.log("Uh-oh, an error occurred!", error);
-            });
-        const storageRef = ref(storage, generateString(100));
+        if (image && image.includes("firebasestorage")) {
+            const pathFromURL = ref(storage, image)._location.path_;
+            const desertRef = ref(storage, pathFromURL);
+            await deleteObject(desertRef)
+                .then(() => {
+                    console.log("File deleted successfully");
+                })
+                .catch((error) => {
+                    console.log("Uh-oh, an error occurred!", error);
+                });
+        }
+        const storageRef = ref(storage, `accounts/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
                     console.log(url);
+                    setImage(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log(err));
         });
     }
+    // async function handleUpdateImage() {
+    //     if (!file) return;
+    //     const pathFromURL = ref(storage, image)._location.path_;
+    //     const desertRef = ref(storage, pathFromURL);
+    //     await deleteObject(desertRef)
+    //         .then(() => {
+    //             console.log("File deleted successfully");
+    //         })
+    //         .catch((error) => {
+    //             console.log("Uh-oh, an error occurred!", error);
+    //         });
+    //     const storageRef = ref(storage, generateString(100));
+    //     await uploadBytes(storageRef, file).then(() => {
+    //         getDownloadURL(storageRef)
+    //             .then((url) => {
+    //                 console.log(url);
+    //             })
+    //             .catch((err) => console.log(err));
+    //     });
+    // }
     return (
         <>
             <Form.Group className="mb-3 form-group">
@@ -124,13 +162,14 @@ const FurnitureUpdate = ({ theFurniture }) => {
                     id="accountImage"
                     alt=""
                     src={
+                        (file && URL.createObjectURL(file)) ||
                         image ||
                         "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
                     }
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="accountImageFile"
+                        htmlFor="furnitureImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -141,7 +180,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="accountImageFile"
+                        id="furnitureImageFile"
                         onChange={onFileChange}
                         required
                     />
@@ -152,6 +191,9 @@ const FurnitureUpdate = ({ theFurniture }) => {
                         <i class="bi bi-file-earmark-arrow-up-fill"></i> Lưu ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form onSubmit={handleSubmit} className="form" id="furnitureUpdate">
                 <Form.Group className="mb-3 form-group">
@@ -196,7 +238,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
                             name="status"
                             value={status}
                             onChange={(e) => setStatus(e.target.value)+" "}
-                            required
+                            // required
                         />
                     </Form.Group>
 

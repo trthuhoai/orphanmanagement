@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal, Row } from "react-bootstrap";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
+import { Link, useNavigate } from "react-router-dom";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import "./_furniture.scss";
 import Furniture from "./Furniture";
 import FurnitureCreate from "./FurnitureCreate";
 import FurniturePagination from "./FurniturePagination";
@@ -13,10 +15,14 @@ const FurnitureList = () => {
     // const { accounts } = useContext(AccountContext);
     const { furnitures,addResult } = useContext(FurnitureContext);
     // const { addResult } = useContext(FurnitureContext);
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState(addResult);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleReDirect=()=>{
+        navigate("/furniture/request");
+    };
     // setErrorMessage("addResult");
     // useEffect(() => {
     //     handleClose();
@@ -26,7 +32,10 @@ const FurnitureList = () => {
 
         <div className="table">
             <div className="table__top">
-                <h2>Danh sách trang thiết bị</h2>
+                <h2  style={{ color: "#0f1e54" }}>Danh sách trang thiết bị</h2>
+                <Button className="btn" onClick={handleReDirect}>
+                    Danh sách yêu cầu
+                </Button>
                 <Button className="btn btn--primary" onClick={handleShow}>
                     Thêm trang thiết bị
                 </Button>

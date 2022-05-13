@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListAccount from "./pages/list/ListAccount";
 import Home from "./pages/home/Home";
 import ListFurniture from "./pages/list/ListFurniture";
+import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
 import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/nurturer" element={<ListNurturer />} />
                     <Route path="/storage" element={<ListStorage />} />
                     <Route path="/furniture" element={<ListFurniture/>}/>    
+                    <Route path="/furniture/request" element={<ListFurnitureRequest/>}/> 
                 </Routes>
             </BrowserRouter>
         </div>

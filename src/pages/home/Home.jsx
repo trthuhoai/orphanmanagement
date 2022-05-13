@@ -86,7 +86,7 @@ export default class Home extends React.Component {
                         <span className="logo__name">CYF</span>
                         <span className="logo-center" style={{ color: "#424252" }}>Center</span>
                     </span>
-  <Container  style={{ marginright: "5cm", marginLeft: "13cm"}} >
+  <Container  style={{ marginright: "0cm", marginLeft: "17cm"}} >
     {/* <Navbar.Brand href="#home">Logo</Navbar.Brand> */}
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
@@ -111,7 +111,7 @@ export default class Home extends React.Component {
           <NavDropdown.Divider />
           <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
         </NavDropdown> */}
-        <Link className="aa" to="/login">Đăng nhập</Link>
+        {/* <Link className="aa" to="/login">Đăng nhập</Link> */}
       </Nav>
       {/* <h6 > Trung tâm bảo trợ trẻ em CYF</h6> */}
       <span className="logo">
@@ -149,7 +149,9 @@ export default class Home extends React.Component {
                     <br></br>
                     <br></br>
 <p className='p-info'>
+    <h2 style={{ color: 'black'}}>
                     Thông tin chung về Trung tâm Bảo trợ trẻ em CYF
+                    </h2>
 <p>
 1. Thông tin chung:
 </p>
