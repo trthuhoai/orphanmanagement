@@ -118,7 +118,7 @@ const AccountUpdate = ({ theAccount }) => {
                     src={
                         (file && URL.createObjectURL(file)) ||
                         image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <Row>
@@ -171,7 +171,7 @@ const AccountUpdate = ({ theAccount }) => {
                                 new Date(
                                     date_of_birth.substring(6, 11),
                                     date_of_birth.substring(3, 5) - 1,
-                                    date_of_birth.substring(0, 2),
+                                    date_of_birth.substring(0, 2)
                                 )
                             }
                             showYearDropdown

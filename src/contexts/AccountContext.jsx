@@ -66,6 +66,7 @@ const AccountContextProvider = (props) => {
             password,
             confirmPassword,
         });
+        const token = JSON.parse(localStorage.getItem("token"));
 
         let requestOptions = {
             method: "POST",

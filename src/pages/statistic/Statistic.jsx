@@ -5,8 +5,14 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Widget from "../../components/widget/Widget";
 import StatisticContextProvider from "../../contexts/StatisticContext";
 import "./_statistic.scss";
+import { Navigate } from "react-router-dom";
 
 const Statistic = () => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+        return <Navigate to="/" />;
+    }
+
     return (
         <div className="list">
             <MetaTags>
@@ -17,7 +23,7 @@ const Statistic = () => {
                 <Header />
                 <div className="main statistic">
                     <StatisticContextProvider>
-                        <Widget/>
+                        <Widget />
                         <Chart />
                     </StatisticContextProvider>
                 </div>

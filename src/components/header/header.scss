@@ -1,13 +1,15 @@
 @use "../../scss/abstracts/" as *;
 
 .header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0 $spacing;
     background-color: $secondaryColor;
     height: $headerHeight;
-    text-align: right;
 
     .user {
-        transform: translateY(50%);
+        position: relative;
         display: inline-flex;
         align-items: center;
         gap: 20px;
@@ -24,6 +26,59 @@
                 width: 30px;
                 border-radius: 50%;
                 object-fit: cover;
+            }
+        }
+
+        .icon__expand {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ddd;
+            font-size: $fontSizeMedium;
+            line-height: 32px;
+            text-align: center;
+
+            &:visited + .user__menu {
+                display: block;
+            }
+        }
+
+        &__menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background-color: $logoColor;
+            width: 100%;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s linear;
+            border-radius: 8px;
+            padding: 4px;
+            z-index: 9;
+        }
+
+        &__menu.expand {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &__item:hover {
+        }
+
+        &__link {
+            @include flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-radius: 6px;
+            color: $secondaryColor;
+
+            &:hover {
+                color: $logoColor;
+                background-color: $secondaryColor;
+
+                // & * {
+                //     background-color: $secondaryColor;
+                // }
             }
         }
     }
