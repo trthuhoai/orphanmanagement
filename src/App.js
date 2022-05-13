@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListEmployee from "./pages/list/ListEmployee";
 import ListAccount from "./pages/list/ListAccount";
 import Home from "./pages/home/Home";
+import News from "./pages/news/News";
+import Charity from "./pages/charity/Charity";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
 import ListChildren from "./pages/list/ListChildren";
@@ -18,7 +20,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/news" element={<News />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/make-charity" element={<Charity />} />
                     <Route path="/account" element={<ListAccount />} />
                     <Route path="/children" element={<ListChildren />} />
                     <Route path="/introducer" element={<ListIntroducer />} />

@@ -56,8 +56,8 @@ export default class Home extends React.Component {
     <Navbar style={{ position: "fixed" }}/>
       <Nav  className="me-auto">
         <NavLink activeClassName="active" className="aa" to="/">Trang chủ</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/info">Tin tức</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/tuthien">Làm từ thiện</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/news">Tin tức</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/make-charity">Làm từ thiện</NavLink>
         <NavLink activeClassName="active" className="aa" to="/ask">Hỏi đáp</NavLink>
         <NavLink activeClassName="active" className="aa" to="/login">Đăng nhập</NavLink>
       </Nav>
