@@ -209,7 +209,6 @@ const FurnitureContextProvider = (props) => {
     return (
         <FurnitureContext.Provider
             value={{
-                // accounts,
                 furnitures,
                 getFurnituresList,
                 addFurniture,

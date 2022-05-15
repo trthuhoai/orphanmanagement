@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -43,13 +44,16 @@ const ChildrenList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {childrens.length !== 0 && (
+                        <tbody>
+                            {childrens.map((children) => (
+                                <tr key={children.id}>
+                                    <Children children={children} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {childrens.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

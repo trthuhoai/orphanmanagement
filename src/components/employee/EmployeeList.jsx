@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -43,13 +44,16 @@ const EmployeeList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {employees.map((employee) => (
-                            <tr key={employee.id}>
-                                <Employee employee={employee} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {employees.length !== 0 && (
+                        <tbody>
+                            {employees.map((employee) => (
+                                <tr key={employee.id}>
+                                    <Employee employee={employee} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {employees.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

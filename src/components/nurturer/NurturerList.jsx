@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -43,13 +44,16 @@ const NurturerList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {nurturers.map((nurturer) => (
-                            <tr key={nurturer.id}>
-                                <Nurturer nurturer={nurturer} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {nurturers.length !== 0 && (
+                        <tbody>
+                            {nurturers.map((nurturer) => (
+                                <tr key={nurturer.id}>
+                                    <Nurturer nurturer={nurturer} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {nurturers.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

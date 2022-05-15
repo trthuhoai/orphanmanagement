@@ -72,14 +72,14 @@ export default class Home extends React.Component {
                                 <NavLink
                                     activeClassName="active"
                                     className="aa"
-                                    to="/info"
+                                    to="/news"
                                 >
                                     Tin tức
                                 </NavLink>
                                 <NavLink
                                     activeClassName="active"
                                     className="aa"
-                                    to="/tuthien"
+                                    to="/make-charity"
                                 >
                                     Làm từ thiện
                                 </NavLink>

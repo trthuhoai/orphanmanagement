@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import { LoadingList } from "../loading/LoadingSkeleton";
 import SearchList from "../search/SearchList";
 import Introducer from "./Introducer";
 import IntroducerCreate from "./IntroducerCreate";
@@ -43,13 +44,16 @@ const IntroducerList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {introducers.map((introducer) => (
-                            <tr key={introducer.id}>
-                                <Introducer introducer={introducer} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {introducers.length !== 0 && (
+                        <tbody>
+                            {introducers.map((introducer) => (
+                                <tr key={introducer.id}>
+                                    <Introducer introducer={introducer} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}{" "}
+                    {introducers.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

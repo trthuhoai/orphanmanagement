@@ -11,6 +11,7 @@ const Account = ({ account }) => {
         handleCloseUpdate();
         handleCloseDelete();
     }, [account]);
+
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);

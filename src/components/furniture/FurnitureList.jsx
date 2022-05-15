@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import { LoadingList } from "../loading/LoadingSkeleton";
+import SearchList from "../search/SearchList";
 import Furniture from "./Furniture";
 import FurnitureCreate from "./FurnitureCreate";
 import FurniturePagination from "./FurniturePagination";
 import "./_furniture.scss";
-import SearchList from "../search/SearchList";
 
 const FurnitureList = () => {
     const { furnitures, addResult } = useContext(FurnitureContext);
@@ -44,13 +45,16 @@ const FurnitureList = () => {
                             <th scope="col">Chức năng</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {furnitures.map((furniture) => (
-                            <tr key={furniture.furnitureId}>
-                                <Furniture furniture={furniture} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {furnitures.length !== 0 && (
+                        <tbody>
+                            {furnitures.map((furniture) => (
+                                <tr key={furniture.furnitureId}>
+                                    <Furniture furniture={furniture} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {furnitures.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

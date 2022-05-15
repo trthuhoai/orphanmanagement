@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -43,13 +44,16 @@ const AccountList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id}>
-                                <Account account={account} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {accounts.length !== 0 && (
+                        <tbody>
+                            {accounts.map((account) => (
+                                <tr key={account.id}>
+                                    <Account account={account} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {accounts.length === 0 && <LoadingList></LoadingList>}
                 </table>
                 <Modal
                     show={show}

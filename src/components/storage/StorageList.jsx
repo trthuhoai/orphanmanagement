@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -20,7 +21,10 @@ const StorageList = () => {
                         placeholder={"Tìm kiếm nhân viên "}
                         searchValue={searchStorage}
                     ></SearchList>
-                    <Button className="btn btn--primary" style={{ visibility: "hidden"}}></Button>
+                    <Button
+                        className="btn btn--primary"
+                        style={{ visibility: "hidden" }}
+                    ></Button>
                 </div>
                 <table className="table__body">
                     <thead>
@@ -31,13 +35,16 @@ const StorageList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {storages.map((storage) => (
-                            <tr key={storage.id}>
-                                <Storage storage={storage} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {storages.length !== 0 && (
+                        <tbody>
+                            {storages.map((storage) => (
+                                <tr key={storage.id}>
+                                    <Storage storage={storage} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {storages.length === 0 && <LoadingList></LoadingList>}
                 </table>
             </div>
             <StoragePagination />
