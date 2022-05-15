@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const EmployeeDetail = ({ theEmployee }) => {
     const id = theEmployee.id;
@@ -17,7 +18,7 @@ const EmployeeDetail = ({ theEmployee }) => {
         });
     },[])
 
-    return (
+    return Object.keys(detailEmployee).length !== 1 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -89,6 +90,8 @@ const EmployeeDetail = ({ theEmployee }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"account"}/>
     );
 };
 

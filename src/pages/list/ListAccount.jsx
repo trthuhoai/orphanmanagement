@@ -15,7 +15,7 @@ const ListAccount = () => {
     return (
         <div className="list">
             <MetaTags>
-                <title>CYF Center | Thành viên</title>
+                <title>CYF Center | Tài khoản</title>
             </MetaTags>
             <Sidebar />
             <div className="listContainer">

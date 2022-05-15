@@ -53,7 +53,9 @@ const EmployeeList = () => {
                             ))}
                         </tbody>
                     )}
-                    {employees.length === 0 && <LoadingList></LoadingList>}
+                    {employees.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}

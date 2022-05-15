@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { AccountContext } from "../../contexts/AccountContext";
-import AccountDetail from "./AccountDetail";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 import AccountUpdate from "./AccountUpdate";
+import AccountDetail from "./AccountDetail";
 
-const Account = ({ account }) => {
+const Account = ({ account = {} }) => {
     const { storeAccount } = useContext(AccountContext);
 
     useEffect(() => {
@@ -72,6 +73,7 @@ const Account = ({ account }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <AccountDetail theAccount={account} />
+                    {/* <LoadingDetail row={1}></LoadingDetail> */}
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Card, ListGroup } from "react-bootstrap";
 import "./_skeleton.scss";
 
 const LoadingSkeleton = ({ className = "" }) => {
@@ -10,7 +11,7 @@ const LoadingSkeleton = ({ className = "" }) => {
     );
 };
 
-export const LoadingList = () => {
+export const LoadingList = ({ columns }) => {
     return (
         <tbody>
             {Array(5)
@@ -21,13 +22,13 @@ export const LoadingList = () => {
                             <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
                             <LoadingSkeleton className="my-3 d-inline-block w-75"></LoadingSkeleton>
                         </td>
-
-                        <td>
-                            <LoadingSkeleton className="my-3 w-100"></LoadingSkeleton>
-                        </td>
-                        <td>
-                            <LoadingSkeleton className="my-3 w-100"></LoadingSkeleton>
-                        </td>
+                        {Array(columns - 2)
+                            .fill(0)
+                            .map((item, index) => (
+                                <td>
+                                    <LoadingSkeleton className="my-3 w-100"></LoadingSkeleton>
+                                </td>
+                            ))}
                         <td>
                             <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
                             <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
@@ -36,6 +37,63 @@ export const LoadingList = () => {
                     </tr>
                 ))}
         </tbody>
+    );
+};
+
+export const LoadingDetail = ({ tableName }) => {
+    const details = {
+        account: [
+            "Giới tính",
+            "Ngày sinh",
+            "CMND/CCCD",
+            "Số điện thoại",
+            "Địa chỉ",
+        ],
+        storage: [
+            "Giới tính",
+            "Ngày sinh",
+            "CMND/CCCD",
+            "Số điện thoại",
+            "Địa chỉ",
+            "Ngày xoá",
+        ],
+        children: [
+            "Ngày sinh",
+            "Ngày vào trung tâm",
+            "Người giới thiệu",
+            "Ngày được nhận nuôi",
+            "Người nhận nuôi",
+        ],
+        introducer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
+        nurturer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
+    };
+    console.log(details.account);
+    return (
+        <Card className="card">
+            <Card.Header className="card__header">
+                <LoadingSkeleton className="img-thumbnail w-50 h-auto "></LoadingSkeleton>
+                <div className="w-100 mb-5 mx-4">
+                    <LoadingSkeleton className="card__title w-100 mb-2"></LoadingSkeleton>
+                    <LoadingSkeleton className="mb-3 text-muted w-100 card__subtitle"></LoadingSkeleton>
+                    <LoadingSkeleton className="card-text w-100"></LoadingSkeleton>
+                </div>
+            </Card.Header>
+            <Card.Body className="card__body">
+                <ListGroup variant="flush" className="list-group">
+                    {details[tableName].map((item, index) => (
+                        <ListGroup.Item
+                            className="list-group__item"
+                            key={index}
+                        >
+                            <span className="list-group__item-heading">
+                                {item}
+                            </span>
+                            <LoadingSkeleton className="list-group__item-content"></LoadingSkeleton>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            </Card.Body>
+        </Card>
     );
 };
 

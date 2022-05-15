@@ -53,7 +53,9 @@ const AccountList = () => {
                             ))}
                         </tbody>
                     )}
-                    {accounts.length === 0 && <LoadingList></LoadingList>}
+                    {accounts.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}

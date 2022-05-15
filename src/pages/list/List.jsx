@@ -7,10 +7,6 @@ import AccountContextProvider from "../../contexts/AccountContext";
 import "./list.scss";
 
 const List = () => {
-    var token = localStorage.getItem("token");
-    if (token === null) {
-        return <Navigate to="/" />;
-    }
     const token = localStorage.getItem("token");
     if (token === null) {
         return <Navigate to="/" />;

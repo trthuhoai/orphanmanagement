@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const NurturerDetail = ({ theNurturer }) => {
     const id = theNurturer.id;
@@ -15,7 +16,7 @@ const NurturerDetail = ({ theNurturer }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailNurturer).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -79,6 +80,8 @@ const NurturerDetail = ({ theNurturer }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"nurturer"}/>
     );
 };
 

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const IntroducerDetail = ({ theIntroducer }) => {
     const id = theIntroducer.id;
@@ -15,7 +16,7 @@ const IntroducerDetail = ({ theIntroducer }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailIntroducer).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -79,6 +80,8 @@ const IntroducerDetail = ({ theIntroducer }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"introducer"}/>
     );
 };
 

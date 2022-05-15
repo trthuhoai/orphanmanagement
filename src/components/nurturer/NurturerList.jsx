@@ -53,7 +53,9 @@ const NurturerList = () => {
                             ))}
                         </tbody>
                     )}
-                    {nurturers.length === 0 && <LoadingList></LoadingList>}
+                    {nurturers.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}

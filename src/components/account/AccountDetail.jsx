@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const AccountDetail = ({ theAccount }) => {
     const id = theAccount.id;
@@ -9,7 +10,7 @@ const AccountDetail = ({ theAccount }) => {
     const [detailAccount, setDetailAccount] = useState({
         roles: [{ description: "" }],
     });
-
+    console.log(detailAccount);
     const { viewAccount } = useContext(AccountContext);
     useEffect(() => {
         viewAccount(id).then((result) => {
@@ -17,7 +18,7 @@ const AccountDetail = ({ theAccount }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailAccount).length !== 1 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -89,6 +90,8 @@ const AccountDetail = ({ theAccount }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+        <LoadingDetail tableName={"account"}/>
     );
 };
 

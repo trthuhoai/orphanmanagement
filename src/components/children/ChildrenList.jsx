@@ -53,7 +53,9 @@ const ChildrenList = () => {
                             ))}
                         </tbody>
                     )}
-                    {childrens.length === 0 && <LoadingList></LoadingList>}
+                    {childrens.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}

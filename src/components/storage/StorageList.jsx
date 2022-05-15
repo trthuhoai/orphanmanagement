@@ -44,7 +44,9 @@ const StorageList = () => {
                             ))}
                         </tbody>
                     )}
-                    {storages.length === 0 && <LoadingList></LoadingList>}
+                    {storages.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
             </div>
             <StoragePagination />

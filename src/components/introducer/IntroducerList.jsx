@@ -53,7 +53,9 @@ const IntroducerList = () => {
                             ))}
                         </tbody>
                     )}{" "}
-                    {introducers.length === 0 && <LoadingList></LoadingList>}
+                    {introducers.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}

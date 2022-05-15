@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const ChildrenDetail = ({ theChildren }) => {
     const id = theChildren.id;
@@ -14,7 +15,7 @@ const ChildrenDetail = ({ theChildren }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailChildren).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -84,6 +85,8 @@ const ChildrenDetail = ({ theChildren }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"children"}/>
     );
 };
 

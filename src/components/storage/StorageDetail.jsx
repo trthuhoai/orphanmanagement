@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const StorageDetail = ({ theStorage }) => {
     const id = theStorage.id;
@@ -17,7 +18,7 @@ const StorageDetail = ({ theStorage }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailStorage).length !== 1 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -97,6 +98,8 @@ const StorageDetail = ({ theStorage }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+        <LoadingDetail tableName={"storage"}/>
     );
 };
 

@@ -54,7 +54,9 @@ const FurnitureList = () => {
                             ))}
                         </tbody>
                     )}
-                    {furnitures.length === 0 && <LoadingList></LoadingList>}
+                    {furnitures.length === 0 && (
+                        <LoadingList columns={5}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
