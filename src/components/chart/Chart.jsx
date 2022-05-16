@@ -8,11 +8,11 @@ const Chart = () => {
     return (
         <div className="chart">
             <div className="chart__top">
-                <LineChart />
+                <BarChart />
                 <PieChart />
             </div>
             <div className="chart__bottom">
-                <BarChart />
+                <LineChart />
             </div>
         </div>
     );

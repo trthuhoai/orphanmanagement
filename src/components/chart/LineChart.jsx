@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 const options = {
-    responsive: true,
+    // responsive: true,
     plugins: {
         legend: {
             position: "top",
@@ -32,6 +32,7 @@ const options = {
             display: true,
             text: "Số trẻ ở trung tâm từ 2010 - 2022",
         },
+        maintainAspectRatio: false,
     },
 };
 
@@ -65,7 +66,7 @@ const LineChart = () => {
     };
     return (
         <div className="line-chart">
-            <Line options={options} data={data} />
+            <Line options={options} data={data} height={96}/>
         </div>
     );
 };

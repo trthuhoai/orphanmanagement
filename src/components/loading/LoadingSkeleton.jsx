@@ -18,9 +18,9 @@ export const LoadingList = ({ columns }) => {
                 .fill(0)
                 .map((item, index) => (
                     <tr>
-                        <td className="d-flex align-items-center gap-3">
-                            <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
-                            <LoadingSkeleton className="my-3 d-inline-block w-75"></LoadingSkeleton>
+                        <td className="d-flex align-items-center gap-3 h-75">
+                            <LoadingSkeleton className="rounded-circle w-25 py-4 d-inline-block"></LoadingSkeleton>
+                            <LoadingSkeleton className="my-3 mx-3 d-inline-block w-75"></LoadingSkeleton>
                         </td>
                         {Array(columns - 2)
                             .fill(0)
@@ -30,9 +30,14 @@ export const LoadingList = ({ columns }) => {
                                 </td>
                             ))}
                         <td>
-                            <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
-                            <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
-                            <LoadingSkeleton className="rounded-circle d-inline-block"></LoadingSkeleton>
+                            <div
+                                className="d-flex align-items-center justify-content-end w-50"
+                                style={{ marginLeft: "auto" }}
+                            >
+                                <LoadingSkeleton className="rounded-circle d-inline-block w-25 px-3 py-3"></LoadingSkeleton>
+                                <LoadingSkeleton className="rounded-circle d-inline-block w-25 px-3 py-3"></LoadingSkeleton>
+                                <LoadingSkeleton className="rounded-circle d-inline-block w-25 px-3 py-3"></LoadingSkeleton>
+                            </div>
                         </td>
                     </tr>
                 ))}

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_pagination.scss";
-
 const AccountPagination = () => {
     const { getAccountsList } = useContext(AccountContext);
     const { pages } = useContext(AccountContext);
