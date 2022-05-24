@@ -11,12 +11,17 @@ import CharityPagination from "./CharityPagination";
 
 const CharityList = () => {
     const { charitys } = useContext(CharityContext);
-    const { searchCharity } = useContext(CharityContext);
+    const { getCharitysList } = useContext(CharityContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,7 @@ const CharityList = () => {
                     <h2>Từ thiện</h2>
                     <SearchList
                         placeholder={"Tìm kiếm hoạt động từ thiện "}
-                        searchValue={searchCharity}
+                        getSearchList={getCharitysList}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm hoạt động từ thiện
@@ -38,9 +43,9 @@ const CharityList = () => {
                 <table className="table__body">
                     <thead>
                         <tr>
-                            <th scope="col">Họ và tên</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Tên sự kiện</th>
+                            <th scope="col">Chủ đề</th>
+                            <th scope="col">Thời gian tổ chức</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
@@ -88,7 +93,7 @@ const CharityList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <CharityPagination />
+            <CharityPagination keyword={keyword} />
         </>
     );
 };

@@ -3,6 +3,14 @@ import { Button, Modal } from "react-bootstrap";
 import { CharityContext } from "../../contexts/CharityContext";
 import CharityDetail from "./CharityDetail";
 import CharityUpdate from "./CharityUpdate";
+export const viewDate = (dateString) => {
+    const dateObj = new Date(dateString);
+    return `${dateObj.getHours()}h${
+        dateObj.getMinutes() === 0 ? "" : dateObj.getMinutes()
+    } ${dateObj.getDate()}/${
+        dateObj.getMonth() + 1
+    }/${dateObj.getFullYear()}`;
+};
 
 const Charity = ({ charity }) => {
     const { deleteCharity } = useContext(CharityContext);
@@ -36,10 +44,12 @@ const Charity = ({ charity }) => {
                     }
                     alt=""
                 />
-                {charity.fullName}
+                {charity.charityName}
             </td>
-            <td>{charity.address} </td>
-            <td>{charity.phone}</td>
+            <td>{charity.title} </td>
+            <td>
+                {viewDate(charity.dateStart)} - {viewDate(charity.dateEnd)}
+            </td>
             <td>
                 <i
                     title="Xem chi tiết"

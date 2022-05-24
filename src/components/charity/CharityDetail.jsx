@@ -3,6 +3,7 @@ import { Card, ListGroup } from "react-bootstrap";
 import { CharityContext } from "../../contexts/CharityContext";
 import "../../scss/abstracts/_card.scss";
 import { LoadingDetail } from "../loading/LoadingSkeleton";
+import { viewDate } from "./Charity";
 
 const CharityDetail = ({ theCharity }) => {
     const id = theCharity.id;
@@ -29,59 +30,28 @@ const CharityDetail = ({ theCharity }) => {
                 />
                 <div>
                     <Card.Title className="card__title">
-                        {detailCharity.fullName}
+                        {detailCharity.charityName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted card__subtitle">
-                        {detailCharity.address}
+                        {detailCharity.title}
                     </Card.Subtitle>
                     <Card.Text className="card-text">
-                        {detailCharity.email}
+                        {viewDate(detailCharity.dateStart)} - {viewDate(detailCharity.dateEnd)}
                     </Card.Text>
                 </div>
             </Card.Header>
             <Card.Body className="card__body">
                 <ListGroup variant="flush" className="list-group">
                     <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Giới tính
-                        </span>
                         <p className="list-group__item-content">
-                            {detailCharity.gender === true
-                                ? "Nam"
-                                : detailCharity.gender === false
-                                ? "Nữ"
-                                : ""}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Ngày sinh
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailCharity.dateOfBirth}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            CMND/CCCD
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailCharity.identification}
-                        </p>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="list-group__item">
-                        <span className="list-group__item-heading">
-                            Số điện thoại
-                        </span>
-                        <p className="list-group__item-content">
-                            {detailCharity.phone}
+                            {detailCharity.content}
                         </p>
                     </ListGroup.Item>
                 </ListGroup>
             </Card.Body>
         </Card>
     ) : (
-            <LoadingDetail tableName={"charity"}/>
+        <LoadingDetail tableName={"charity"} />
     );
 };
 

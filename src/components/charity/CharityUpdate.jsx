@@ -18,38 +18,32 @@ const CharityUpdate = ({ theCharity }) => {
     const [image, setImage] = useState("");
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [charityName, setCharityName] = useState("");
+    const [dateOfEvent, setDateOfEvent] = useState("");
     const [gender, setGender] = useState("");
-    const [address, setAddress] = useState("");
-    const [identification, setIdentification] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
     const { viewCharity } = useContext(CharityContext);
     useEffect(() => {
         viewCharity(id).then((result) => {
             setImage(result.image);
-            setFullName(result.fullName);
-            setDateOfBirth(result.dateOfBirth);
+            setCharityName(result.charityName);
+            setDateOfEvent(result.dateOfEvent);
             setGender(result.gender);
-            setAddress(result.address);
-            setIdentification(result.identification);
-            setPhone(result.phone);
-            setEmail(result.email);
+            setTitle(result.title);
+            setContent(result.content);
         });
     }, []);
 
     const { updateCharity } = useContext(CharityContext);
     const updatedCharity = {
         image,
-        fullName,
-        dateOfBirth,
+        charityName,
+        dateOfEvent,
         gender,
-        address,
-        identification,
-        phone,
-        email,
+        title,
+        content,
     };
 
     const handleSubmit = (e) => {
@@ -142,112 +136,64 @@ const CharityUpdate = ({ theCharity }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form
-                onSubmit={handleSubmit}
-                className="form"
-                id="charityUpdate"
-            >
+            <Form onSubmit={handleSubmit} className="form" id="charityUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="Họ và tên"
-                        name="fullName"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder="Tên sự kiện"
+                        name="charityName"
+                        value={charityName}
+                        onChange={(e) => setCharityName(e.target.value)}
                         required
                     />
                 </Form.Group>
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <DatePicker
-                            className="form-control"
-                            placeholderText="Ngày sinh"
-                            selected={
-                                new Date(
-                                    dateOfBirth.substring(6, 11),
-                                    dateOfBirth.substring(3, 5) - 1,
-                                    dateOfBirth.substring(0, 2)
-                                )
-                            }
-                            showYearDropdown
-                            scrollableYearDropdown
-                            yearDropdownItemNumber={100}
-                            dateFormat="dd/MM/yyyy"
-                            onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDateOfBirth(resultDate);
-                            }}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Select
-                            className="form-select form-select__gender"
-                            name="gender"
-                            onChange={(e) => {
-                                console.log(e.target.value);
-                                setGender(
-                                    e.target.value === "true" ? true : false
-                                );
-                            }}
-                            value={gender}
-                        >
-                            <option hidden>Giới tính</option>
-                            <option value={true}>Nam</option>
-                            <option value={false}>Nữ</option>
-                        </Form.Select>
-                    </Form.Group>
-                </Row>
 
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="Địa chỉ"
-                        name="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Chủ đề"
+                        name="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </Form.Group>
 
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="CMND/CCCD"
-                            name="identification"
-                            value={identification}
-                            onChange={(e) => setIdentification(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="Số điện thoại"
-                            name="phone"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
-
                 <Form.Group className="mb-3 form-group">
+                    <DatePicker
+                        className="form-control"
+                        placeholderText="Thời gian tổ chức"
+                        selected={
+                            new Date(
+                                dateOfEvent.substring(6, 11),
+                                dateOfEvent.substring(3, 5) - 1,
+                                dateOfEvent.substring(0, 2)
+                            )
+                        }
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setDateOfEvent(resultDate);
+                        }}
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group as={Col} className="form-group">
                     <Form.Control
                         className="form-control"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        as="textarea"
+                        placeholder="Nội dung sự kiện"
+                        name="content"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        style={{ height: "150px" }}
                         required
                     />
                 </Form.Group>

@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { CharityContext } from "../../contexts/CharityContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const CharityPagination = () => {
+const CharityPagination = ({ keyword }) => {
     const { getCharitysList } = useContext(CharityContext);
     const { pages } = useContext(CharityContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getCharitysList(currentPage);
+        getCharitysList(currentPage, keyword);
     };
 
     return (

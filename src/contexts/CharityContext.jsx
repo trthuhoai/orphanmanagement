@@ -11,11 +11,11 @@ const CharityContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getCharitysList(1);
+        getCharitysList(1, "");
     }, []);
 
     // GET CHARITYS LIST
-    async function getCharitysList(currentPage) {
+    async function getCharitysList(currentPage, keyword) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -25,7 +25,7 @@ const CharityContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity?page=${currentPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity?page=${currentPage}&limit=${5}`,
             requestOptions
         )
             .then((response) => response.json())
@@ -42,25 +42,13 @@ const CharityContextProvider = (props) => {
     }
 
     // ADD CHARITY
-    async function addCharity(
-        image,
-        fullName,
-        dateOfBirth,
-        gender,
-        address,
-        identification,
-        phone,
-        email
-    ) {
+    async function addCharity(image, charityName, title, dateOfEvent, content) {
         let raw = JSON.stringify({
             image,
-            fullName,
-            dateOfBirth,
-            gender,
-            address,
-            identification,
-            phone,
-            email,
+            charityName,
+            title,
+            dateOfEvent,
+            content,
         });
 
         let requestOptions = {
@@ -166,7 +154,7 @@ const CharityContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/charity/search",
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity/search?page=${currentPage}&limit=${5}`,
             requestOptions
         )
             .then((response) => response.json())
