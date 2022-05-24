@@ -8,6 +8,7 @@
         flex: 5;
 
         .main{
+            position: relative;
             height: calc(100% - #{$headerHeight});
             padding: $spacing;
         }

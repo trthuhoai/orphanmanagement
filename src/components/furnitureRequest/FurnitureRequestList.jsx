@@ -76,7 +76,7 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <ChildrenPagination keyword={keyword} />
         </>
     );
 };

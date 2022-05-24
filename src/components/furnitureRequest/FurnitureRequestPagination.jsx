@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const ChildrenPagination = () => {
+const ChildrenPagination = ({ keyword }) => {
     const { getChildrensList } = useContext(ChildrenContext);
     const { pages } = useContext(ChildrenContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("childrenPage", currentPage);
-        getChildrensList(currentPage);
+        getChildrensList(currentPage, keyword);
     };
 
     return (
