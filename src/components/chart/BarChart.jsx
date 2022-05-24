@@ -20,7 +20,7 @@ ChartJS.register(
     Legend
 );
 
-export const options = {
+const options = {
     responsive: true,
     plugins: {
         legend: {
@@ -28,29 +28,64 @@ export const options = {
         },
         title: {
             display: true,
-            text: "Cán bộ và nhân viên",
+            text: "",
         },
     },
     maintainAspectRatio: false,
 };
 
-const BarChart = () => {
+const BarChart = ({ chartId }) => {
     const { accountRole } = useContext(StatisticContext);
+    const { childrenAge } = useContext(StatisticContext);
 
-    const labels = accountRole.map((item) =>
-        item.keyword === "ROLE_ADMIN"
-            ? "Quản trị viên"
-            : item.keyword === "ROLE_EMPLOYEE"
-            ? "Nhân viên"
-            : item.keyword === "ROLE_MANAGER_CHILDREN"
-            ? "Quản lý trẻ em"
-            : item.keyword === "ROLE_MANAGER_HR"
-            ? "Quản lý nhân sự"
-            : item.keyword === "ROLE_MANAGER_LOGISTIC"
-            ? "Quản lý trung tâm"
-            : ""
-    );
-    const data = accountRole.map((item) => item.value);
+    let chartData = [];
+     if (chartId === 1) {
+         options.plugins.title.text =
+             "Biểu đồ số lượng tài khoản được phân quyền";
+         chartData = accountRole.map((item) => {
+             switch (item.keyword) {
+                 case "ROLE_ADMIN":
+                     return { keyword: "Quản trị viên", value: item.value };
+                 case "ROLE_EMPLOYEE":
+                     return { keyword: "Nhân viên", value: item.value };
+                 case "ROLE_MANAGER_CHILDREN":
+                     return { keyword: "Quản lý trẻ em", value: item.value };
+                 case "ROLE_MANAGER_HR":
+                     return { keyword: "Quản lý nhân sự", value: item.value };
+                 case "ROLE_MANAGER_LOGISTIC":
+                     return { keyword: "Quản lý trung tâm", value: item.value };
+                 default:
+                     return {};
+             }
+         });
+     } else if (chartId === 2) {
+         options.plugins.title.text = "Biểu đồ tỉ lệ giới tính trẻ em ";
+         chartData = childrenAge.map((item) => {
+             switch (item.keyword) {
+                 case "kindergarten":
+                     return { keyword: "Mẫu giáo", value: item.value };
+                 case "primary":
+                     return { keyword: "Tiểu học", value: item.value };
+                 case "secondary":
+                     return { keyword: "Trung học cơ sở", value: item.value };
+                 case "high":
+                     return {
+                         keyword: "Trung học phổ thông",
+                         value: item.value,
+                     };
+                 case "adult":
+                     return { keyword: "Trưởng thành", value: item.value };
+                 default:
+                     return {};
+             }
+         });
+     } else if (chartId === 3) {
+         options.plugins.title.text = "Chua co du lieu";
+    }
+    
+    const labels = chartData.map((item) => item.keyword);
+    const data = chartData.map((item) => item.value);
+
     return (
         <div className="bar-chart">
             <Bar
@@ -58,25 +93,15 @@ const BarChart = () => {
                     labels: labels,
                     datasets: [
                         {
-                            label: "Phân quyền",
+                            label: "Số lượng",
                             data: data,
                             backgroundColor: [
-                                "rgba(255, 99, 132, 0.8)",
-                                "rgba(54, 162, 235, 0.8)",
-                                "rgba(255, 206, 86, 0.8)",
-                                "rgba(75, 192, 192, 0.8)",
-                                "rgba(153, 102, 255, 0.8)",
-                                "rgba(255, 159, 64, 0.8)",
+                                "#EB7560",
+                                "#FFB458",
+                                "#F9F871",
+                                "#34DFB3",
+                                "#0092B3",
                             ],
-                            borderColor: [
-                                "rgba(255, 99, 132, 1)",
-                                "rgba(54, 162, 235, 1)",
-                                "rgba(255, 206, 86, 1)",
-                                "rgba(75, 192, 192, 1)",
-                                "rgba(153, 102, 255, 1)",
-                                "rgba(255, 159, 64, 1)",
-                            ],
-                            borderWidth: 1,
                         },
                     ],
                 }}
