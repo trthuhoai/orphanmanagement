@@ -11,34 +11,62 @@ const NurturerContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getNurturersList(1);
+        getNurturersList(1, "");
     }, []);
 
     // GET NURTURERS LIST
-    async function getNurturersList(currentPage) {
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${currentPage}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setNurturers(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => {
-                console.log("error", error);
-                setNurturers([]);
-                getNurturersList(currentPage - 1);
+    async function getNurturersList(currentPage, keyword) {
+        if (keyword) {
+            let raw = JSON.stringify({
+                keyword,
             });
+
+            let requestOptions = {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                body: raw,
+                redirect: "follow",
+            };
+
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/search?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setNurturers(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => console.log("error", error));
+        } else {
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setNurturers(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    setNurturers([]);
+                    getNurturersList(currentPage - 1);
+                });
+        }
     }
 
     // ADD NURTURER
@@ -149,34 +177,6 @@ const NurturerContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH NURTURER
-    async function searchNurturer(keyword) {
-        let raw = JSON.stringify({
-            keyword,
-        });
-
-        let requestOptions = {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            body: raw,
-            redirect: "follow",
-        };
-
-        await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/nurturer/search",
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setNurturers(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => console.log("error", error));
-    }
     return (
         <NurturerContext.Provider
             value={{
@@ -186,7 +186,6 @@ const NurturerContextProvider = (props) => {
                 deleteNurturer,
                 viewNurturer,
                 updateNurturer,
-                searchNurturer,
                 pages,
             }}
         >

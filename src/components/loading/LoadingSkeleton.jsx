@@ -19,7 +19,7 @@ export const LoadingList = ({ columns }) => {
                 .map((item, index) => (
                     <tr>
                         <td className="d-flex align-items-center gap-3 h-75">
-                            <LoadingSkeleton className="rounded-circle w-25 py-4 d-inline-block"></LoadingSkeleton>
+                            <LoadingSkeleton className="rounded-circle w-25 py-4 px-3 d-inline-block"></LoadingSkeleton>
                             <LoadingSkeleton className="my-3 mx-3 d-inline-block w-75"></LoadingSkeleton>
                         </td>
                         {Array(columns - 2)
@@ -71,8 +71,9 @@ export const LoadingDetail = ({ tableName }) => {
         ],
         introducer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
         nurturer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
+        charity: [],
+        picnic: []
     };
-    console.log(details.account);
     return (
         <Card className="card">
             <Card.Header className="card__header">

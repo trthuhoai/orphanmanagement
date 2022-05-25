@@ -13,12 +13,16 @@ import "./_furniture.scss";
 
 const FurnitureList = () => {
     const { furnitures, addResult } = useContext(FurnitureContext);
-    const { searchFurniture } = useContext(FurnitureContext);
+    const { getFurnituresList } = useContext(FurnitureContext);
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState(addResult);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
     const handleReDirect = () => {
         navigate("/furniture/request");
     };
@@ -29,7 +33,8 @@ const FurnitureList = () => {
                     <h2 style={{ color: "#0f1e54" }}>Trang thiết bị</h2>
                     <SearchList
                         placeholder={"Tìm kiếm trang thiết bị "}
-                        searchValue={searchFurniture}
+                        getSearchList={getFurnituresList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm trang thiết bị
@@ -96,7 +101,7 @@ const FurnitureList = () => {
             >
                 Danh sách yêu cầu
             </Button>
-            <FurniturePagination />
+            <FurniturePagination keyword={keyword} />
         </>
     );
 };

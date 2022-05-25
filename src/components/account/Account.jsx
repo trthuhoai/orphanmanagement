@@ -73,7 +73,6 @@ const Account = ({ account = {} }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <AccountDetail theAccount={account} />
-                    {/* <LoadingDetail row={1}></LoadingDetail> */}
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}

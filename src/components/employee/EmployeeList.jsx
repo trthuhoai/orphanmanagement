@@ -11,12 +11,17 @@ import EmployeePagination from "./EmployeePagination";
 
 const EmployeeList = () => {
     const { employees } = useContext(EmployeeContext);
-    const { searchEmployee } = useContext(EmployeeContext);
+    const { getEmployeesList } = useContext(EmployeeContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,8 @@ const EmployeeList = () => {
                     <h2>Nhân viên</h2>
                     <SearchList
                         placeholder={"Tìm kiếm nhân viên "}
-                        searchValue={searchEmployee}
+                        getSearchList={getEmployeesList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm nhân viên
@@ -88,7 +94,7 @@ const EmployeeList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <EmployeePagination />
+            <EmployeePagination keyword={keyword} />
         </>
     );
 };
