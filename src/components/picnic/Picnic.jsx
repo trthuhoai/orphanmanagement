@@ -1,18 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
-import { LoadingDetail } from "../loading/LoadingSkeleton";
-import AccountUpdate from "./AccountUpdate";
-import AccountDetail from "./AccountDetail";
+import { PicnicContext } from "../../contexts/PicnicContext";
+import PicnicDetail from "./PicnicDetail";
+import PicnicUpdate from "./PicnicUpdate";
 
-const Account = ({ account = {} }) => {
-    const { storeAccount } = useContext(AccountContext);
+export const viewDate = (dateString) => {
+    const dateObj = new Date(dateString);
+    return `${dateObj.getHours()}h${
+        dateObj.getMinutes() === 0 ? "" : dateObj.getMinutes()
+    } ${dateObj.getDate()}/${
+        dateObj.getMonth() + 1
+    }/${dateObj.getFullYear()}`;
+};
+
+const Picnic = ({ picnic }) => {
+    const { deletePicnic } = useContext(PicnicContext);
 
     useEffect(() => {
         handleCloseUpdate();
         handleCloseDelete();
-    }, [account]);
-
+    }, [picnic]);
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
@@ -33,15 +40,17 @@ const Account = ({ account = {} }) => {
             <td>
                 <img
                     src={
-                        account.image ||
+                        picnic.image ||
                         "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                     alt=""
                 />
-                {account.fullName}
+                {picnic.namePicnic}
             </td>
-            <td>{account.email} </td>
-            <td>{account.roles[0].description}</td>
+            <td>{picnic.title} </td>
+            <td>
+                {viewDate(picnic.dateStart)} - {viewDate(picnic.dateEnd)}
+            </td>
             <td>
                 <i
                     title="Xem chi tiết"
@@ -54,8 +63,7 @@ const Account = ({ account = {} }) => {
                     onClick={handleShowUpdate}
                 ></i>
                 <i
-                    title="Lưu trữ"
-                    className="bi bi-archive icon icon__storage"
+                    className="bi bi-trash3 icon icon__delete"
                     onClick={handleShowDelete}
                 ></i>
             </td>
@@ -69,10 +77,10 @@ const Account = ({ account = {} }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Thông tin tài khoản</Modal.Title>
+                    <Modal.Title>Thông tin hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountDetail theAccount={account} />
+                    <PicnicDetail thePicnic={picnic} />
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}
@@ -83,10 +91,10 @@ const Account = ({ account = {} }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật tài khoản</Modal.Title>
+                    <Modal.Title>Cập nhật hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <AccountUpdate theAccount={account} />
+                    <PicnicUpdate thePicnic={picnic} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -97,7 +105,7 @@ const Account = ({ account = {} }) => {
                         Close
                     </Button>
                     <Button
-                        form="accountUpdate"
+                        form="picnicUpdate"
                         variant="success"
                         type="submit"
                         className="btn btn--primary btn__submit"
@@ -114,11 +122,11 @@ const Account = ({ account = {} }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Xoá tài khoản</Modal.Title>
+                    <Modal.Title>Xoá hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Tài khoản ${account.fullName} sẽ được lưu trữ và bị xoá vĩnh viễn trong 7 ngày. Bạn có muốn tiếp tục không?`}
+                        {`Bạn có chắc chắn muốn xoá ${picnic.fullName} khỏi danh sách không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -132,7 +140,7 @@ const Account = ({ account = {} }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            storeAccount(account.id);
+                            deletePicnic(picnic.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
@@ -144,4 +152,4 @@ const Account = ({ account = {} }) => {
     );
 };
 
-export default Account;
+export default Picnic;

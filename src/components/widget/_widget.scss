@@ -27,3 +27,13 @@
         transform: scale(1.05);
     }
 }
+
+.widget__item.widget__active {
+    background-color: $logoColor;
+    color: $secondaryColor;
+}
+
+.widget__heading,
+.widget__description {
+    user-select: none;
+}

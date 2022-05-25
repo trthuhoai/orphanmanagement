@@ -93,7 +93,11 @@ export default class Home extends React.Component {
                                 <NavLink
                                     activeClassName="active"
                                     className="aa"
-                                    to="/login"
+                                    to={`/${
+                                        localStorage.getItem("token")
+                                            ? "account "
+                                            : "login"
+                                    }`}
                                 >
                                     Đăng nhập
                                 </NavLink>

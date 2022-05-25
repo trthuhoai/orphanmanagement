@@ -1,43 +1,42 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StatisticContext } from "../../contexts/StatisticContext";
 import "./_widget.scss";
 
-const Widget = ({ getChartData }) => {
-    const { amountAccount } = useContext(StatisticContext);
-    const { amountChildren } = useContext(StatisticContext);
+const Widget = ({ getChartId }) => {
+    const { accountStatusActive } = useContext(StatisticContext);
+    const { accountStatusDeleted } = useContext(StatisticContext);
+    const { childrenTotal } = useContext(StatisticContext);
 
-    const widgetData = [
+    const widgets = [
         {
-            amount: amountAccount || 0,
-            description: "Cán bộ và nhân viên",
-            data: [1, 2, 3],
+            id: 1,
+            total: accountStatusActive + accountStatusDeleted || 0,
+            description: "Tài khoản",
         },
         {
-            amount: amountChildren || 0,
+            id: 2,
+            total: childrenTotal || 0,
             description: "Trẻ em",
-            data: [4, 5, 6],
         },
         {
-            amount: 0,
+            id: 3,
+            total: 0,
             description: "No data",
-            data: [7, 8, 9],
         },
     ];
-    const handleData = (widgetData) => {
-        getChartData(widgetData);
+    const handleClickWidget = (widgetId) => {
+        getChartId(widgetId);
     };
     return (
         <div className="widget">
-            {widgetData.map((widgetItem, key) => (
+            {widgets.map((widget, key) => (
                 <div
                     className="widget__item"
-                    key={key}
-                    onClick={() => handleData(widgetItem.data)}
+                    key={widget.id}
+                    onClick={() => handleClickWidget(widget.id)}
                 >
-                    <h1 className="widget__heading">{widgetItem.amount}</h1>
-                    <p className="widget__description">
-                        {widgetItem.description}
-                    </p>
+                    <h1 className="widget__heading">{widget.total}</h1>
+                    <p className="widget__description">{widget.description}</p>
                 </div>
             ))}
         </div>

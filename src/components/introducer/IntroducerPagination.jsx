@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const IntroducerPagination = () => {
+const IntroducerPagination = ({ keyword }) => {
     const { getIntroducersList } = useContext(IntroducerContext);
     const { pages } = useContext(IntroducerContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getIntroducersList(currentPage);
+        getIntroducersList(currentPage, keyword);
     };
 
     return (

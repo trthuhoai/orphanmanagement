@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { EmployeeContext } from "../../contexts/EmployeeContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const EmployeePagination = ({ keyword }) => {
-    const { getEmployeesList } = useContext(EmployeeContext);
-    const { pages } = useContext(EmployeeContext);
+const PicnicPagination = ({ keyword }) => {
+    const { getPicnicsList } = useContext(PicnicContext);
+    const { pages } = useContext(PicnicContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getEmployeesList(currentPage, keyword);
+        getPicnicsList(currentPage, keyword);
     };
 
     return (
@@ -36,4 +36,4 @@ const EmployeePagination = ({ keyword }) => {
     );
 };
 
-export default EmployeePagination;
+export default PicnicPagination;

@@ -9,15 +9,18 @@ import StatisticContextProvider from "../../contexts/StatisticContext";
 import "./_statistic.scss";
 
 const Statistic = () => {
-    const [chartData, setChartData] = useState([]);
+    const [chartId, setChartId] = useState(0);
 
     const token = localStorage.getItem("token");
     if (token === null) {
         return <Navigate to="/" />;
     }
-    const getChartData = (widgetData) => {
-        console.log(widgetData)
+
+    const getChartId = (chartId) => {
+        console.log(chartId)
+        setChartId(chartId);
     };
+
     return (
         <div className="list">
             <MetaTags>
@@ -28,8 +31,8 @@ const Statistic = () => {
                 <Header />
                 <div className="main statistic">
                     <StatisticContextProvider>
-                        <Widget getChartData={getChartData} />
-                        <Chart />
+                        <Widget getChartId={getChartId} />
+                        <Chart chartId={chartId || 1} />
                     </StatisticContextProvider>
                 </div>
             </div>

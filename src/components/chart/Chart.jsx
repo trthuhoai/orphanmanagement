@@ -4,15 +4,15 @@ import LineChart from "./LineChart";
 import PieChart from "./PieChart";
 import "./_chart.scss";
 
-const Chart = () => {
+const Chart = ({ chartId }) => {
     return (
         <div className="chart">
             <div className="chart__top">
-                <BarChart />
-                <PieChart />
+                <BarChart chartId={chartId} />
+                <PieChart chartId={chartId} />
             </div>
             <div className="chart__bottom">
-                <LineChart />
+                <LineChart chartId={chartId} />
             </div>
         </div>
     );

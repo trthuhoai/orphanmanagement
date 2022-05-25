@@ -12,11 +12,16 @@ import "./_children.scss";
 
 const ChildrenList = () => {
     const { childrens } = useContext(ChildrenContext);
-    const { searchChildren } = useContext(ChildrenContext);
+    const { getChildrensList } = useContext(ChildrenContext);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,8 @@ const ChildrenList = () => {
                     <h2>Trẻ em</h2>
                     <SearchList
                         placeholder={"Tìm kiếm trẻ em "}
-                        searchValue={searchChildren}
+                        getSearchList={getChildrensList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm trẻ em
@@ -88,7 +94,7 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <ChildrenPagination keyword={keyword} />
         </>
     );
 };

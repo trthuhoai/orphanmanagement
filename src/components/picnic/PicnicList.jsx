@@ -1,66 +1,65 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { FurnitureContext } from "../../contexts/FurnitureContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
 import { LoadingList } from "../loading/LoadingSkeleton";
 import SearchList from "../search/SearchList";
-import Furniture from "./Furniture";
-import FurnitureCreate from "./FurnitureCreate";
-import FurniturePagination from "./FurniturePagination";
-import "./_furniture.scss";
+import Picnic from "./Picnic";
+import PicnicCreate from "./PicnicCreate";
+import PicnicPagination from "./PicnicPagination";
 
-const FurnitureList = () => {
-    const { furnitures, addResult } = useContext(FurnitureContext);
-    const { getFurnituresList } = useContext(FurnitureContext);
-    const navigate = useNavigate();
+const PicnicList = () => {
+    const { picnics } = useContext(PicnicContext);
+    const { getPicnicsList } = useContext(PicnicContext);
+
     const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(addResult);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     const [keyword, setKeyword] = useState("");
     const getKeyword = (keyword) => {
         setKeyword(keyword);
     };
-    const handleReDirect = () => {
-        navigate("/furniture/request");
-    };
+
+    useEffect(() => {
+        handleClose();
+    }, [picnics]);
+
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2 style={{ color: "#0f1e54" }}>Trang thiết bị</h2>
+                    <h2>Dã ngoại</h2>
                     <SearchList
-                        placeholder={"Tìm kiếm trang thiết bị "}
-                        getSearchList={getFurnituresList}
-                        getKeyword={getKeyword}
+                        placeholder={"Tìm kiếm hoạt động dã ngoại "}
+                        getSearchList={getPicnicsList}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm trang thiết bị
+                        Thêm hoạt động dã ngoại
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
-                            <th scope="col">Tên trang thiết bị</th>
-                            <th scope="col">Số lượng hoạt động tốt</th>
-                            <th scope="col">Số lượng bị hỏng</th>
-                            <th scope="col">Ghi chú</th>
-                            <th scope="col">Chức năng</th>
+                            <th scope="col">Tên sự kiện</th>
+                            <th scope="col">Chủ đề</th>
+                            <th scope="col">Thời gian tổ chức</th>
+                            <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    {furnitures.length !== 0 && (
+                    {picnics.length !== 0 && (
                         <tbody>
-                            {furnitures.map((furniture) => (
-                                <tr key={furniture.furnitureId}>
-                                    <Furniture furniture={furniture} />
+                            {picnics.map((picnic) => (
+                                <tr key={picnic.id}>
+                                    <Picnic picnic={picnic} />
                                 </tr>
                             ))}
                         </tbody>
-                    )}
-                    {furnitures.length === 0 && (
-                        <LoadingList columns={5}></LoadingList>
+                    )}{" "}
+                    {picnics.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
                     )}
                 </table>
                 <Modal
@@ -70,10 +69,10 @@ const FurnitureList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm trang thiết bị</Modal.Title>
+                        <Modal.Title>Thêm hoạt động dã ngoại</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <FurnitureCreate />
+                        <PicnicCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -85,7 +84,7 @@ const FurnitureList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="furnitureCreate"
+                            form="picnicCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -94,16 +93,9 @@ const FurnitureList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <Button
-                className="btn"
-                onClick={handleReDirect}
-                style={{ position: "absolute", bottom: "48px" }}
-            >
-                Danh sách yêu cầu
-            </Button>
-            <FurniturePagination keyword={keyword} />
+            <PicnicPagination keyword={keyword} />
         </>
     );
 };
 
-export default FurnitureList;
+export default PicnicList;

@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AccountContext } from "../../contexts/AccountContext";
 import "./search.scss";
 
-const SearchList = ({ placeholder, searchValue }) => {
+const SearchList = ({ placeholder, getSearchList, getKeyword }) => {
     const [searchWord, setSearchWord] = useState("");
 
     const handleFilter = (e) => {
         const searchWord = e.target.value;
         // if (searchWord === "") {
-        //     searchValue(searchWord);
+        //     getSearchList(searchWord);
         // }
         setSearchWord(searchWord);
+        getKeyword(searchWord);
     };
 
     const handleSearch = (e) => {
         e.preventDefault();
-        searchValue(searchWord);
+        getSearchList(1, searchWord);
     };
 
     return (
@@ -27,7 +29,7 @@ const SearchList = ({ placeholder, searchValue }) => {
                     onChange={handleFilter}
                     onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                            searchValue(searchWord);
+                            getSearchList(1, searchWord);
                         }
                     }}
                 />

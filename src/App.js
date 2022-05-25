@@ -19,6 +19,8 @@ import Login from "./pages/login/Login";
 import ResetPassword from "./pages/login/ResetPassword";
 import Statistic from "./pages/statistic/Statistic";
 import "./scss/App.scss";
+import ProfileInfo from "./pages/profile/ProfileInfo";
+import ProfilePassword from "./pages/profile/ProfilePassword";
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/resetpassword" element={<ResetPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
+                    <Route path="/profileinfo" element={<ProfileInfo />} />
+                    <Route path="/profilepassword" element={<ProfilePassword />} />
                     <Route path="/make-charity" element={<Charity />} />
                     <Route path="/account" element={<ListAccount />} />
                     <Route path="/children" element={<ListChildren />} />

@@ -11,12 +11,17 @@ import AccountPagination from "./AccountPagination";
 
 const AccountList = () => {
     const { accounts } = useContext(AccountContext);
-    const { searchAccount } = useContext(AccountContext);
+    const { getAccountsList } = useContext(AccountContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,8 @@ const AccountList = () => {
                     <h2>Tài khoản</h2>
                     <SearchList
                         placeholder={"Tìm kiếm tài khoản "}
-                        searchValue={searchAccount}
+                        getSearchList={getAccountsList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm tài khoản
@@ -88,7 +94,7 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination />
+            <AccountPagination keyword={keyword} />
         </>
     );
 };

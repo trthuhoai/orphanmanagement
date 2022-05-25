@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { StorageContext } from "../../contexts/StorageContext";
@@ -10,7 +10,12 @@ import StoragePagination from "./StoragePagination";
 
 const StorageList = () => {
     const { storages } = useContext(StorageContext);
-    const { searchStorage } = useContext(StorageContext);
+    const { getStoragesList } = useContext(StorageContext);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     return (
         <>
@@ -19,7 +24,8 @@ const StorageList = () => {
                     <h2>Lưu trữ</h2>
                     <SearchList
                         placeholder={"Tìm kiếm nhân viên "}
-                        searchValue={searchStorage}
+                        getSearchList={getStoragesList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button
                         className="btn btn--primary"
@@ -49,7 +55,7 @@ const StorageList = () => {
                     )}
                 </table>
             </div>
-            <StoragePagination />
+            <StoragePagination keyword={keyword} />
         </>
     );
 };
