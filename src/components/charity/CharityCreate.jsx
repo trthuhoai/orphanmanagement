@@ -1,7 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
 import { useContext, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { CharityContext } from "../../contexts/CharityContext";
 import { storage } from "../../firebase";
@@ -11,13 +11,10 @@ const CharityCreate = () => {
     const { addCharity } = useContext(CharityContext);
     const [newCharity, setNewCharity] = useState({
         image: "",
-        fullName: "",
-        dateOfBirth: "",
-        gender: "",
-        address: "",
-        identification: "",
-        phone: "",
-        email: "",
+        charityName: "",
+        title: "",
+        dateOfEvent: "",
+        content: "",
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
@@ -30,28 +27,10 @@ const CharityCreate = () => {
         });
         console.log(newCharity);
     };
-    const {
-        image,
-        fullName,
-        dateOfBirth,
-        gender,
-        address,
-        identification,
-        phone,
-        email,
-    } = newCharity;
+    const { image, charityName, title, dateOfEvent, content } = newCharity;
     const handleSubmit = (e) => {
         e.preventDefault();
-        addCharity(
-            image,
-            fullName,
-            dateOfBirth,
-            gender,
-            address,
-            identification,
-            phone,
-            email
-        );
+        addCharity(image, charityName, title, dateOfEvent, content);
     };
 
     // IMAGE UPLOAD
@@ -131,117 +110,64 @@ const CharityCreate = () => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form
-                onSubmit={handleSubmit}
-                className="form"
-                id="charityCreate"
-            >
+            <Form onSubmit={handleSubmit} className="form" id="charityCreate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
-                        placeholder="Họ và tên"
-                        name="fullName"
-                        value={fullName}
-                        onChange={(e) => onInputChange(e)}
-                        required
-                    />
-                </Form.Group>
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <DatePicker
-                            className="form-control"
-                            placeholderText="Ngày sinh"
-                            showYearDropdown
-                            scrollableYearDropdown
-                            yearDropdownItemNumber={100}
-                            dateFormat="dd/MM/yyyy"
-                            selected={pickerDate}
-                            onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setNewCharity({
-                                    ...newCharity,
-                                    dateOfBirth: resultDate,
-                                });
-                                setPickerDate(date);
-                            }}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Select
-                            defaultValue="Giới tính"
-                            className="form-select"
-                            name="gender"
-                            value={gender}
-                            onChange={(e) => {
-                                onInputChange(e);
-                                setNewCharity({
-                                    ...newCharity,
-                                    gender:
-                                        e.target.value === "true"
-                                            ? true
-                                            : false,
-                                });
-                            }}
-                        >
-                            <option value={"Giới tính"} hidden>
-                                Giới tính
-                            </option>
-                            <option value={true}>Nam</option>
-                            <option value={false}>Nữ</option>
-                        </Form.Select>
-                    </Form.Group>
-                </Row>
-
-                <Form.Group className="mb-3 form-group">
-                    <Form.Control
-                        className="form-control"
-                        type="text"
-                        placeholder="Địa chỉ"
-                        name="address"
-                        value={address}
+                        placeholder="Tên sự kiện"
+                        name="charityName"
+                        value={charityName}
                         onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
 
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="CMND/CCCD"
-                            name="identification"
-                            value={identification}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
+                <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="text"
+                        placeholder="Chủ đề"
+                        name="title"
+                        value={title}
+                        onChange={(e) => onInputChange(e)}
+                        required
+                    />
+                </Form.Group>
 
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="Số điện thoại"
-                            name="phone"
-                            value={phone}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
+                <Form.Group className="mb-3 form-group">
+                    <DatePicker
+                        className="form-control"
+                        placeholderText="Thời gian tổ chức"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dateFormat="dd/MM/yyyy h:mm aa"
+                        timeInputLabel="Thời gian:"
+                        showTimeInput
+                        selected={pickerDate}
+                        onChange={(date) => {
+                            const resultDate =
+                                moment(date).format("DD/MM/YYYY");
+                            setNewCharity({
+                                ...newCharity,
+                                dateOfEvent: resultDate,
+                            });
+                            setPickerDate(date);
+                        }}
+                        required
+                    />
+                </Form.Group>
 
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={email}
+                        as="textarea"
+                        placeholder="Nội dung sự kiện"
+                        name="content"
+                        value={content}
                         onChange={(e) => onInputChange(e)}
+                        style={{ height: "150px" }}
                         required
                     />
                 </Form.Group>

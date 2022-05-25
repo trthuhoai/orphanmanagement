@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { CharityContext } from "../../contexts/CharityContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const CharityPagination = ({ keyword }) => {
-    const { getCharitysList } = useContext(CharityContext);
-    const { pages } = useContext(CharityContext);
+const PicnicPagination = ({ keyword }) => {
+    const { getPicnicsList } = useContext(PicnicContext);
+    const { pages } = useContext(PicnicContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getCharitysList(currentPage, keyword);
+        getPicnicsList(currentPage, keyword);
     };
 
     return (
@@ -36,4 +36,4 @@ const CharityPagination = ({ keyword }) => {
     );
 };
 
-export default CharityPagination;
+export default PicnicPagination;

@@ -1,57 +1,39 @@
-import {
-    deleteObject,
-    getDownloadURL,
-    ref,
-    uploadBytes,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
-import { useContext, useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Button, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { CharityContext } from "../../contexts/CharityContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const CharityUpdate = ({ theCharity }) => {
-    const id = theCharity.id;
-
-    const [image, setImage] = useState("");
+const PicnicCreate = () => {
+    const { addPicnic } = useContext(PicnicContext);
+    const [newPicnic, setNewPicnic] = useState({
+        image: "",
+        namePicnic: "",
+        title: "",
+        dateOfEvent: "",
+        content: "",
+    });
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [charityName, setCharityName] = useState("");
-    const [dateOfEvent, setDateOfEvent] = useState("");
-    const [gender, setGender] = useState("");
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [pickerDate, setPickerDate] = useState("");
 
-    const { viewCharity } = useContext(CharityContext);
-    useEffect(() => {
-        viewCharity(id).then((result) => {
-            setImage(result.image);
-            setCharityName(result.charityName);
-            setDateOfEvent(result.dateOfEvent);
-            setGender(result.gender);
-            setTitle(result.title);
-            setContent(result.content);
+    const onInputChange = (e) => {
+        setNewPicnic({
+            ...newPicnic,
+            [e.target.name]: e.target.value,
         });
-    }, []);
-
-    const { updateCharity } = useContext(CharityContext);
-    const updatedCharity = {
-        image,
-        charityName,
-        dateOfEvent,
-        gender,
-        title,
-        content,
+        console.log(newPicnic);
     };
-
+    const { image, namePicnic, title, dateOfEvent, content } = newPicnic;
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedCharity);
-        updateCharity(id, updatedCharity);
+        addPicnic(image, namePicnic, title, dateOfEvent, content);
     };
-    // IMAGE UPDATE
+
+    // IMAGE UPLOAD
     // generate random string for filename
     function generateString(length) {
         const characters =
@@ -71,46 +53,38 @@ const CharityUpdate = ({ theCharity }) => {
             setFile(e.target.files[0]);
         }
     };
-    async function handleUpdateImage() {
+    async function handleUploadImage() {
         if (!file) return;
-        if (image && image.includes("firebasestorage")) {
-            const pathFromURL = ref(storage, image)._location.path_;
-            const desertRef = ref(storage, pathFromURL);
-            await deleteObject(desertRef)
-                .then(() => {
-                    console.log("File deleted successfully");
-                })
-                .catch((error) => {
-                    console.log("Uh-oh, an error occurred!", error);
-                });
-        }
-        const storageRef = ref(storage, `charitys/${generateString(100)}`);
+        const storageRef = ref(storage, `picnics/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
+                    setNewPicnic({
+                        ...newPicnic,
+                        image: url,
+                    });
                     console.log(url);
-                    setImage(url);
                     setImageSuccess("Tải ảnh lên thành công");
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log("err", err));
         });
     }
+
     return (
         <>
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="charityImage"
+                    id="picnicImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
-                        image ||
                         "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="charityImageFile"
+                        htmlFor="picnicImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -121,12 +95,12 @@ const CharityUpdate = ({ theCharity }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="charityImageFile"
+                        id="picnicImageFile"
                         onChange={onFileChange}
                     />
                     <Button
                         className="form-label btn__image btn btn--secondary"
-                        onClick={handleUpdateImage}
+                        onClick={handleUploadImage}
                     >
                         <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
                         ảnh
@@ -136,15 +110,15 @@ const CharityUpdate = ({ theCharity }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="charityUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="picnicCreate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
                         placeholder="Tên sự kiện"
-                        name="charityName"
-                        value={charityName}
-                        onChange={(e) => setCharityName(e.target.value)}
+                        name="namePicnic"
+                        value={namePicnic}
+                        onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
@@ -156,7 +130,7 @@ const CharityUpdate = ({ theCharity }) => {
                         placeholder="Chủ đề"
                         name="title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => onInputChange(e)}
                         required
                     />
                 </Form.Group>
@@ -165,34 +139,34 @@ const CharityUpdate = ({ theCharity }) => {
                     <DatePicker
                         className="form-control"
                         placeholderText="Thời gian tổ chức"
-                        selected={
-                            new Date(
-                                dateOfEvent.substring(6, 11),
-                                dateOfEvent.substring(3, 5) - 1,
-                                dateOfEvent.substring(0, 2)
-                            )
-                        }
                         showYearDropdown
                         scrollableYearDropdown
                         yearDropdownItemNumber={100}
-                        dateFormat="dd/MM/yyyy"
+                        dateFormat="dd/MM/yyyy h:mm aa"
+                        timeInputLabel="Thời gian:"
+                        showTimeInput
+                        selected={pickerDate}
                         onChange={(date) => {
                             const resultDate =
                                 moment(date).format("DD/MM/YYYY");
-                            setDateOfEvent(resultDate);
+                            setNewPicnic({
+                                ...newPicnic,
+                                dateOfEvent: resultDate,
+                            });
+                            setPickerDate(date);
                         }}
                         required
                     />
                 </Form.Group>
 
-                <Form.Group as={Col} className="form-group">
+                <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         as="textarea"
                         placeholder="Nội dung sự kiện"
                         name="content"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        onChange={(e) => onInputChange(e)}
                         style={{ height: "150px" }}
                         required
                     />
@@ -202,4 +176,4 @@ const CharityUpdate = ({ theCharity }) => {
     );
 };
 
-export default CharityUpdate;
+export default PicnicCreate;

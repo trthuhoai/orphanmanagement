@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 
-export const CharityContext = createContext();
+export const PicnicContext = createContext();
 
-const CharityContextProvider = (props) => {
-    const [charitys, setCharitys] = useState([]);
+const PicnicContextProvider = (props) => {
+    const [picnics, setPicnics] = useState([]);
     const [pages, setPages] = useState([]);
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
@@ -11,11 +11,11 @@ const CharityContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getCharitysList(1, "");
+        getPicnicsList(1, "");
     }, []);
 
-    // GET CHARITYS LIST
-    async function getCharitysList(currentPage, keyword) {
+    // GET PICNICS LIST
+    async function getPicnicsList(currentPage, keyword) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -25,27 +25,27 @@ const CharityContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity?page=${currentPage}&limit=${5}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/picnic?page=${currentPage}&limit=${5}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setCharitys(result.data.result);
+                setPicnics(result.data.result);
                 setPages(result.data.pages);
             })
             .catch((error) => {
                 console.log("error", error);
-                setCharitys([]);
-                getCharitysList(currentPage - 1);
+                setPicnics([]);
+                getPicnicsList(currentPage - 1);
             });
     }
 
-    // ADD CHARITY
-    async function addCharity(image, charityName, title, dateOfEvent, content) {
+    // ADD PICNIC
+    async function addPicnic(image, namePicnic, title, dateOfEvent, content) {
         let raw = JSON.stringify({
             image,
-            charityName,
+            namePicnic,
             title,
             dateOfEvent,
             content,
@@ -62,18 +62,18 @@ const CharityContextProvider = (props) => {
         };
 
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/charity",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/picnic",
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getPicnicsList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // VIEW CHARITY DETAILS
-    async function viewCharity(id) {
+    // VIEW PICNIC DETAILS
+    async function viewPicnic(id) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -84,16 +84,16 @@ const CharityContextProvider = (props) => {
         };
 
         let result = await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/picnic/${id}`,
             requestOptions
         );
 
         result = await result.json();
         return result.data;
     }
-    //EDIT CHARITY
-    async function updateCharity(id, updatedCharity) {
-        let raw = JSON.stringify(updatedCharity);
+    //EDIT PICNIC
+    async function updatePicnic(id, updatedPicnic) {
+        let raw = JSON.stringify(updatedPicnic);
         let requestOptions = {
             method: "PUT",
             headers: {
@@ -105,18 +105,18 @@ const CharityContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/picnic/${id}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getPicnicsList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    // DELETE CHARITY
-    async function deleteCharity(id) {
+    // DELETE PICNIC
+    async function deletePicnic(id) {
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -127,18 +127,18 @@ const CharityContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity/${id}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/picnic/${id}`,
             requestOptions
         )
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getPicnicsList(currentPage);
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH CHARITY
-    async function searchCharity(keyword) {
+    //SEARCH PICNIC
+    async function searchPicnic(keyword) {
         let raw = JSON.stringify({
             keyword,
         });
@@ -154,33 +154,33 @@ const CharityContextProvider = (props) => {
         };
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/charity/search?page=${currentPage}&limit=${5}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/picnic/search?page=${currentPage}&limit=${5}`,
             requestOptions
         )
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                setCharitys(result.data.result);
+                setPicnics(result.data.result);
                 setPages(result.data.pages);
             })
             .catch((error) => console.log("error", error));
     }
     return (
-        <CharityContext.Provider
+        <PicnicContext.Provider
             value={{
-                charitys,
-                getCharitysList,
-                addCharity,
-                deleteCharity,
-                viewCharity,
-                updateCharity,
-                searchCharity,
+                picnics,
+                getPicnicsList,
+                addPicnic,
+                deletePicnic,
+                viewPicnic,
+                updatePicnic,
+                searchPicnic,
                 pages,
             }}
         >
             {props.children}
-        </CharityContext.Provider>
+        </PicnicContext.Provider>
     );
 };
 
-export default CharityContextProvider;
+export default PicnicContextProvider;

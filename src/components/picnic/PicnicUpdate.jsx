@@ -8,27 +8,27 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { CharityContext } from "../../contexts/CharityContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const CharityUpdate = ({ theCharity }) => {
-    const id = theCharity.id;
+const PicnicUpdate = ({ thePicnic }) => {
+    const id = thePicnic.id;
 
     const [image, setImage] = useState("");
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [charityName, setCharityName] = useState("");
+    const [namePicnic, setNamePicnic] = useState("");
     const [dateOfEvent, setDateOfEvent] = useState("");
     const [gender, setGender] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
-    const { viewCharity } = useContext(CharityContext);
+    const { viewPicnic } = useContext(PicnicContext);
     useEffect(() => {
-        viewCharity(id).then((result) => {
+        viewPicnic(id).then((result) => {
             setImage(result.image);
-            setCharityName(result.charityName);
+            setNamePicnic(result.namePicnic);
             setDateOfEvent(result.dateOfEvent);
             setGender(result.gender);
             setTitle(result.title);
@@ -36,10 +36,10 @@ const CharityUpdate = ({ theCharity }) => {
         });
     }, []);
 
-    const { updateCharity } = useContext(CharityContext);
-    const updatedCharity = {
+    const { updatePicnic } = useContext(PicnicContext);
+    const updatedPicnic = {
         image,
-        charityName,
+        namePicnic,
         dateOfEvent,
         gender,
         title,
@@ -48,8 +48,8 @@ const CharityUpdate = ({ theCharity }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedCharity);
-        updateCharity(id, updatedCharity);
+        console.log(updatedPicnic);
+        updatePicnic(id, updatedPicnic);
     };
     // IMAGE UPDATE
     // generate random string for filename
@@ -84,7 +84,7 @@ const CharityUpdate = ({ theCharity }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(storage, `charitys/${generateString(100)}`);
+        const storageRef = ref(storage, `picnics/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -100,7 +100,7 @@ const CharityUpdate = ({ theCharity }) => {
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
-                    id="charityImage"
+                    id="picnicImage"
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
@@ -110,7 +110,7 @@ const CharityUpdate = ({ theCharity }) => {
                 />
                 <Row>
                     <Form.Label
-                        htmlFor="charityImageFile"
+                        htmlFor="picnicImageFile"
                         className="form-label btn__image btn btn--secondary"
                     >
                         <i className="bi bi-image icon icon__image"></i>
@@ -121,7 +121,7 @@ const CharityUpdate = ({ theCharity }) => {
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="charityImageFile"
+                        id="picnicImageFile"
                         onChange={onFileChange}
                     />
                     <Button
@@ -136,15 +136,15 @@ const CharityUpdate = ({ theCharity }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="charityUpdate">
+            <Form onSubmit={handleSubmit} className="form" id="picnicUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
                         type="text"
                         placeholder="Tên sự kiện"
-                        name="charityName"
-                        value={charityName}
-                        onChange={(e) => setCharityName(e.target.value)}
+                        name="namePicnic"
+                        value={namePicnic}
+                        onChange={(e) => setNamePicnic(e.target.value)}
                         required
                     />
                 </Form.Group>
@@ -202,4 +202,4 @@ const CharityUpdate = ({ theCharity }) => {
     );
 };
 
-export default CharityUpdate;
+export default PicnicUpdate;

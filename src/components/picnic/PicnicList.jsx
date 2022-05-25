@@ -1,17 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { CharityContext } from "../../contexts/CharityContext";
+import { PicnicContext } from "../../contexts/PicnicContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
 import { LoadingList } from "../loading/LoadingSkeleton";
 import SearchList from "../search/SearchList";
-import Charity from "./Charity";
-import CharityCreate from "./CharityCreate";
-import CharityPagination from "./CharityPagination";
+import Picnic from "./Picnic";
+import PicnicCreate from "./PicnicCreate";
+import PicnicPagination from "./PicnicPagination";
 
-const CharityList = () => {
-    const { charitys } = useContext(CharityContext);
-    const { getCharitysList } = useContext(CharityContext);
+const PicnicList = () => {
+    const { picnics } = useContext(PicnicContext);
+    const { getPicnicsList } = useContext(PicnicContext);
 
     const [show, setShow] = useState(false);
 
@@ -25,19 +25,19 @@ const CharityList = () => {
 
     useEffect(() => {
         handleClose();
-    }, [charitys]);
+    }, [picnics]);
 
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Từ thiện</h2>
+                    <h2>Dã ngoại</h2>
                     <SearchList
-                        placeholder={"Tìm kiếm hoạt động từ thiện "}
-                        getSearchList={getCharitysList}
+                        placeholder={"Tìm kiếm hoạt động dã ngoại "}
+                        getSearchList={getPicnicsList}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm hoạt động từ thiện
+                        Thêm hoạt động dã ngoại
                     </Button>
                 </div>
                 <table className="table__body">
@@ -49,16 +49,16 @@ const CharityList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    {charitys.length !== 0 && (
+                    {picnics.length !== 0 && (
                         <tbody>
-                            {charitys.map((charity) => (
-                                <tr key={charity.id}>
-                                    <Charity charity={charity} />
+                            {picnics.map((picnic) => (
+                                <tr key={picnic.id}>
+                                    <Picnic picnic={picnic} />
                                 </tr>
                             ))}
                         </tbody>
                     )}{" "}
-                    {charitys.length === 0 && (
+                    {picnics.length === 0 && (
                         <LoadingList columns={4}></LoadingList>
                     )}
                 </table>
@@ -69,10 +69,10 @@ const CharityList = () => {
                     className="modal"
                 >
                     <Modal.Header closeButton className="modal__header">
-                        <Modal.Title>Thêm hoạt động từ thiện</Modal.Title>
+                        <Modal.Title>Thêm hoạt động dã ngoại</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <CharityCreate />
+                        <PicnicCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -84,7 +84,7 @@ const CharityList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="charityCreate"
+                            form="picnicCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -93,9 +93,9 @@ const CharityList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <CharityPagination keyword={keyword} />
+            <PicnicPagination keyword={keyword} />
         </>
     );
 };
 
-export default CharityList;
+export default PicnicList;

@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { CharityContext } from "../../contexts/CharityContext";
-import CharityDetail from "./CharityDetail";
-import CharityUpdate from "./CharityUpdate";
+import { PicnicContext } from "../../contexts/PicnicContext";
+import PicnicDetail from "./PicnicDetail";
+import PicnicUpdate from "./PicnicUpdate";
+
 export const viewDate = (dateString) => {
     const dateObj = new Date(dateString);
     return `${dateObj.getHours()}h${
@@ -12,13 +13,13 @@ export const viewDate = (dateString) => {
     }/${dateObj.getFullYear()}`;
 };
 
-const Charity = ({ charity }) => {
-    const { deleteCharity } = useContext(CharityContext);
+const Picnic = ({ picnic }) => {
+    const { deletePicnic } = useContext(PicnicContext);
 
     useEffect(() => {
         handleCloseUpdate();
         handleCloseDelete();
-    }, [charity]);
+    }, [picnic]);
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
     const handleCloseDetail = () => setShowDetail(false);
@@ -39,16 +40,16 @@ const Charity = ({ charity }) => {
             <td>
                 <img
                     src={
-                        charity.image ||
+                        picnic.image ||
                         "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                     alt=""
                 />
-                {charity.charityName}
+                {picnic.namePicnic}
             </td>
-            <td>{charity.title} </td>
+            <td>{picnic.title} </td>
             <td>
-                {viewDate(charity.dateStart)} - {viewDate(charity.dateEnd)}
+                {viewDate(picnic.dateStart)} - {viewDate(picnic.dateEnd)}
             </td>
             <td>
                 <i
@@ -76,10 +77,10 @@ const Charity = ({ charity }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Thông tin hoạt động từ thiện</Modal.Title>
+                    <Modal.Title>Thông tin hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <CharityDetail theCharity={charity} />
+                    <PicnicDetail thePicnic={picnic} />
                 </Modal.Body>
             </Modal>
             {/* MODAL UPDATE */}
@@ -90,10 +91,10 @@ const Charity = ({ charity }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Cập nhật hoạt động từ thiện</Modal.Title>
+                    <Modal.Title>Cập nhật hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
-                    <CharityUpdate theCharity={charity} />
+                    <PicnicUpdate thePicnic={picnic} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
@@ -104,7 +105,7 @@ const Charity = ({ charity }) => {
                         Close
                     </Button>
                     <Button
-                        form="charityUpdate"
+                        form="picnicUpdate"
                         variant="success"
                         type="submit"
                         className="btn btn--primary btn__submit"
@@ -121,11 +122,11 @@ const Charity = ({ charity }) => {
                 className="modal"
             >
                 <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Xoá hoạt động từ thiện</Modal.Title>
+                    <Modal.Title>Xoá hoạt động dã ngoại</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Bạn có chắc chắn muốn xoá ${charity.fullName} khỏi danh sách không?`}
+                        {`Bạn có chắc chắn muốn xoá ${picnic.fullName} khỏi danh sách không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -139,7 +140,7 @@ const Charity = ({ charity }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            deleteCharity(charity.id);
+                            deletePicnic(picnic.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >
@@ -151,4 +152,4 @@ const Charity = ({ charity }) => {
     );
 };
 
-export default Charity;
+export default Picnic;
