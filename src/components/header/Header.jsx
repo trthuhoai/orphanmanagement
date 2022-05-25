@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./header.scss";
 
 const Header = () => {
@@ -8,6 +8,10 @@ const Header = () => {
         localStorage.clear();
         navigate("/");
     }
+
+    const linkStyle = {
+        textDecoration: "none",
+    };
 
     const currentUser = JSON.parse(localStorage.getItem("current-user"));
 
@@ -37,16 +41,30 @@ const Header = () => {
                 ></i>
                 <ul className={`user__menu ${expand}`}>
                     <li className="user__item">
-                        <a href="/" className="user__link">
-                            <i className="bi bi-key icon icon__password"></i>
+                        <NavLink
+                            to="/profileinfo"
+                            className="user__link"
+                            style={linkStyle}
+                        >
+                            <i className="bi bi-person-circle icon icon__password"></i>
+                            <span>Tài khoản</span>
+                        </NavLink>
+                    </li>
+                    <li className="user__item">
+                        <NavLink
+                            to="/profilepassword"
+                            className="user__link"
+                            style={linkStyle}
+                        >
+                            <i className="bi bi-lock icon icon__password"></i>
                             <span>Đổi mật khẩu</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="user__item" onClick={logout}>
-                        <a href="/" className="user__link">
+                        <NavLink to="/" className="user__link">
                             <i className="bi bi-box-arrow-right icon icon__logout"></i>
                             <span>Đăng xuất</span>
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
             </div>
