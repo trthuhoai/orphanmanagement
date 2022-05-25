@@ -3,22 +3,10 @@ import { StatisticContext } from "../../contexts/StatisticContext";
 import "./_widget.scss";
 
 const Widget = ({ getChartId }) => {
-    // ACCOUNT CHART
-    const { accountRole } = useContext(StatisticContext);
     const { accountStatusActive } = useContext(StatisticContext);
     const { accountStatusDeleted } = useContext(StatisticContext);
-    const accountStatus = [
-        { keyword: "Hoạt động", value: accountStatusActive },
-        { keyword: "Lưu trữ", value: accountStatusDeleted },
-    ];
-    const { accountActiveYear } = useContext(StatisticContext);
-
     const { childrenTotal } = useContext(StatisticContext);
-    const { childrenAge } = useContext(StatisticContext);
-    const { childrenGender } = useContext(StatisticContext);
-    const { childrenIntroduction } = useContext(StatisticContext);
-    const { childrenAdoption } = useContext(StatisticContext);
-    //IDEAL: Truyen id qua props, thay vi cac data nhu ban dau. Dung useContext lay data tai cac Chart tuong ung
+
     const widgets = [
         {
             id: 1,
