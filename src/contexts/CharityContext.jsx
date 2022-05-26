@@ -42,13 +42,23 @@ const CharityContextProvider = (props) => {
     }
 
     // ADD CHARITY
-    async function addCharity(image, charityName, title, dateOfEvent, content) {
+    async function addCharity(
+        charityName,
+        content,
+        dateEnd,
+        dateStart,
+        image,
+        isCompleted,
+        title
+    ) {
         let raw = JSON.stringify({
-            image,
             charityName,
-            title,
-            dateOfEvent,
             content,
+            dateEnd,
+            dateStart,
+            image,
+            isCompleted,
+            title,
         });
 
         let requestOptions = {

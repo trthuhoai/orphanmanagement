@@ -16,11 +16,10 @@ const CharityUpdate = ({ theCharity }) => {
     const id = theCharity.id;
 
     const [image, setImage] = useState("");
-
     const [imageSuccess, setImageSuccess] = useState("");
     const [charityName, setCharityName] = useState("");
-    const [dateOfEvent, setDateOfEvent] = useState("");
-    const [gender, setGender] = useState("");
+    const [dateStart, setDateStart] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -29,21 +28,21 @@ const CharityUpdate = ({ theCharity }) => {
         viewCharity(id).then((result) => {
             setImage(result.image);
             setCharityName(result.charityName);
-            setDateOfEvent(result.dateOfEvent);
-            setGender(result.gender);
             setTitle(result.title);
+            setDateStart(result.dateOfEvent);
+            setDateEnd(result.dateOfEvent);
             setContent(result.content);
         });
     }, []);
 
     const { updateCharity } = useContext(CharityContext);
     const updatedCharity = {
-        image,
         charityName,
-        dateOfEvent,
-        gender,
-        title,
         content,
+        dateEnd,
+        dateStart,
+        image,
+        title,
     };
 
     const handleSubmit = (e) => {
@@ -167,9 +166,9 @@ const CharityUpdate = ({ theCharity }) => {
                         placeholderText="Thời gian tổ chức"
                         selected={
                             new Date(
-                                dateOfEvent.substring(6, 11),
-                                dateOfEvent.substring(3, 5) - 1,
-                                dateOfEvent.substring(0, 2)
+                                dateStart.substring(6, 11),
+                                dateStart.substring(3, 5) - 1,
+                                dateStart.substring(0, 2)
                             )
                         }
                         showYearDropdown
@@ -179,7 +178,7 @@ const CharityUpdate = ({ theCharity }) => {
                         onChange={(date) => {
                             const resultDate =
                                 moment(date).format("DD/MM/YYYY");
-                            setDateOfEvent(resultDate);
+                            setDateStart(resultDate);
                         }}
                         required
                     />
