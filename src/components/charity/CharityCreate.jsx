@@ -1,7 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
 import { useContext, useState } from "react";
-import { Button, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { CharityContext } from "../../contexts/CharityContext";
 import { storage } from "../../firebase";
@@ -13,12 +13,14 @@ const CharityCreate = () => {
         image: "",
         charityName: "",
         title: "",
-        dateOfEvent: "",
+        dateEnd: "",
+        dateStart: "",
         content: "",
+        isCompleted: true,
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [pickerDate, setPickerDate] = useState("");
+    const [pickerDate, setPickerDate] = useState(new Date());
 
     const onInputChange = (e) => {
         setNewCharity({
@@ -27,10 +29,26 @@ const CharityCreate = () => {
         });
         console.log(newCharity);
     };
-    const { image, charityName, title, dateOfEvent, content } = newCharity;
+    const {
+        charityName,
+        content,
+        dateEnd,
+        dateStart,
+        image,
+        isCompleted,
+        title,
+    } = newCharity;
     const handleSubmit = (e) => {
         e.preventDefault();
-        addCharity(image, charityName, title, dateOfEvent, content);
+        addCharity(
+            charityName,
+            content,
+            dateEnd,
+            dateStart,
+            image,
+            isCompleted,
+            title
+        );
     };
 
     // IMAGE UPLOAD
@@ -134,30 +152,32 @@ const CharityCreate = () => {
                         required
                     />
                 </Form.Group>
-
-                <Form.Group className="mb-3 form-group">
-                    <DatePicker
-                        className="form-control"
-                        placeholderText="Thời gian tổ chức"
-                        showYearDropdown
-                        scrollableYearDropdown
-                        yearDropdownItemNumber={100}
-                        dateFormat="dd/MM/yyyy h:mm aa"
-                        timeInputLabel="Thời gian:"
-                        showTimeInput
-                        selected={pickerDate}
-                        onChange={(date) => {
-                            const resultDate =
-                                moment(date).format("DD/MM/YYYY");
-                            setNewCharity({
-                                ...newCharity,
-                                dateOfEvent: resultDate,
-                            });
-                            setPickerDate(date);
-                        }}
-                        required
-                    />
-                </Form.Group>
+                <Row className="mb-3">
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian bắt đầu"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy h:mm aa"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            timeFormat="Pp"
+                            selected={pickerDate}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY hh:mm");
+                                setNewCharity({
+                                    ...newCharity,
+                                    dateStart: resultDate,
+                                });
+                                setPickerDate(date);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                </Row>
 
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
