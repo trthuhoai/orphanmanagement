@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { StorageContext } from "../../contexts/StorageContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const StoragePagination = () => {
+const StoragePagination = ({ keyword }) => {
     const { getStoragesList } = useContext(StorageContext);
     const { pages } = useContext(StorageContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getStoragesList(currentPage);
+        getStoragesList(currentPage, keyword);
     };
 
     return (

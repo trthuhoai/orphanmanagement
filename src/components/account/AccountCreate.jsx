@@ -19,8 +19,6 @@ const AccountCreate = () => {
         identification: "",
         phone: "",
         email: "",
-        password: "",
-        confirmPassword: "",
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
@@ -43,8 +41,6 @@ const AccountCreate = () => {
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
     } = newAccount;
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -58,8 +54,6 @@ const AccountCreate = () => {
             identification,
             phone,
             email,
-            password,
-            confirmPassword
         );
     };
 
@@ -174,7 +168,7 @@ const AccountCreate = () => {
                             required
                         />
                     </Form.Group>
-                    {/* <Form.Group as={Col} className="form-group">
+                    <Form.Group as={Col} className="form-group">
                         <Form.Select
                             defaultValue="Giới tính"
                             className="form-select"
@@ -197,7 +191,7 @@ const AccountCreate = () => {
                             <option value={true}>Nam</option>
                             <option value={false}>Nữ</option>
                         </Form.Select>
-                    </Form.Group> */}
+                    </Form.Group>
                     <Form.Group as={Col} className="form-group">
                         <select
                             defaultValue="Phân quyền"
@@ -281,37 +275,6 @@ const AccountCreate = () => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );

@@ -5,44 +5,61 @@ import {
     uploadBytes,
 } from "firebase/storage";
 import moment from "moment";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { AccountContext } from "../../contexts/AccountContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
-const AccountUpdate = ({ theAccount }) => {
-    const id = theAccount.id;
+const FormInfo = () => {
+    const currentUser = JSON.parse(localStorage.getItem("current-user"));
+    const token = JSON.parse(localStorage.getItem("token"));
 
-    const [image, setImage] = useState("");
-    const [imageSuccess, setImageSuccess] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [date_of_birth, setDate_of_birth] = useState("");
-    const [gender, setGender] = useState("");
-    const [roles, setRoles] = useState("");
-    const [address, setAddress] = useState("");
-    const [identification, setIdentification] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
+    const [imageSuccess, setImageSuccess] = useState();
+    const [image, setImage] = useState(currentUser.image);
+    const [fullName, setFullName] = useState(currentUser.fullName);
+    const [date_of_birth, setDate_of_birth] = useState(
+        currentUser.date_of_birth
+    );
+    const [gender, setGender] = useState(currentUser.gender);
+    const [roles, setRoles] = useState(currentUser.roles);
+    const [address, setAddress] = useState(currentUser.address);
+    const [identification, setIdentification] = useState(
+        currentUser.identification
+    );
+    const [phone, setPhone] = useState(currentUser.phone);
+    const [email, setEmail] = useState(currentUser.email);
 
-    const { viewAccount } = useContext(AccountContext);
-    useEffect(() => {
-        viewAccount(id).then((result) => {
-            setImage(result.image);
-            setFullName(result.fullName);
-            setDate_of_birth(result.date_of_birth);
-            setGender(result.gender);
-            setRoles([result.roles[0].roleName]);
-            setAddress(result.address);
-            setIdentification(result.identification);
-            setPhone(result.phone);
-            setEmail(result.email);
-        });
-    }, []);
+    async function updateProfile(updatedProfile) {
+        let raw = JSON.stringify(updatedProfile);
+        let requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: raw,
+            redirect: "follow",
+        };
 
-    const { updateAccount } = useContext(AccountContext);
-    const updatedAccount = {
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/profile/account",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                if (result.code === 200) {
+                    alert("Cập nhật thông tin thành công");
+                    localStorage.setItem(
+                        "current-user",
+                        JSON.stringify(result.data)
+                    );
+                }
+            })
+            .catch((error) => console.log("error", error));
+    }
+    const updatedProfile = {
         image,
         fullName,
         date_of_birth,
@@ -56,9 +73,10 @@ const AccountUpdate = ({ theAccount }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedAccount);
-        updateAccount(id, updatedAccount);
+        console.log(updatedProfile);
+        updateProfile(updatedProfile);
     };
+
     // IMAGE UPDATE
     // generate random string for filename
     function generateString(length) {
@@ -106,6 +124,7 @@ const AccountUpdate = ({ theAccount }) => {
 
     return (
         <>
+            <h3 className="profile__title">Cập nhật thông tin tài khoản</h3>
             <Form.Group className="mb-3 form-group">
                 <img
                     className="image"
@@ -146,7 +165,11 @@ const AccountUpdate = ({ theAccount }) => {
                     <p className="image__success">{imageSuccess}</p>
                 )}
             </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="accountUpdate">
+            <Form
+                onSubmit={handleSubmit}
+                className="form mb-3"
+                id="profileUpdate"
+            >
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -158,6 +181,7 @@ const AccountUpdate = ({ theAccount }) => {
                         required
                     />
                 </Form.Group>
+
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
                         <DatePicker
@@ -205,22 +229,66 @@ const AccountUpdate = ({ theAccount }) => {
                             className="form-select"
                             name="roles"
                             onChange={(e) => {
-                                setRoles([e.target.value]);
+                                console.log(e.target.value);
+                                setRoles(JSON.parse(e.target.value));
                             }}
-                            value={roles}
+                            value={JSON.stringify(roles)}
                         >
                             <option hidden>Phân quyền</option>
-                            <option value={["ROLE_ADMIN"]}>
+                            <option
+                                value={JSON.stringify([
+                                    {
+                                        roleId: 1,
+                                        roleName: "ROLE_ADMIN",
+                                        description: "Quản trị viên",
+                                    },
+                                ])}
+                            >
                                 Quản trị viên
                             </option>
-                            <option value={["ROLE_EMPLOYEE"]}>Nhân viên</option>
-                            <option value={["ROLE_MANAGER_LOGISTIC"]}>
+                            <option
+                                value={
+                                    JSON.stringify([{
+                                        roleId: 2,
+                                        roleName: "ROLE_EMPLOYEE",
+                                        description: "Nhân viên",
+                                    }])
+                                }
+                            >
+                                Nhân viên
+                            </option>
+                            <option
+                                value={
+                                    JSON.stringify([{
+                                        roleId: 3,
+                                        roleName: "ROLE_MANAGER_LOGISTIC",
+                                        description:
+                                            "Quản lý hoạt động trung tâm",
+                                    }])
+                                }
+                            >
                                 Quản lý trung tâm
                             </option>
-                            <option value={["ROLE_MANAGER_HR"]}>
+                            <option
+                                value={
+                                    JSON.stringify([{
+                                        roleId: 4,
+                                        roleName: "ROLE_MANAGER_HR",
+                                        description: "Quản lý nhân sự",
+                                    }])
+                                }
+                            >
                                 Quản lý nhân sự
                             </option>
-                            <option value={["ROLE_MANAGER_CHILDREN"]}>
+                            <option
+                                value={
+                                    JSON.stringify([{
+                                        roleId: 5,
+                                        roleName: "ROLE_MANAGER_CHILDREN",
+                                        description: "Quản lý trẻ em",
+                                    }])
+                                }
+                            >
                                 Quản lý trẻ em
                             </option>
                         </Form.Select>
@@ -264,7 +332,6 @@ const AccountUpdate = ({ theAccount }) => {
                         />
                     </Form.Group>
                 </Row>
-
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -276,9 +343,17 @@ const AccountUpdate = ({ theAccount }) => {
                         required
                     />
                 </Form.Group>
+                <Button
+                    form="profileUpdate"
+                    variant="success"
+                    type="submit"
+                    className="btn btn--primary btn__submit"
+                >
+                    Cập nhật thông tin
+                </Button>
             </Form>
         </>
     );
 };
 
-export default AccountUpdate;
+export default FormInfo;

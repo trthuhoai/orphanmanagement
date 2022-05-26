@@ -1,12 +1,12 @@
-import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
-import PicnicList from "../../components/picnic/PicnicList";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/header/Header";
+import ProfileInfo from "../../components/profile/FormInfo";
+import FormPassword from "../../components/profile/FormPassword";
 import Sidebar from "../../components/sidebar/Sidebar";
-import PicnicContextProvider from "../../contexts/PicnicContext";
-import "./list.scss";
+import "./_profile.scss";
 
-const ListPicnic = () => {
+const ProfilePassword = () => {
     const token = localStorage.getItem("token");
     if (token === null) {
         return <Navigate to="/" />;
@@ -15,19 +15,19 @@ const ListPicnic = () => {
     return (
         <div className="list">
             <MetaTags>
-                <title>CYF Center | Dã ngoại</title>
+                <title>CYF Center | Trang cá nhân</title>
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
                 <Header />
                 <div className="main">
-                    <PicnicContextProvider>
-                        <PicnicList />
-                    </PicnicContextProvider>
+                    <div className="profile">
+                        <FormPassword></FormPassword>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ListPicnic;
+export default ProfilePassword;

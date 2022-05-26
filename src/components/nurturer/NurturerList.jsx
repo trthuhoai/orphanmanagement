@@ -11,12 +11,17 @@ import NurturerPagination from "./NurturerPagination";
 
 const NurturerList = () => {
     const { nurturers } = useContext(NurturerContext);
-    const { searchNurturer } = useContext(NurturerContext);
+    const { getNurturersList } = useContext(NurturerContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,8 @@ const NurturerList = () => {
                     <h2>Nhận nuôi trẻ</h2>
                     <SearchList
                         placeholder={"Tìm kiếm người nhận nuôi "}
-                        searchValue={searchNurturer}
+                        getSearchList={getNurturersList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người nhận nuôi
@@ -88,7 +94,7 @@ const NurturerList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <NurturerPagination />
+            <NurturerPagination keyword={keyword} />
         </>
     );
 };

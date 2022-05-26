@@ -11,12 +11,17 @@ import IntroducerPagination from "./IntroducerPagination";
 
 const IntroducerList = () => {
     const { introducers } = useContext(IntroducerContext);
-    const { searchIntroducer } = useContext(IntroducerContext);
+    const { getIntroducersList } = useContext(IntroducerContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -29,7 +34,8 @@ const IntroducerList = () => {
                     <h2>Giới thiệu trẻ</h2>
                     <SearchList
                         placeholder={"Tìm kiếm người giới thiệu "}
-                        searchValue={searchIntroducer}
+                        getSearchList={getIntroducersList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người giới thiệu
@@ -88,7 +94,7 @@ const IntroducerList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <IntroducerPagination />
+            <IntroducerPagination keyword={keyword} />
         </>
     );
 };
