@@ -99,7 +99,7 @@ const StatisticContextProvider = (props) => {
     // PIE CHART ACCOUNT STATUS STATS
     async function getAccountStatus() {
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin?limit=5&page=1`,
             requestOptions
         )
             .then((response) => response.json())
@@ -109,7 +109,7 @@ const StatisticContextProvider = (props) => {
             .catch((error) => console.log("error", error));
 
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?limit=5&page=1`,
             requestOptions
         )
             .then((response) => response.json())
