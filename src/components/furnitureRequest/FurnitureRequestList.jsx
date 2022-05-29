@@ -1,46 +1,50 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import Children from "./Children";
-import ChildrenCreate from "./ChildrenCreate";
-import ChildrenPagination from "./ChildrenPagination";
-import "./_children.scss";
-
-const ChildrenList = () => {
-    const { childrens } = useContext(ChildrenContext);
-
+import FurnitureRequest from "./FurnitureRequest";
+import FurnitureRequestCreate from "./FurnitureRequestCreate";
+import FurnitureRequestPagination from "./FurnitureRequestPagination";
+import "./_furnitureRequest.scss";
+import { useNavigate } from "react-router-dom";
+const FurnitureRequestList = () => {
+    const navigate = useNavigate();
+    const { furnitureRequests } = useContext(FurnitureRequestContext);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () =>{
+        navigate("/furniture/request/create")
+    }
 
     useEffect(() => {
         handleClose();
-    }, [childrens]);
-
+    }, [furnitureRequests]);
+    // furnitureRequests.reverse();
     return (
         <>
             <div className="table">
                 <div className="table__top">
-                    <h2>Trẻ em</h2>
+                    <h2>Danh sánh yêu cầu sửa chữa</h2>
                     <Button className="btn btn--primary" onClick={handleShow}>
-                        Thêm trẻ em
+                        Thêm yêu cầu
                     </Button>
                 </div>
                 <table className="table__body">
                     <thead>
                         <tr>
-                            <th scope="col">Họ và tên</th>
-                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Ngày yêu cầu</th>
+                            <th scope="col">Hạn cuối</th>
                             <th scope="col">Trạng thái</th>
+                            <th scope="col">Nhân viên được giao</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
+                        {furnitureRequests.map((furnitureRequest) => (
+                            <tr key={furnitureRequest.furnitureRequestId}>
+                                <FurnitureRequest furnitureRequest={furnitureRequest} />
                             </tr>
                         ))}
                     </tbody>
@@ -55,7 +59,7 @@ const ChildrenList = () => {
                         <Modal.Title>Thêm tài khoản</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal__body">
-                        <ChildrenCreate />
+                        <FurnitureRequestCreate />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -67,7 +71,7 @@ const ChildrenList = () => {
                         </Button>
                         <Button
                             variant="success"
-                            form="childrenCreate"
+                            form="furnitureRequestCreate"
                             type="submit"
                             className="btn btn--primary btn__submit"
                         >
@@ -76,9 +80,9 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <FurnitureRequestPagination />
         </>
     );
 };
 
-export default ChildrenList;
+export default FurnitureRequestList;

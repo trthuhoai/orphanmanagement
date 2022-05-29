@@ -6,6 +6,9 @@ import News from "./pages/news/News";
 import Charity from "./pages/charity/Charity";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
+import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
+import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
+import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
 import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
@@ -29,7 +32,10 @@ function App() {
                     <Route path="/nurturer" element={<ListNurturer />} />
                     <Route path="/storage" element={<ListStorage />} />
                     <Route path="/furniture" element={<ListFurniture/>}/>    
-                    <Route path="/furniture/request" element={<ListFurnitureRequest/>}/> 
+                    <Route path="/furniture/request" element={<ListFurnitureRequest/>} exact/> 
+                    <Route path="/furniture/request/create" element={<ListFurnitureRequestCreate/>} exact/> 
+                    <Route path="/furniture/request/update/:id" element={<ListFurnitureRequestUpdate/>} exact/> 
+                    <Route path="/furniture/request/:id" element={<ListFurnitureRequestDetail/>}/> 
                     <Route path="/employee" element={<ListEmployee />} />
                     <Route path="/statistic" element={<Statistic />} />
                 </Routes>

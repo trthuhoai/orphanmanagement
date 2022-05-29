@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const ChildrenPagination = () => {
-    const { getChildrensList } = useContext(ChildrenContext);
-    const { pages } = useContext(ChildrenContext);
+const FurnitureRequestPagination = () => {
+    const { getFurnitureRequestsList } = useContext(FurnitureRequestContext);
+    const { pages } = useContext(FurnitureRequestContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
-        localStorage.setItem("childrenPage", currentPage);
-        getChildrensList(currentPage);
+        localStorage.setItem("furnitureRequestPage", currentPage);
+        getFurnitureRequestsList(currentPage);
     };
 
     return (
@@ -36,4 +36,4 @@ const ChildrenPagination = () => {
     );
 };
 
-export default ChildrenPagination;
+export default FurnitureRequestPagination;

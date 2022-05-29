@@ -23,7 +23,7 @@ const FurnitureContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture?page=${furniturePage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture?page=${furniturePage}&limit=5`,
             requestOptions
         )
             .then((response) => response.json())

@@ -30,7 +30,7 @@ const ChildrenContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}&limit=6`,
             requestOptions
         )
             .then((response) => response.json())

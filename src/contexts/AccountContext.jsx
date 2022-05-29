@@ -25,7 +25,7 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${currentPage}`,
+            `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${currentPage}&limit=5`,
             requestOptions
         )
             .then((response) => response.json())

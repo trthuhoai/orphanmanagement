@@ -1,11 +1,16 @@
 import { MetaTags } from "react-meta-tags";
-import FurnitureRequestList from "../../components/furnitureRequest/FurnitureRequestList";
+import FurnitureRequestCreate from "../../components/furnitureRequest/FurnitureRequestCreate";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
-import "./list.scss";
+// import { withRouter } from "react-router-dom";
+import { useParams } from 'react-router-dom'
+// import "./list.scss";
 
-const ListFurnitureRequest = () => {
+const ListFurnitureRequest_Create = () => {
+    const params = useParams()
+   console.log("id", params.id);
+   let id=params.id;
     return (
         <div className="list">
             <MetaTags>
@@ -14,9 +19,9 @@ const ListFurnitureRequest = () => {
             <Sidebar />
             <div className="listContainer">
                 <Header />
-                <div className="main">
+                <div className="main"> 
                     <FurnitureRequestContextProvider>
-                        <FurnitureRequestList />
+                        <FurnitureRequestCreate/>
                     </FurnitureRequestContextProvider>
                 </div>
             </div>
@@ -24,4 +29,4 @@ const ListFurnitureRequest = () => {
     );
 };
 
-export default ListFurnitureRequest;
+export default ListFurnitureRequest_Create;  

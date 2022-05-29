@@ -40,7 +40,7 @@ export default function Login() {
                 redirect: "follow",
             };
             let _result = await fetch(
-                "https://orphanmanagement.herokuapp.com/api/v1/auth/account",
+                "https://orphanmanagement.herokuapp.com/api/v1/profile/account",
                 requestOptions
             );
             _result = await _result.json();
