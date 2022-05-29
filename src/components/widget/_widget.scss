@@ -21,8 +21,19 @@
     border-radius: 12px;
     box-shadow: 0 0 12px rgba(15, 30, 84, 0.15);
     transition: transform 0.2s linear;
+    cursor: pointer;
 
     &:hover {
         transform: scale(1.05);
     }
+}
+
+.widget__item.widget__active {
+    background-color: $logoColor;
+    color: $secondaryColor;
+}
+
+.widget__heading,
+.widget__description {
+    user-select: none;
 }

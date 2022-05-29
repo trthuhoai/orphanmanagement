@@ -9,8 +9,10 @@ const FurnitureContextProvider = (props) => {
     const furniturePage = JSON.parse(localStorage.getItem("furniturePage"));
     const [detailAccounts, setDetailAccounts] = useState({});
 
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getFurnituresList(1);
+        getFurnituresList(1, "");
     }, []);
     async function getFurnituresList(furniturePage) {
         const token = JSON.parse(localStorage.getItem("token"));
@@ -36,7 +38,6 @@ const FurnitureContextProvider = (props) => {
     }
     // GET ACCOUNTS LIST
     async function getFurnituresList1() {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -51,7 +52,7 @@ const FurnitureContextProvider = (props) => {
         )
             .then((response) => response.text())
             .then((result) => {
-                console.log(result)
+                console.log(result);
                 setFurnitures(JSON.parse(result).data);
             })
             .catch((error) => console.log("error", error));
@@ -69,9 +70,8 @@ const FurnitureContextProvider = (props) => {
             nameFurniture,
             status,
             goodQuantity,
-            brokenQuantity
+            brokenQuantity,
         });
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "POST",
             headers: {
@@ -88,9 +88,8 @@ const FurnitureContextProvider = (props) => {
         )
             .then((response) => response.json())
             .then((result) => {
-                console.log(result.code+"ddddf");
-                if(result.code==="200")
-                {
+                console.log(result.code + "ddddf");
+                if (result.code === "200") {
                     setAddResult("true");
                 }
                 getFurnituresList();
@@ -100,7 +99,6 @@ const FurnitureContextProvider = (props) => {
     }
     // VIEW ACCOUNT DETAILS
     async function viewFurniture(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -110,24 +108,23 @@ const FurnitureContextProvider = (props) => {
             redirect: "follow",
         };
 
-        let result=await fetch(
+        let result = await fetch(
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
         );
-            // .then((response) => response.text())
-            // .then((result) => {
-            //     console.log(result);
-            result = await result.json();
-            return result.data;
+        // .then((response) => response.text())
+        // .then((result) => {
+        //     console.log(result);
+        result = await result.json();
+        return result.data;
 
-                //Cần fix để hiển thi ds thay đổi sau khi add
-               // setAccounts(JSON.parse(result).data);
-            // })
-            // .catch((error) => console.log("error", error));
+        //Cần fix để hiển thi ds thay đổi sau khi add
+        // setAccounts(JSON.parse(result).data);
+        // })
+        // .catch((error) => console.log("error", error));
     }
     //UPDATE ACCOUNT
     async function updateFurniture(id, updatedFurniture) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedFurniture);
         let requestOptions = {
             method: "PUT",
@@ -148,7 +145,9 @@ const FurnitureContextProvider = (props) => {
                 console.log(result);
                 setFurnitures(
                     furnitures.map((furniture) =>
-                        furniture.furnitureId === id ? JSON.parse(result).data : furniture
+                        furniture.furnitureId === id
+                            ? JSON.parse(result).data
+                            : furniture
                     )
                 );
             })
@@ -156,7 +155,6 @@ const FurnitureContextProvider = (props) => {
     }
     // DELETE ACCOUNT
     async function deleteFurniture(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "DELETE",
             headers: {
@@ -173,14 +171,17 @@ const FurnitureContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                setFurnitures(furnitures.filter((furniture) => furniture.furnitureId !== id));
+                setFurnitures(
+                    furnitures.filter(
+                        (furniture) => furniture.furnitureId !== id
+                    )
+                );
             })
             .catch((error) => console.log("error", error));
     }
     return (
         <FurnitureContext.Provider
             value={{
-                // accounts,
                 furnitures,
                 getFurnituresList,
                 addFurniture,
@@ -188,12 +189,9 @@ const FurnitureContextProvider = (props) => {
                 deleteFurniture,
                 viewFurniture,
                 updateFurniture,
-                pages
+                pages,
             }}
         >
-            {/* <div className="App">
-              <FurnitureList />
-            </div> */}
             {props.children}
         </FurnitureContext.Provider>
     );

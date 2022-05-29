@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const NurturerDetail = ({ theNurturer }) => {
     const id = theNurturer.id;
@@ -15,7 +16,7 @@ const NurturerDetail = ({ theNurturer }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailNurturer).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -23,7 +24,7 @@ const NurturerDetail = ({ theNurturer }) => {
                     variant="top"
                     src={
                         detailNurturer.image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <div>
@@ -79,6 +80,8 @@ const NurturerDetail = ({ theNurturer }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"nurturer"}/>
     );
 };
 

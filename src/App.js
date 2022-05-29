@@ -1,21 +1,33 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ListEmployee from "./pages/list/ListEmployee";
-import ListAccount from "./pages/list/ListAccount";
+import Announcement from "./pages/announcement/Announcement";
+import Feedback from "./pages/feedback/Feedback";
 import Home from "./pages/home/Home";
+import ListAccount from "./pages/list/ListAccount";
+import ListCharity from "./pages/list/ListCharity";
+import ListChildren from "./pages/list/ListChildren";
+import ListEmployee from "./pages/list/ListEmployee";
 import News from "./pages/news/News";
 import Charity from "./pages/charity/Charity";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
+<<<<<<< HEAD
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
 import ListChildren from "./pages/list/ListChildren";
+=======
+>>>>>>> d1fdac8d4c48f1d94aae00a90fe26c7cc436ef0b
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
+import ListPicnic from "./pages/list/ListPicnic";
 import ListStorage from "./pages/list/ListStorage";
-import Statistic from "./pages/statistic/Statistic"
+import ChangePassword from "./pages/login/ChangePassword";
 import Login from "./pages/login/Login";
+import ResetPassword from "./pages/login/ResetPassword";
+import Statistic from "./pages/statistic/Statistic";
 import "./scss/App.scss";
+import ProfileInfo from "./pages/profile/ProfileInfo";
+import ProfilePassword from "./pages/profile/ProfilePassword";
 
 function App() {
     return (
@@ -25,6 +37,10 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/resetpassword" element={<ResetPassword />} />
+                    <Route path="/changepassword" element={<ChangePassword />} />
+                    <Route path="/profileinfo" element={<ProfileInfo />} />
+                    <Route path="/profilepassword" element={<ProfilePassword />} />
                     <Route path="/make-charity" element={<Charity />} />
                     <Route path="/account" element={<ListAccount />} />
                     <Route path="/children" element={<ListChildren />} />
@@ -38,6 +54,10 @@ function App() {
                     <Route path="/furniture/request/:id" element={<ListFurnitureRequestDetail/>}/> 
                     <Route path="/employee" element={<ListEmployee />} />
                     <Route path="/statistic" element={<Statistic />} />
+                    <Route path="/charity" element={<ListCharity />} />
+                    <Route path="/picnic" element={<ListPicnic />} />
+                    <Route path="/feedback" element={<Feedback />} />
+                    <Route path="/announcement" element={<Announcement />} />
                 </Routes>
             </BrowserRouter>
         </div>
@@ -45,4 +65,3 @@ function App() {
 }
 
 export default App;
-

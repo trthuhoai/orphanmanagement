@@ -1,4 +1,4 @@
-import { useContext,useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
 import FurnitureDetail from "./FurnitureDetail";
@@ -35,23 +35,17 @@ const Furniture = ({ furniture }) => {
                 <img
                     src={
                         furniture.image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                     alt=""
                 />
                 {furniture.nameFurniture}
             </td>
             <td>{furniture.goodQuantity} </td>
+            <td>{furniture.brokenQuantity}</td>
+            <td>{furniture.status}</td>
             <td>
-                {furniture.brokenQuantity}
- 
-            </td>
-            <td>
-                {furniture.status}
- 
-            </td>
-            <td>
-                 <i
+                <i
                     title="Xem chi tiết"
                     className="bi bi-info-circle icon icon__view"
                     onClick={handleShowDetail}
@@ -64,7 +58,7 @@ const Furniture = ({ furniture }) => {
                 <i
                     className="bi bi-trash3 icon icon__delete"
                     onClick={handleShowDelete}
-                ></i> 
+                ></i>
             </td>
             <Modal
                 show={showDetail}
@@ -79,7 +73,7 @@ const Furniture = ({ furniture }) => {
                     <FurnitureDetail theFurniture={furniture} />
                 </Modal.Body>
             </Modal>
-{/* MODAL UPDATE */}
+            {/* MODAL UPDATE */}
             <Modal
                 show={showUpdate}
                 onHide={handleCloseUpdate}
@@ -143,7 +137,7 @@ const Furniture = ({ furniture }) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-{/* Modal */}
+            {/* Modal */}
         </>
     );
 };

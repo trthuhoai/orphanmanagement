@@ -25,8 +25,6 @@ const AccountUpdate = ({ theAccount }) => {
     const [identification, setIdentification] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const { viewAccount } = useContext(AccountContext);
     useEffect(() => {
@@ -54,8 +52,6 @@ const AccountUpdate = ({ theAccount }) => {
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
     };
 
     const handleSubmit = (e) => {
@@ -118,7 +114,7 @@ const AccountUpdate = ({ theAccount }) => {
                     src={
                         (file && URL.createObjectURL(file)) ||
                         image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <Row>
@@ -171,7 +167,7 @@ const AccountUpdate = ({ theAccount }) => {
                                 new Date(
                                     date_of_birth.substring(6, 11),
                                     date_of_birth.substring(3, 5) - 1,
-                                    date_of_birth.substring(0, 2),
+                                    date_of_birth.substring(0, 2)
                                 )
                             }
                             showYearDropdown
@@ -280,35 +276,6 @@ const AccountUpdate = ({ theAccount }) => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );

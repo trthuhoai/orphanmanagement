@@ -13,7 +13,9 @@ const FurnitureRequestContextProvider = (props) => {
 
     
 
-    const furnitureRequestPage = JSON.parse(localStorage.getItem("furnitureRequestPage"));
+    const furnitureRequestPage = JSON.parse(
+        localStorage.getItem("furnitureRequestPage")
+    );
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {

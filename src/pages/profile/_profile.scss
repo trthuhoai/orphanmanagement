@@ -1,0 +1,31 @@
+@use "../../scss/abstracts/" as *;
+
+.profile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 700px;
+    width: 100%;
+
+    &__title {
+        text-align: center;
+        margin-bottom: 1rem;
+        color: $mainColor;
+        font-size: $fontSizeLarge;
+    }
+
+    .form-group {
+        max-width: 100%;
+    }
+
+    .btn__submit {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .form-password {
+        width: 50%;
+        margin: 0 auto;
+    }
+}

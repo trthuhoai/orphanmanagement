@@ -1,6 +1,7 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const ChildrenDetail = ({ theChildren }) => {
     const id = theChildren.id;
@@ -14,7 +15,7 @@ const ChildrenDetail = ({ theChildren }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailChildren).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -22,7 +23,7 @@ const ChildrenDetail = ({ theChildren }) => {
                     variant="top"
                     src={
                         detailChildren.image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <div>
@@ -84,6 +85,8 @@ const ChildrenDetail = ({ theChildren }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"children"}/>
     );
 };
 

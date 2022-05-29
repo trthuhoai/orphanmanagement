@@ -2,15 +2,14 @@ import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_pagination.scss";
-
-const AccountPagination = () => {
+const AccountPagination = ({ keyword }) => {
     const { getAccountsList } = useContext(AccountContext);
     const { pages } = useContext(AccountContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getAccountsList(currentPage);
+        getAccountsList(currentPage,keyword);
     };
 
     return (

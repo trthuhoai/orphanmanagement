@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -10,12 +11,17 @@ import EmployeePagination from "./EmployeePagination";
 
 const EmployeeList = () => {
     const { employees } = useContext(EmployeeContext);
-    const { searchEmployee } = useContext(EmployeeContext);
+    const { getEmployeesList } = useContext(EmployeeContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -28,7 +34,8 @@ const EmployeeList = () => {
                     <h2>Nhân viên</h2>
                     <SearchList
                         placeholder={"Tìm kiếm nhân viên "}
-                        searchValue={searchEmployee}
+                        getSearchList={getEmployeesList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm nhân viên
@@ -43,13 +50,18 @@ const EmployeeList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {employees.map((employee) => (
-                            <tr key={employee.id}>
-                                <Employee employee={employee} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {employees.length !== 0 && (
+                        <tbody>
+                            {employees.map((employee) => (
+                                <tr key={employee.id}>
+                                    <Employee employee={employee} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {employees.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
@@ -82,7 +94,7 @@ const EmployeeList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <EmployeePagination />
+            <EmployeePagination keyword={keyword} />
         </>
     );
 };

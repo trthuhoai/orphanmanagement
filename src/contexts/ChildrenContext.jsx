@@ -14,36 +14,64 @@ const ChildrenContextProvider = (props) => {
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
 
-        getChildrensList(1);
+        getChildrensList(1, "");
         getIntroducersList();
         getNurturersList();
     }, []);
 
     // GET CHILDRENS LIST
-    async function getChildrensList(currentPage) {
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}&limit=6`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setChildrens(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => {
-                console.log("error", error);
-                setChildrens([]);
-                getChildrensList(currentPage - 1);
+    async function getChildrensList(currentPage, keyword) {
+        if (keyword) {
+            let raw = JSON.stringify({
+                keyword,
             });
+
+            let requestOptions = {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                body: raw,
+                redirect: "follow",
+            };
+
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/manager/children/search?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setChildrens(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => console.log("error", error));
+        } else {
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/manager/children?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setChildrens(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    setChildrens([]);
+                    getChildrensList(currentPage - 1);
+                });
+        }
     }
     // GET INTRODUCERS LIST
     async function getIntroducersList() {
@@ -196,34 +224,6 @@ const ChildrenContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH CHILDREN
-    async function searchChildren(keyword) {
-        let raw = JSON.stringify({
-            keyword,
-        });
-
-        let requestOptions = {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            body: raw,
-            redirect: "follow",
-        };
-
-        await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/manager/children/search",
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setChildrens(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => console.log("error", error));
-    }
     return (
         <ChildrenContext.Provider
             value={{
@@ -235,7 +235,6 @@ const ChildrenContextProvider = (props) => {
                 deleteChildren,
                 viewChildren,
                 updateChildren,
-                searchChildren,
                 pages,
             }}
         >

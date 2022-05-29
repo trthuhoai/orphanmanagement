@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const NurturerPagination = () => {
+const NurturerPagination = ({ keyword }) => {
     const { getNurturersList } = useContext(NurturerContext);
     const { pages } = useContext(NurturerContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getNurturersList(currentPage);
+        getNurturersList(currentPage, keyword);
     };
 
     return (

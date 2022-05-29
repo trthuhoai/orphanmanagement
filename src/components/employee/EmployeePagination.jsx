@@ -3,14 +3,14 @@ import ReactPaginate from "react-paginate";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const EmployeePagination = () => {
+const EmployeePagination = ({ keyword }) => {
     const { getEmployeesList } = useContext(EmployeeContext);
     const { pages } = useContext(EmployeeContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("currentPage", currentPage);
-        getEmployeesList(currentPage);
+        getEmployeesList(currentPage, keyword);
     };
 
     return (

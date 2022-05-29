@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_card.scss";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 
 const IntroducerDetail = ({ theIntroducer }) => {
     const id = theIntroducer.id;
@@ -15,7 +16,7 @@ const IntroducerDetail = ({ theIntroducer }) => {
         });
     }, []);
 
-    return (
+    return Object.keys(detailIntroducer).length !== 0 ? (
         <Card className="card">
             <Card.Header className="card__header">
                 <Card.Img
@@ -23,7 +24,7 @@ const IntroducerDetail = ({ theIntroducer }) => {
                     variant="top"
                     src={
                         detailIntroducer.image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <div>
@@ -79,6 +80,8 @@ const IntroducerDetail = ({ theIntroducer }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    ) : (
+            <LoadingDetail tableName={"introducer"}/>
     );
 };
 

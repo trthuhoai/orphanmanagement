@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
 import FurnitureRequestList from "../../components/furnitureRequest/FurnitureRequestList";
 import Header from "../../components/header/Header";

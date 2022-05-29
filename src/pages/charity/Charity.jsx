@@ -3,7 +3,7 @@ import { MetaTags } from 'react-meta-tags'
 import { NavLink } from 'react-router-dom';
 import "./charity.scss";
 import { Navbar, Nav } from 'react-bootstrap';
-import { Row, Container } from "reactstrap";
+import { Row, Container } from "react-bootstrap";
 import { Button, Col, Form, Row1 } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 

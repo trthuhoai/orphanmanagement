@@ -33,39 +33,67 @@ const options = {
             text: "Số trẻ ở trung tâm từ 2010 - 2022",
         },
     },
+    maintainAspectRatio: false,
 };
 
-const LineChart = () => {
+const LineChart = ({ chartId }) => {
+    const { accountActiveYear } = useContext(StatisticContext);
+    const { accountDeletedYear } = useContext(StatisticContext);
     const { childrenIntroduction } = useContext(StatisticContext);
     const { childrenAdoption } = useContext(StatisticContext);
 
-    const labels = childrenIntroduction.map((item) => item.year);
+    let firstChartData = [],
+        secondChartData = [];
+    let label = [];
+    let labels = [];
+    if (chartId === 1) {
+        options.plugins.title.text =
+            "Biểu đồ thể hiện sự thay đổi số lượng tài khoản trong năm 2022";
+        label = ["Tài khoản mới", ""];
+        firstChartData = accountActiveYear.map((item) => item.amount);
+        labels = accountActiveYear.map((item) => item.year);
+        // secondChartData = labels.map((label) => {
+        //     let index = accountDeletedYear.find(
+        //         (element) => element.year === label
+        //     );
+        //     return (index && index.amount) || 0;
+        // });
+    } else if (chartId === 2) {
+        options.plugins.title.text =
+            "Biểu đồ thể hiện sự thay đổi số lượng trẻ em qua từng năm từ 2010 - 2022 ";
+        label = ["Trẻ em vào trung tâm", "Trẻ em được nhận nuôi"];
+        firstChartData = childrenIntroduction.map((item) => item.amount);
+        labels = childrenIntroduction.map((item) => item.year);
+        secondChartData = labels.map((label) => {
+            let index = childrenAdoption.find(
+                (element) => element.year === label
+            );
+            return (index && index.amount) || 0;
+        });
+    } else if (chartId === 3) {
+        options.plugins.title.text = "Chua co du lieu";
+    }
 
     const data = {
-        labels,
+        labels: labels,
         datasets: [
             {
-                label: "Trẻ em vào trung tâm",
-                data: childrenIntroduction.map((item, index) => item.amount),
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                label: label[0],
+                data: firstChartData,
+                borderColor: "rgb(246, 147, 51)",
+                backgroundColor: "rgba(246, 147, 51, 0.5)",
             },
             {
-                label: "Trẻ em được nhận nuôi",
-                data: labels.map((label) => {
-                    let index = childrenAdoption.find(
-                        (element) => element.year === label
-                    );
-                    return (index && index.amount) || 0;
-                }),
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
+                label: label[1],
+                data: secondChartData,
+                borderColor: chartId !== 1 ? "rgb(94, 200, 235)" : "#fff",
+                backgroundColor: chartId !== 1 ? "rgba(94, 200, 235, 0.5)" : "#fff",
             },
         ],
     };
     return (
         <div className="line-chart">
-            <Line options={options} data={data} />
+            <Line options={options} data={data} height={96} />
         </div>
     );
 };

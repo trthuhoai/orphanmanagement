@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { ChildrenContext } from "../../contexts/ChildrenContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -11,11 +12,16 @@ import "./_children.scss";
 
 const ChildrenList = () => {
     const { childrens } = useContext(ChildrenContext);
-    const { searchChildren } = useContext(ChildrenContext);
+    const { getChildrensList } = useContext(ChildrenContext);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -28,7 +34,8 @@ const ChildrenList = () => {
                     <h2>Trẻ em</h2>
                     <SearchList
                         placeholder={"Tìm kiếm trẻ em "}
-                        searchValue={searchChildren}
+                        getSearchList={getChildrensList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm trẻ em
@@ -43,13 +50,18 @@ const ChildrenList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {childrens.map((children) => (
-                            <tr key={children.id}>
-                                <Children children={children} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {childrens.length !== 0 && (
+                        <tbody>
+                            {childrens.map((children) => (
+                                <tr key={children.id}>
+                                    <Children children={children} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {childrens.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
@@ -82,7 +94,7 @@ const ChildrenList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <ChildrenPagination />
+            <ChildrenPagination keyword={keyword} />
         </>
     );
 };

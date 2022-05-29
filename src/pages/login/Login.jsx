@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
 
 export default function Login() {
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (token) navigate("/account");
+    }, []);
+    
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState("");
 
     async function login() {
@@ -124,7 +130,7 @@ export default function Login() {
                         />
                     </div>
                     <div className="login__field"></div>
-                    <p style={{ color: "red" }}>
+                    <p style={{ color: "#CD1818" }}>
                         {errorMessage && (
                             <div className="error"> {errorMessage} </div>
                         )}
@@ -139,7 +145,7 @@ export default function Login() {
                         Đăng nhập
                     </button>
                     <div className="no-account">
-                        <Link className="btn-sign" to="/Register">
+                        <Link className="btn-sign" to="/resetpassword">
                             Quên mật khẩu?
                         </Link>
                     </div>

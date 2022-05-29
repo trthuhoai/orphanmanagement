@@ -1,5 +1,5 @@
 import {
-    deleteObject, 
+    deleteObject,
     getDownloadURL,
     ref,
     uploadBytes
@@ -107,7 +107,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
                     console.log("Uh-oh, an error occurred!", error);
                 });
         }
-        const storageRef = ref(storage, `accounts/${generateString(100)}`);
+        const storageRef = ref(storage, `furnitures/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -128,7 +128,7 @@ const FurnitureUpdate = ({ theFurniture }) => {
                     src={
                         (file && URL.createObjectURL(file)) ||
                         image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <Row>

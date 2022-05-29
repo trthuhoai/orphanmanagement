@@ -2,32 +2,41 @@ import React, { useContext } from "react";
 import { StatisticContext } from "../../contexts/StatisticContext";
 import "./_widget.scss";
 
-const Widget = () => {
-    const { amountAccount } = useContext(StatisticContext);
-    const { amountChildren } = useContext(StatisticContext);
+const Widget = ({ getChartId }) => {
+    const { accountStatusActive } = useContext(StatisticContext);
+    const { accountStatusDeleted } = useContext(StatisticContext);
+    const { childrenTotal } = useContext(StatisticContext);
 
-    const widgetData = [
+    const widgets = [
         {
-            amount: amountAccount,
-            description: "Cán bộ và nhân viên",
+            id: 1,
+            total: accountStatusActive + accountStatusDeleted || 0,
+            description: "Tài khoản",
         },
         {
-            amount: amountChildren,
+            id: 2,
+            total: childrenTotal || 0,
             description: "Trẻ em",
         },
         {
-            amount: 0,
+            id: 3,
+            total: 0,
             description: "No data",
         },
     ];
+    const handleClickWidget = (widgetId) => {
+        getChartId(widgetId);
+    };
     return (
         <div className="widget">
-            {widgetData.map((widgetItem, key) => (
-                <div className="widget__item" key={key} >
-                    <h1 className="widget__heading">{widgetItem.amount}</h1>
-                    <p className="widget__description">
-                        {widgetItem.description}
-                    </p>
+            {widgets.map((widget, key) => (
+                <div
+                    className="widget__item"
+                    key={widget.id}
+                    onClick={() => handleClickWidget(widget.id)}
+                >
+                    <h1 className="widget__heading">{widget.total}</h1>
+                    <p className="widget__description">{widget.description}</p>
                 </div>
             ))}
         </div>

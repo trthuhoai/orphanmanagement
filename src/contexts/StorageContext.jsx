@@ -11,33 +11,61 @@ const StorageContextProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem("currentPage", 1);
-        getStoragesList(1);
+        getStoragesList(1, "");
     }, []);
 
     // GET STORAGES LIST
-    async function getStoragesList(currentPage) {
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${currentPage}`,
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                setStorages(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => {
-                console.log("error", error);
-                setStorages([]);
-                getStoragesList(currentPage - 1);
+    async function getStoragesList(currentPage, keyword) {
+        if (keyword) {
+            let raw = JSON.stringify({
+                keyword,
             });
+
+            let requestOptions = {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                body: raw,
+                redirect: "follow",
+            };
+
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/admin/search/deleted?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setStorages(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => console.log("error", error));
+        } else {
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/admin/deleted?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    setStorages(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    setStorages([]);
+                    getStoragesList(currentPage - 1);
+                });
+        }
     }
 
     // VIEW STORAGE DETAILS
@@ -102,34 +130,6 @@ const StorageContextProvider = (props) => {
             })
             .catch((error) => console.log("error", error));
     }
-    //SEARCH STORAGE
-    async function searchStorage(keyword) {
-        let raw = JSON.stringify({
-            keyword,
-        });
-
-        let requestOptions = {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            body: raw,
-            redirect: "follow",
-        };
-
-        await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin/search/deleted",
-            requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result);
-                setStorages(result.data.result);
-                setPages(result.data.pages);
-            })
-            .catch((error) => console.log("error", error));
-    }
     return (
         <StorageContext.Provider
             value={{
@@ -138,7 +138,6 @@ const StorageContextProvider = (props) => {
                 deleteStorage,
                 restoreStorage,
                 viewStorage,
-                searchStorage,
                 pages,
             }}
         >

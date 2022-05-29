@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { AccountContext } from "../../contexts/AccountContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -10,16 +11,21 @@ import AccountPagination from "./AccountPagination";
 
 const AccountList = () => {
     const { accounts } = useContext(AccountContext);
-    const { searchAccount } = useContext(AccountContext);
+    const { getAccountsList } = useContext(AccountContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // useEffect(() => {
-    //     handleClose();
-    // }, [accounts]);
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
+
+    useEffect(() => {
+        handleClose();
+    }, [accounts]);
 
     return (
         <>
@@ -28,7 +34,8 @@ const AccountList = () => {
                     <h2>Tài khoản</h2>
                     <SearchList
                         placeholder={"Tìm kiếm tài khoản "}
-                        searchValue={searchAccount}
+                        getSearchList={getAccountsList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm tài khoản
@@ -43,13 +50,18 @@ const AccountList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id}>
-                                <Account account={account} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {accounts.length !== 0 && (
+                        <tbody>
+                            {accounts.map((account) => (
+                                <tr key={account.id}>
+                                    <Account account={account} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {accounts.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
@@ -82,7 +94,7 @@ const AccountList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <AccountPagination />
+            <AccountPagination keyword={keyword} />
         </>
     );
 };

@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { AccountContext } from "../../contexts/AccountContext";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
 import "../../scss/abstracts/_pagination.scss";
 
-const FurniturePagination = () => {
+const FurniturePagination = ({ keyword }) => {
     const { getFurnituresList } = useContext(FurnitureContext);
     const { pages } = useContext(FurnitureContext);
 
     const handlePageClick = (data) => {
         let currentPage = data.selected + 1;
         localStorage.setItem("furniturePage", currentPage);
-        getFurnituresList(currentPage);
+        getFurnituresList(currentPage, keyword);
     };
 
     return (

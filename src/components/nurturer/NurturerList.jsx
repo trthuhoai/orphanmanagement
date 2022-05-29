@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { LoadingList } from "../../components/loading/LoadingSkeleton";
 import { NurturerContext } from "../../contexts/NurturerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
@@ -10,12 +11,17 @@ import NurturerPagination from "./NurturerPagination";
 
 const NurturerList = () => {
     const { nurturers } = useContext(NurturerContext);
-    const { searchNurturer } = useContext(NurturerContext);
+    const { getNurturersList } = useContext(NurturerContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -28,7 +34,8 @@ const NurturerList = () => {
                     <h2>Nhận nuôi trẻ</h2>
                     <SearchList
                         placeholder={"Tìm kiếm người nhận nuôi "}
-                        searchValue={searchNurturer}
+                        getSearchList={getNurturersList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người nhận nuôi
@@ -43,13 +50,18 @@ const NurturerList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {nurturers.map((nurturer) => (
-                            <tr key={nurturer.id}>
-                                <Nurturer nurturer={nurturer} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {nurturers.length !== 0 && (
+                        <tbody>
+                            {nurturers.map((nurturer) => (
+                                <tr key={nurturer.id}>
+                                    <Nurturer nurturer={nurturer} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}
+                    {nurturers.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
@@ -82,7 +94,7 @@ const NurturerList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <NurturerPagination />
+            <NurturerPagination keyword={keyword} />
         </>
     );
 };

@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { IntroducerContext } from "../../contexts/IntroducerContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
+import { LoadingList } from "../loading/LoadingSkeleton";
 import SearchList from "../search/SearchList";
 import Introducer from "./Introducer";
 import IntroducerCreate from "./IntroducerCreate";
@@ -10,12 +11,17 @@ import IntroducerPagination from "./IntroducerPagination";
 
 const IntroducerList = () => {
     const { introducers } = useContext(IntroducerContext);
-    const { searchIntroducer } = useContext(IntroducerContext);
+    const { getIntroducersList } = useContext(IntroducerContext);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [keyword, setKeyword] = useState("");
+    const getKeyword = (keyword) => {
+        setKeyword(keyword);
+    };
 
     useEffect(() => {
         handleClose();
@@ -28,7 +34,8 @@ const IntroducerList = () => {
                     <h2>Giới thiệu trẻ</h2>
                     <SearchList
                         placeholder={"Tìm kiếm người giới thiệu "}
-                        searchValue={searchIntroducer}
+                        getSearchList={getIntroducersList}
+                        getKeyword={getKeyword}
                     ></SearchList>
                     <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm người giới thiệu
@@ -43,13 +50,18 @@ const IntroducerList = () => {
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {introducers.map((introducer) => (
-                            <tr key={introducer.id}>
-                                <Introducer introducer={introducer} />
-                            </tr>
-                        ))}
-                    </tbody>
+                    {introducers.length !== 0 && (
+                        <tbody>
+                            {introducers.map((introducer) => (
+                                <tr key={introducer.id}>
+                                    <Introducer introducer={introducer} />
+                                </tr>
+                            ))}
+                        </tbody>
+                    )}{" "}
+                    {introducers.length === 0 && (
+                        <LoadingList columns={4}></LoadingList>
+                    )}
                 </table>
                 <Modal
                     show={show}
@@ -82,7 +94,7 @@ const IntroducerList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <IntroducerPagination />
+            <IntroducerPagination keyword={keyword} />
         </>
     );
 };

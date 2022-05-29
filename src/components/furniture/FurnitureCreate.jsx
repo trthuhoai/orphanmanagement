@@ -1,21 +1,19 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useContext, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { AccountContext } from "../../contexts/AccountContext";
+import { Button, Form, Row } from "react-bootstrap";
 import { FurnitureContext } from "../../contexts/FurnitureContext";
-
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
 
 const FormCreate = () => {
-    const { addResult,addFurniture } = useContext(FurnitureContext);
+    const { addResult, addFurniture } = useContext(FurnitureContext);
     const [errorMessage, setErrorMessage] = useState("");
     const [newFurniture, setNewFurniture] = useState({
         image: "",
         nameFurniture: "",
         status: " ",
         goodQuantity: 0,
-        brokenQuantity: 0
+        brokenQuantity: 0,
     });
     const [imageSuccess, setImageSuccess] = useState("");
     const onInputChange = (e) => {
@@ -25,31 +23,22 @@ const FormCreate = () => {
         });
         console.log(newFurniture);
     };
-    const {
-        image,
-        nameFurniture,
-        status,
-        goodQuantity,
-        brokenQuantity
-
-
-    } = newFurniture;
+    const { image, nameFurniture, status, goodQuantity, brokenQuantity } =
+        newFurniture;
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("ok");
         addFurniture(
             image,
             nameFurniture,
-            status,   
+            status,
             goodQuantity,
             brokenQuantity
-           
         );
-        if(addResult){
-            setErrorMessage("Thêm thông tin thiết bị thành công!")
-        }
-        else{
-            setErrorMessage("Lỗi thêm thiết bị!")
+        if (addResult) {
+            setErrorMessage("Thêm thông tin thiết bị thành công!");
+        } else {
+            setErrorMessage("Lỗi thêm thiết bị!");
         }
     };
 
@@ -75,7 +64,7 @@ const FormCreate = () => {
     };
     async function handleUploadImage() {
         if (!file) return;
-        const storageRef = ref(storage, generateString(100));
+        const storageRef = ref(storage, `furnitures/${generateString(100)}`);
         await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(storageRef)
                 .then((url) => {
@@ -83,7 +72,8 @@ const FormCreate = () => {
                         ...newFurniture,
                         image: url,
                     });
-                    console.log("link anh ", url);
+                    console.log(url);
+                    setImageSuccess("Tải ảnh lên thành công");
                 })
                 .catch((err) => console.log("err", err));
         });
@@ -97,7 +87,7 @@ const FormCreate = () => {
                     alt=""
                     src={
                         (file && URL.createObjectURL(file)) ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                 />
                 <Row>
@@ -124,6 +114,9 @@ const FormCreate = () => {
                         <i class="bi bi-file-earmark-arrow-up-fill"></i> Lưu ảnh
                     </Button>
                 </Row>
+                {imageSuccess && (
+                    <p className="image__success">{imageSuccess}</p>
+                )}
             </Form.Group>
             <Form onSubmit={handleSubmit} className="form" id="furnitureCreate">
                 <Form.Group className="mb-3 form-group">
@@ -163,7 +156,6 @@ const FormCreate = () => {
                         placeholder="Ghi chú"
                         name="status"
                         onChange={(e) => onInputChange(e)}
-                        
                     />
                 </Form.Group>
                 <Row className="mb-6">
@@ -172,7 +164,7 @@ const FormCreate = () => {
                             <div className="error"> {errorMessage} </div>
                         )}
                     </p>
-                        </Row>
+                </Row>
             </Form>
         </>
     );
