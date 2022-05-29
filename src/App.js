@@ -10,13 +10,10 @@ import News from "./pages/news/News";
 import Charity from "./pages/charity/Charity";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
-<<<<<<< HEAD
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
-import ListChildren from "./pages/list/ListChildren";
-=======
->>>>>>> d1fdac8d4c48f1d94aae00a90fe26c7cc436ef0b
+// import ListChildren from "./pages/list/ListChildren";
 import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
 import ListPicnic from "./pages/list/ListPicnic";
