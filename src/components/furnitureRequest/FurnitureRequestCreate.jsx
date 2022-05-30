@@ -1,268 +1,291 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
-import { storage } from "../../firebase";
+import { useForm, Controller } from "react-hook-form";
+import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
+import { Card, ListGroup } from "react-bootstrap";
+import Select from "react-select";
 import "../../scss/abstracts/_form.scss";
-import { SearchBar } from "../searchBar/SearchBar";
-import "./_children.scss";
+import "./_furnitureRequest.scss";
+import { Link, useNavigate } from "react-router-dom";
 
-const ChildrenCreate = () => {
-    const { addChildren } = useContext(ChildrenContext);
-    const { introducers } = useContext(ChildrenContext);
-    const { nurturers } = useContext(ChildrenContext);
-
-    const [newChildren, setNewChildren] = useState({
-        image: "",
-        fullName: "",
-        dateOfBirth: "",
-        gender: "",
-        introductoryDate: "",
-        adoptiveDate: "",
-        introducerId: 0,
-        nurturerId: 0,
+const FurnitureRequestCreate = () => {
+    const { addFurnitureRequest,furnitures,accounts } = useContext(FurnitureRequestContext);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [selectedOption, setSelectedOption] = useState(0);
+    const navigate = useNavigate();
+    const defaultValues = {
+        Native: "",
+        TextField: "",
+        Select: "",
+        ReactSelect: { value: 0, label: "Select..." },
+        Checkbox: false,
+        switch: false,
+        RadioGroup: "",
+        numberFormat: 123456789,
+        downShift: "apple"
+      };
+      const {control } = useForm({ defaultValues });
+    const [newFurnitureRequest, setNewFurnitureRequest] = useState({
+        employeeId: 0,
+        furnitureRequestList:[]
     });
-    const [imageSuccess, setImageSuccess] = useState("");
+    const [request,setRequest]=useState({
+        fixQuantity: 0,
+            furnitureId:0,
+            importQuantity:0,
+            note:""
+    })
 
-    const [introducerId, setIntroducerId] = useState(0);
-    const [introducer, setIntroducer] = useState({});
-    const getIntroducerId = (valueId) => {
-        setIntroducerId(valueId);
-        setIntroducer(
-            introducers.find((introducer) => introducer.id === valueId)
-        );
-    };
-    const [nurturerId, setNurturerId] = useState(0);
-    const [nurturer, setNurturer] = useState(0);
-    const getNurturerId = (valueId) => {
-        setNurturerId(valueId);
-        setNurturer(nurturers.find((nurturer) => nurturer.id === valueId));
-    };
+    const listRequest=[];
     const onInputChange = (e) => {
-        setNewChildren({
-            ...newChildren,
-            [e.target.name]: e.target.value,
+        setNewFurnitureRequest({
+            ...newFurnitureRequest,
+            "employeeId": e.value,
         });
-        console.log(newChildren);
+        console.log("newFurnitureRequest",newFurnitureRequest);
     };
-    const {
-        image,
-        fullName,
-        gender,
-        dateOfBirth,
-        introductoryDate,
-        adoptiveDate,
-    } = newChildren;
+    const onInputChange1 = (e) => {
+        setRequest({...request,
+            [e.target.name]: e.target.value,
+        })
+        listRequest[0]=request;
+        setNewFurnitureRequest({
+            ...newFurnitureRequest,
+            furnitureRequestList: listRequest,
+        });
+        console.log("newFurnitureRequest",newFurnitureRequest);
+    };
+    const onInputChange2 = (e) => {
+        setRequest({...request,
+            "furnitureId": e.value,
+        })
+        listRequest[0]=request;
+        setNewFurnitureRequest({
+            ...newFurnitureRequest,
+            furnitureRequestList: listRequest,
+        });
+        console.log("newFurnitureRequest",newFurnitureRequest);
+    };
+    let renameObjectKey = (object) => {
+        object.label = object.nameFurniture;
+        object.value=object.furnitureId;
+        delete object.nameFurniture;
+        delete object.furnitureId;
+        delete object.goodQuantity;
+        delete object.image;
+        delete object.status;
+        delete object.unitPrice;
+        delete object.brokenQuantity;
+      };
+      let renameObjectKeyAccount = (object) => {
+        object.label =object.id+ " - " +object.fullName ;
+        object.value=object.id;
+        delete object.fullName;
+        delete object.email;
+        delete object.id;
+        delete object.image;
+        delete object.phone;
+        delete object.roles;
+      };
+    useEffect(() => {
+        furnitures.map((furniture) => {
+            renameObjectKey(furniture);
+
+        });
+      
+        },[furnitures]);
+
+        useEffect(() => {
+            accounts.map((account) => {
+                renameObjectKeyAccount(account);
+    
+            });
+
+            },[accounts]);
+        
+    // const filterOption = (option, inputValue) => {
+    //     const { label, value } = option;
+    //     const otherKey = furnitures.filter(
+    //       opt => opt.label === label && opt.value.includes(inputValue)
+    //     );
+    //     return value.includes(inputValue) || otherKey.length > 0;
+    //   };
+    // const {
+    //     employeeId,
+    //     furnitureRequestList        
+    // } = newFurnitureRequest;
     const handleSubmit = (e) => {
         e.preventDefault();
-        addChildren(
-            image,
-            fullName,
-            gender,
-            dateOfBirth,
-            introductoryDate,
-            adoptiveDate,
-            introducerId,
-            nurturerId
+        addFurnitureRequest(
+           newFurnitureRequest
         );
+        setErrorMessage("Thêm yêu cầu mua mới, sửa chữa thiết bị thành công!")
+        // if(addResult){
+        //     setErrorMessage("Thêm thông tin thiết bị thành công!")
+        // }
+        // else{
+        //     setErrorMessage("Lỗi thêm yêu cầu thiết bị!")
+        // }
     };
 
-    //Image Upload
-    // generate random string for filename
-    function generateString(length) {
-        const characters =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let result = " ";
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-            result += characters.charAt(
-                Math.floor(Math.random() * charactersLength)
-            );
-        }
-        return result;
-    }
-    const [file, setFile] = useState("");
-    const onFileChange = (e) => {
-        if (e.target.files[0]) {
-            setFile(e.target.files[0]);
-        }
+    const handleClose = () => {
+        navigate("/furniture/request")
     };
-    async function handleUpload() {
-        if (!file) return;
-        const storageRef = ref(storage, `children/${generateString(100)}`);
-        await uploadBytes(storageRef, file).then(() => {
-            getDownloadURL(storageRef)
-                .then((url) => {
-                    setNewChildren({
-                        ...newChildren,
-                        image: url,
-                    });
-                    console.log(url);
-                    setImageSuccess("Tải ảnh lên thành công");
-                })
-                .catch((err) => console.log("err", err));
-        });
-    }
+   
     return (
-        <Form onSubmit={handleSubmit} className="form" id="childrenCreate">
-            <Form.Group className="mb-3 form-group">
-                <img
-                    className="image"
-                    id="childrenImage"
-                    alt=""
-                    src={
-                        (file && URL.createObjectURL(file)) ||
-                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
-                    }
+        <Card className="card modal-dialog1 " >
+             <Card.Header className="card__header">
+                <div>
+                      <h3  style={{ color: "#0f1e54" }}>Thêm yêu cầu sửa chữa</h3>
+                </div>
+            </Card.Header>
+            <Card.Body className="card__body">
+                <ListGroup  className="list-group">
+                <ListGroup.Item >
+        <Form onSubmit={handleSubmit} className="form" id="furnitureRequestCreate">
+            <div className="row-fluid">
+                <div className="span2"></div>
+                <div className="span3"> 
+                Chọn thiết bị
+                <Form.Group as={Col} className="form-group">
+                <section>
+          <Controller
+            as={Select}
+            style={{ color: "#0f1e54" }}
+            name="furnitureId"
+            isClearable
+            control={control}
+           
+            render={({ field }) => (
+                <Select
+                  {...field}
+                  name="furnitureId"
+                  options={furnitures}
+                  onChange={(e) => {
+                    onInputChange2(e);
+                    setSelectedOption(e.value)
+                }}
+                isClearable
                 />
-                <Row>
-                    <Form.Label
-                        htmlFor="childrenImageFile"
-                        className="form-label btn__image btn btn--secondary"
-                    >
-                        <i className="bi bi-image icon icon__image"></i>
-                        Chọn ảnh
-                    </Form.Label>
-                    <Form.Control
-                        className="form-control form-control__file"
-                        type="file"
-                        accept="image/*"
-                        name="image"
-                        id="childrenImageFile"
-                        onChange={onFileChange}
-                        required
-                    />
-                    <Button
-                        className="form-label btn__image btn btn--secondary"
-                        onClick={handleUpload}
-                    >
-                        <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
-                        ảnh
-                    </Button>
-                </Row>
-                {imageSuccess && (
-                    <p className="image__success">{imageSuccess}</p>
-                )}
-            </Form.Group>
-
-            <Form.Group className="mb-3 form-group">
-                <Form.Control
-                    className="form-control"
-                    type="text"
-                    placeholder="Họ và tên"
-                    name="fullName"
-                    value={fullName}
-                    onChange={(e) => onInputChange(e)}
-                    required
+              )}
+          />
+        </section>
+        </Form.Group>
+                </div>
+                <div className="span2"></div>
+                <div className="span3">
+                    Chọn nhân viên phụ trách
+                    <Form.Group as={Col} className="form-group">
+                <section>
+          <Controller
+            as={Select}
+            style={{ color: "#0f1e54" }}
+            name="employeeId"
+            isClearable
+            control={control}
+           
+            render={({ field }) => (
+                <Select
+                  {...field}
+                  name="employeeId"
+                  options={accounts}
+                  isClearable
+                  onChange={(e) => {
+                        onInputChange(e);
+                        setSelectedOption(e.value)
+                }}
                 />
-            </Form.Group>
-            <Row className="mb-3">
+              )}
+          />
+        </section>
+        </Form.Group>
+                </div>
+            </div>
+            <div className="row-fluid">
+                <div className="span2"></div>
+                <div className="span3"> 
+                Số lượng sửa
                 <Form.Group as={Col} className="form-group">
                     <Form.Control
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày sinh"
-                        name="dateOfBirth"
-                        value={dateOfBirth}
-                        onChange={(e) => onInputChange(e)}
+                        type="number"
+                        placeholder="Số lượng sửa"
+                        name="fixQuantity"
+                        onChange={(e) => onInputChange1(e)}
                         required
                     />
                 </Form.Group>
+                </div>
+                <div className="span2"></div>
+                <div className="span3">
+                    Số lượng nhập
                 <Form.Group as={Col} className="form-group">
-                    <Form.Select
-                        defaultValue="Giới tính"
-                        className="form-select"
-                        name="gender"
-                        value={gender}
-                        onChange={(e) => {
-                            onInputChange(e);
-                            setNewChildren({
-                                ...newChildren,
-                                gender:
-                                    e.target.value === "true" ? true : false,
-                            });
-                        }}
-                    >
-                        <option value={"Giới tính"} hidden>
-                            Giới tính
-                        </option>
-                        <option value={true}>Nam</option>
-                        <option value={false}>Nữ</option>
-                    </Form.Select>
-                </Form.Group>
-            </Row>
-            <Row className="mb-3">
-                <Form.Group as={Col} className=" form-group">
                     <Form.Control
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày vào trung tâm"
-                        name="introductoryDate"
-                        value={introductoryDate}
-                        onChange={(e) => onInputChange(e)}
+                        type="number"
+                        placeholder="Số lượng nhập"
+                        name="importQuantity"
+                        onChange={(e) => onInputChange1(e)}
                         required
                     />
                 </Form.Group>
-                <Form.Group as={Col} className=" form-group">
+                </div>
+            </div>
+            <div className="row-fluid">              
+                <div className="span2"></div>
+                <div className="span10">
+                    Ghi chú
+                    <Form.Group as={Col} className="form-group1">
                     <Form.Control
                         className="form-control"
-                        type="text"
-                        placeholder="Ngày nhận nuôi"
-                        name="adoptiveDate"
-                        value={adoptiveDate}
-                        onChange={(e) => onInputChange(e)}
-                        // required
+                        type="textarea"
+                        placeholder="Ghi chú"
+                        name="note"
+                        onChange={(e) => onInputChange1(e)}
                     />
                 </Form.Group>
-            </Row>
-            <Form.Group as={Col} className="mb-3 form-group">
-                <SearchBar
-                    placeholder={"Nhập tên người giới thiệu"}
-                    data={introducers}
-                    getValueId={getIntroducerId}
-                />
-            </Form.Group>
-            {Object.keys(introducer).length !== 0 && (
-                <Form.Group className="mb-3 form-group search-item">
-                    <img
-                        src={
-                            introducer.image ||
-                            "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
-                        }
-                        alt=""
-                        className="search-item__image"
-                    />
-                    <div className="search-item__content">
-                        <p>{introducer.fullName}</p>
-                        <span> {introducer.phone}</span>
+                 </div>
+            </div>
+                <div className="row-fluid">
+                    <div className="span3"></div>
+                    <div className="span6">
+                    <p style={{ color: "red" }}>
+                        {errorMessage && (
+                            <div className="error"> {errorMessage} </div>
+                        )}
+                    </p>
                     </div>
-                </Form.Group>
-            )}
-            <Form.Group as={Col} className="mb-3 form-group">
-                <SearchBar
-                    placeholder={"Nhập tên người nhận nuôi"}
-                    data={nurturers}
-                    getValueId={getNurturerId}
-                />
-            </Form.Group>
-            {Object.keys(nurturer).length !== 0 && (
-                <Form.Group className="mb-3 form-group search-item">
-                    <img
-                        src={
-                            nurturer.image ||
-                            "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
-                        }
-                        alt=""
-                        className="search-item__image"
-                    />
-                    <div className="search-item__content">
-                        <p>{nurturer.fullName}</p>
-                        <span> {nurturer.phone}</span>
-                    </div>
-                </Form.Group>
-            )}
+                        </div>
         </Form>
+        </ListGroup.Item>
+        </ListGroup>
+            </Card.Body>
+            <div className="row-fluid">
+                <div className="span7"></div>
+                <div className="span1-5">  <Button
+                            variant="secondary"
+                            onClick={handleClose}
+                            className="btn btn--secondary btn__close"
+                        >
+                            Đóng
+                        </Button>
+                </div>
+                <div className="span2">
+                <Button
+                            variant="success"
+                            form="furnitureRequestCreate"
+                            type="submit"
+                            className="btn btn--primary btn__submit"
+                        >
+                            Xác nhận
+                        </Button>
+                </div>
+
+            </div>
+          
+                       
+        </Card>
     );
 };
 
-export default ChildrenCreate;
+export default FurnitureRequestCreate;

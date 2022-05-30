@@ -14,54 +14,27 @@ const FurnitureContextProvider = (props) => {
     useEffect(() => {
         getFurnituresList(1, "");
     }, []);
-    async function getFurnituresList(furniturePage,keyword) {
-        if (keyword) {
-            let raw = JSON.stringify({
-                keyword,
-            });
-
-            let requestOptions = {
-                method: "POST",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-                body: raw,
-                redirect: "follow",
-            };
-
-            await fetch(
-                `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/search?page=${furniturePage}`,
-                requestOptions
-            )
-                .then((response) => response.json())
-                .then((result) => {
-                    console.log(result);
-                    setFurnitures(result.data.result);
-                    setPages(result.data.pages);
-                })
-                .catch((error) => console.log("error", error));
-        } else {
-            let requestOptions = {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-            };
-            await fetch(
-                `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture?page=${furniturePage}`,
-                requestOptions
-            )
-                .then((response) => response.json())
-                .then((result) => {
-                    console.log(result);
-                    setFurnitures(result.data.result);
-                    setPages(result.data.pages);
-                })
-                .catch((error) => console.log("error", error));
-        }
+    async function getFurnituresList(furniturePage) {
+        const token = JSON.parse(localStorage.getItem("token"));
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture?page=${furniturePage}&limit=5`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result)
+                setFurnitures(result.data.result);
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
     }
     // GET ACCOUNTS LIST
     async function getFurnituresList1() {
