@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const FurnitureRequestDetail = ({ furnitureRequestId }) => {
+    const navigate = useNavigate();
     const id = furnitureRequestId;
     const [nameFurniture, setNameFurniture] = useState("");
     const [namePersonRequest,setNamePersonRequest]= useState("");
@@ -12,6 +14,12 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
     const [idFurniture, setIdFurniture]=useState(0)
     const { viewFurnitureRequest } = useContext(FurnitureRequestContext);
     const [request, setRequest]=useState({});
+    const handleUpdate=(id)=> {
+        navigate(`/furniture/request/update/${id}`);
+    }
+    const handleReturn=() =>{
+        navigate('/furniture/request');
+    }
     useEffect(() => {
         viewFurnitureRequest(id).then((result) => {
             setDetailFurnitureRequest(result);
@@ -164,19 +172,22 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                 <div className="span1-5">  <Button
                             variant="secondary"
                             // onClick={handleClose}
+                            onClick={handleReturn}
                             className="btn btn--secondary btn__close"
                         >
-                            Đóng
+                            Trở về
                         </Button>
                 </div>
                 <div className="span2">
                 <Button
                             variant="success"
-                            form="furnitureRequestCreate"
-                            type="submit"
-                            className="btn btn--primary btn__submit"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleUpdate(detailFurnitureRequest.furnitureRequestId);
+                            }}
+                            className="btn btn--primary btn__update"
                         >
-                            Xác nhận
+                            Cập nhật
                         </Button>
                 </div>
 

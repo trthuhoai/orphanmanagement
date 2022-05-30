@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
 import FurnitureRequestListLogistic from "../../components/furnitureRequest/FurnitureRequestList_Logistic";
 import Header from "../../components/header/Header";
-import SidebarLogistic from "../../components/sidebar/Sidebar_Logistic";
+import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
 import "./list.scss";
 
@@ -12,8 +12,8 @@ const ListFurnitureRequest = () => {
             <MetaTags>
                 <title>CYF Center | Yêu cầu sửa chữa</title>
             </MetaTags>
-            <SidebarLogistic />
-            <div className="listContainer">
+            <Sidebar />
+            <div className="listContainer"> 
                 <Header />
                 <div className="main">
                     <FurnitureRequestContextProvider>

@@ -4,25 +4,19 @@ import Feedback from "./pages/feedback/Feedback";
 import Home from "./pages/home/Home";
 import ListAccount from "./pages/list/ListAccount";
 import ListCharity from "./pages/list/ListCharity";
-import ListCharityLogistic from "./pages/listLogistic/ListCharity_Logistic";
 import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
 import News from "./pages/news/News";
 import Charity from "./pages/charity/Charity";
-// import CharityLogistic from "./pages/charity/Charity_Logistic";
 import ListFurniture from "./pages/list/ListFurniture";
-import ListFurnitureLogistic from "./pages/listLogistic/ListFurniture_Logistic";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
-import ListFurnitureRequestLogistic from "./pages/listLogistic/ListFurnitureRequest_Logistic";
+import ListFurnitureRequestLogistic from "./pages/list/ListFurnitureRequest_Logistic";
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
-import ListFurnitureRequestDetailLogistic from "./pages/listLogistic/ListFurnitureRequest_Detail";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
-// import ListChildren from "./pages/list/ListChildren";
-import ListIntroducer from "./pages/list/ListIntroducer";
+import ListIntroducer from "./pages/list/ListIntroducer"; 
 import ListNurturer from "./pages/list/ListNurturer";
 import ListPicnic from "./pages/list/ListPicnic";
-import ListPicnicLogistic from "./pages/listLogistic/ListPicnic_Logistic";
 import ListStorage from "./pages/list/ListStorage";
 import ChangePassword from "./pages/login/ChangePassword";
 import Login from "./pages/login/Login";
@@ -63,11 +57,11 @@ function App() {
                     <Route path="/announcement" element={<Announcement />} />
 
                     {/* //Manager Logistic */}
-                    <Route path="/manager/furniture" element={<ListFurnitureLogistic/>}/>  
+                    <Route path="/manager/furniture" element={<ListFurniture/>}/>  
                     <Route path="/manager/request-furniture" element={<ListFurnitureRequestLogistic/>} exact/>
-                    <Route path="/manager/request-furniture/:id" element={<ListFurnitureRequestDetailLogistic/>}/>
-                    <Route path="/manager/charity" element={<ListCharityLogistic/>}/>    
-                    <Route path="/manager/picnic" element={<ListPicnicLogistic/>}/>        
+                    <Route path="/manager/request-furniture/:id" element={<ListFurnitureRequestDetail/>}/>
+                    <Route path="/manager/charity" element={<ListCharity/>}/>    
+                    <Route path="/manager/picnic" element={<ListPicnic/>}/>        
                     
                 </Routes>
             </BrowserRouter>

@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
 import CharityList from "../../components/charity/CharityList";
 import Header from "../../components/header/Header";
-import SidebarLogistic from "../../components/sidebar/Sidebar_Logistic";
+import Sidebar from "../../components/sidebar/Sidebar";
 import CharityContextProvider from "../../contexts/CharityContext";
 import "./list.scss";
 
@@ -17,7 +17,7 @@ const ListCharity = () => {
             <MetaTags>
                 <title>CYF Center | Từ thiện</title>
             </MetaTags>
-            <SidebarLogistic />
+            <Sidebar />
             <div className="listContainer">
                 <Header />
                 <div className="main">
