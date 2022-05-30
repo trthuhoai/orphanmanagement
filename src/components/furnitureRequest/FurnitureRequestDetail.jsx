@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 const FurnitureRequestDetail = ({ furnitureRequestId }) => {
     const id = furnitureRequestId;
@@ -158,6 +159,28 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                     </ListGroup.Item>
                 </ListGroup>
             </Card.Body>
+            <div className="row-fluid">
+                <div className="span7"></div>
+                <div className="span1-5">  <Button
+                            variant="secondary"
+                            // onClick={handleClose}
+                            className="btn btn--secondary btn__close"
+                        >
+                            Đóng
+                        </Button>
+                </div>
+                <div className="span2">
+                <Button
+                            variant="success"
+                            form="furnitureRequestCreate"
+                            type="submit"
+                            className="btn btn--primary btn__submit"
+                        >
+                            Xác nhận
+                        </Button>
+                </div>
+
+            </div>
         </Card>
     );
 };

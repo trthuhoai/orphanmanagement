@@ -1,0 +1,33 @@
+import { Navigate } from "react-router-dom";
+import { MetaTags } from "react-meta-tags";
+import CharityList from "../../components/charity/CharityList";
+import Header from "../../components/header/Header";
+import SidebarLogistic from "../../components/sidebar/Sidebar_Logistic";
+import CharityContextProvider from "../../contexts/CharityContext";
+import "./list.scss";
+
+const ListCharity = () => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+        return <Navigate to="/" />;
+    }
+
+    return (
+        <div className="list">
+            <MetaTags>
+                <title>CYF Center | Từ thiện</title>
+            </MetaTags>
+            <SidebarLogistic />
+            <div className="listContainer">
+                <Header />
+                <div className="main">
+                    <CharityContextProvider>
+                        <CharityList />
+                    </CharityContextProvider>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ListCharity;

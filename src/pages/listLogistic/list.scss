@@ -1,0 +1,16 @@
+@use "../../scss/abstracts/" as *;
+
+.list{
+    display: flex;
+
+    .listContainer{
+        background-color: #ecf5ff;
+        flex: 5;
+
+        .main{
+            position: relative;
+            height: calc(100% - #{$headerHeight});
+            padding: $spacing;
+        } 
+    }
+}
