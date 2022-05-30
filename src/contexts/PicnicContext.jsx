@@ -42,13 +42,27 @@ const PicnicContextProvider = (props) => {
     }
 
     // ADD PICNIC
-    async function addPicnic(image, namePicnic, title, dateOfEvent, content) {
+    async function addPicnic(
+        image,
+        namePicnic,
+        title,
+        dateStart,
+        dateEnd,
+        address,
+        money,
+        content,
+        personInChargeId
+    ) {
         let raw = JSON.stringify({
             image,
             namePicnic,
             title,
-            dateOfEvent,
+            dateStart,
+            dateEnd,
+            address,
+            money,
             content,
+            personInChargeId
         });
 
         let requestOptions = {

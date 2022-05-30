@@ -5,12 +5,16 @@ import PicnicDetail from "./PicnicDetail";
 import PicnicUpdate from "./PicnicUpdate";
 
 export const viewDate = (dateString) => {
-    const dateObj = new Date(dateString);
+    const dateObj = new Date(
+        dateString.substring(6, 10),
+        dateString.substring(3, 5) - 1,
+        dateString.substring(0, 2),
+        dateString.substring(11, 13),
+        dateString.substring(14, 16)
+    );
     return `${dateObj.getHours()}h${
         dateObj.getMinutes() === 0 ? "" : dateObj.getMinutes()
-    } ${dateObj.getDate()}/${
-        dateObj.getMonth() + 1
-    }/${dateObj.getFullYear()}`;
+    } ${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
 };
 
 const Picnic = ({ picnic }) => {
