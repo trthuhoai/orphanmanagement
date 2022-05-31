@@ -22,19 +22,19 @@ const CharityUpdate = ({ theCharity }) => {
     const [dateEnd, setDateEnd] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
+   
     const { viewCharity } = useContext(CharityContext);
     useEffect(() => {
         viewCharity(id).then((result) => {
             setImage(result.image);
             setCharityName(result.charityName);
             setTitle(result.title);
-            setDateStart(result.dateOfEvent);
-            setDateEnd(result.dateOfEvent);
+            setDateStart(result.dateStart);
+            setDateEnd(result.dateEnd);
             setContent(result.content);
         });
     }, []);
-
+    
     const { updateCharity } = useContext(CharityContext);
     const updatedCharity = {
         charityName,
@@ -160,29 +160,62 @@ const CharityUpdate = ({ theCharity }) => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3 form-group">
-                    <DatePicker
-                        className="form-control"
-                        placeholderText="Thời gian tổ chức"
-                        selected={
-                            new Date(
-                                dateStart.substring(6, 11),
-                                dateStart.substring(3, 5) - 1,
-                                dateStart.substring(0, 2)
-                            )
-                        }
-                        showYearDropdown
-                        scrollableYearDropdown
-                        yearDropdownItemNumber={100}
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(date) => {
-                            const resultDate =
-                                moment(date).format("DD/MM/YYYY");
-                            setDateStart(resultDate);
-                        }}
-                        required
-                    />
-                </Form.Group>
+                <Row className="mb-3">
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian bắt đầu"
+                            selected={
+                                new Date(
+                                    dateStart.substring(6, 10),
+                                    dateStart.substring(3, 5) - 1,
+                                    dateStart.substring(0, 2),
+                                    dateStart.substring(11, 13),
+                                    dateStart.substring(14, 16)
+                                )
+                            }
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy HH:mm"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY HH:mm");
+                                setDateStart(resultDate);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian kết thúc"
+                            selected={
+                                new Date(
+                                    dateEnd.substring(6, 10),
+                                    dateEnd.substring(3, 5) - 1,
+                                    dateEnd.substring(0, 2),
+                                    dateEnd.substring(11, 13),
+                                    dateEnd.substring(14, 16)
+                                )
+                            }
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy HH:mm"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY HH:mm");
+                                setDateEnd(resultDate);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                </Row>
 
                 <Form.Group as={Col} className="form-group">
                     <Form.Control

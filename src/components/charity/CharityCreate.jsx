@@ -20,7 +20,8 @@ const CharityCreate = () => {
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [pickerDate, setPickerDate] = useState(new Date());
+    const [pickerDateStart, setPickerDateStart] = useState("");
+    const [pickerDateEnd, setPickerDateEnd] = useState("");
 
     const onInputChange = (e) => {
         setNewCharity({
@@ -160,19 +161,41 @@ const CharityCreate = () => {
                             showYearDropdown
                             scrollableYearDropdown
                             yearDropdownItemNumber={100}
-                            dateFormat="dd/MM/yyyy h:mm aa"
+                            dateFormat="dd/MM/yyyy HH:mm"
                             timeInputLabel="Thời gian:"
                             showTimeInput
-                            timeFormat="Pp"
-                            selected={pickerDate}
+                            selected={pickerDateStart}
                             onChange={(date) => {
                                 const resultDate =
-                                    moment(date).format("DD/MM/YYYY hh:mm");
+                                    moment(date).format("DD/MM/YYYY HH:mm");
                                 setNewCharity({
                                     ...newCharity,
                                     dateStart: resultDate,
                                 });
-                                setPickerDate(date);
+                                setPickerDateStart(date);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian kết thúc"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy HH:mm"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            selected={pickerDateEnd}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY HH:mm");
+                                setNewCharity({
+                                    ...newCharity,
+                                    dateEnd: resultDate,
+                                });
+                                setPickerDateEnd(date);
                             }}
                             required
                         />
