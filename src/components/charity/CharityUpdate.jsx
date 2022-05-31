@@ -34,8 +34,6 @@ const CharityUpdate = ({ theCharity }) => {
             setContent(result.content);
         });
     }, []);
-    console.log("🚀 ~ file: CharityUpdate.jsx ~ line 38 ~ CharityUpdate ~ dateStart", dateStart)
-    console.log("🚀 ~ file: CharityUpdate.jsx ~ line 38 ~ CharityUpdate ~ dateEnd", dateEnd)
     
     const { updateCharity } = useContext(CharityContext);
     const updatedCharity = {
@@ -169,9 +167,9 @@ const CharityUpdate = ({ theCharity }) => {
                             placeholderText="Thời gian bắt đầu"
                             selected={
                                 new Date(
-                                    dateStart.substring(0, 4),
-                                    dateStart.substring(5, 7) - 1,
-                                    dateStart.substring(8, 10),
+                                    dateStart.substring(6, 10),
+                                    dateStart.substring(3, 5) - 1,
+                                    dateStart.substring(0, 2),
                                     dateStart.substring(11, 13),
                                     dateStart.substring(14, 16)
                                 )
@@ -196,9 +194,9 @@ const CharityUpdate = ({ theCharity }) => {
                             placeholderText="Thời gian kết thúc"
                             selected={
                                 new Date(
-                                    dateEnd.substring(0, 4),
-                                    dateEnd.substring(5, 7) - 1,
-                                    dateEnd.substring(8, 10),
+                                    dateEnd.substring(6, 10),
+                                    dateEnd.substring(3, 5) - 1,
+                                    dateEnd.substring(0, 2),
                                     dateEnd.substring(11, 13),
                                     dateEnd.substring(14, 16)
                                 )
