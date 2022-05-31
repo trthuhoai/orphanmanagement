@@ -1,23 +1,16 @@
-import {
-    deleteObject,
-    getDownloadURL,
-    ref,
-    uploadBytes,
-} from "firebase/storage";
+import { Card, ListGroup } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { ChildrenContext } from "../../contexts/ChildrenContext";
-import { storage } from "../../firebase";
+import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import "../../scss/abstracts/_form.scss";
-import { SearchBar } from "../searchBar/SearchBar";
+// import { SearchBar } from "../searchBar/SearchBar";
 
-const ChildrenUpdate = ({ theChildren }) => {
-    const id = theChildren.id;
-    const { introducers } = useContext(ChildrenContext);
-    const { nurturers } = useContext(ChildrenContext);
+const FurnitureRequestUpdate = ({ furnitureRequestId }) => {
+    const id = furnitureRequestId;
+    const { introducers } = useContext(FurnitureRequestContext);
+    const { nurturers } = useContext(FurnitureRequestContext);
 
     const [image, setImage] = useState("");
-    const [imageSuccess, setImageSuccess] = useState("");
 
     const [fullName, setFullName] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -30,9 +23,9 @@ const ChildrenUpdate = ({ theChildren }) => {
     const [introducer, setIntroducer] = useState({});
     const [nurturer, setNurturer] = useState({});
 
-    const { viewChildren } = useContext(ChildrenContext);
+    const { viewFurnitureRequest } = useContext(FurnitureRequestContext);
     useEffect(() => {
-        viewChildren(id).then((result) => {
+        viewFurnitureRequest(id).then((result) => {
             setImage(result.image);
             setFullName(result.fullName);
             setDateOfBirth(result.dateOfBirth);
@@ -52,19 +45,8 @@ const ChildrenUpdate = ({ theChildren }) => {
         });
     }, []);
 
-    const getIntroducerId = (valueId) => {
-        setIntroducerId(valueId);
-        setIntroducer(
-            introducers.find((introducer) => introducer.id === valueId)
-        );
-    };
-    const getNurturerId = (valueId) => {
-        setNurturerId(valueId);
-        setNurturer(nurturers.find((nurturer) => nurturer.id === valueId));
-    };
-
-    const { updateChildren } = useContext(ChildrenContext);
-    const updatedChildren = {
+    const { updateFurnitureRequest } = useContext(FurnitureRequestContext);
+    const updatedFurnitureRequest = {
         image,
         fullName,
         gender,
@@ -77,97 +59,25 @@ const ChildrenUpdate = ({ theChildren }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updatedChildren);
-        updateChildren(id, updatedChildren);
+        console.log(updatedFurnitureRequest);
+        updateFurnitureRequest(id, updatedFurnitureRequest);
     };
 
-    // IMAGE UPDATE
-    // generate random string for filename
-    function generateString(length) {
-        const characters =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let result = " ";
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-            result += characters.charAt(
-                Math.floor(Math.random() * charactersLength)
-            );
-        }
-        return result;
-    }
-    const [file, setFile] = useState("");
-    const onFileChange = (e) => {
-        if (e.target.files[0]) {
-            setFile(e.target.files[0]);
-        }
-    };
-    async function handleUpdateImage() {
-        if (!file) return;
-        if (image && image.includes("firebasestorage")) {
-            const pathFromURL = ref(storage, image)._location.path_;
-            const desertRef = ref(storage, pathFromURL);
-            await deleteObject(desertRef)
-                .then(() => {
-                    console.log("File deleted successfully");
-                })
-                .catch((error) => {
-                    console.log("Uh-oh, an error occurred!", error);
-                });
-        }
-        const storageRef = ref(storage, `children/${generateString(100)}`);
-        await uploadBytes(storageRef, file).then(() => {
-            getDownloadURL(storageRef)
-                .then((url) => {
-                    console.log(url);
-                    setImage(url);
-                    setImageSuccess("Tải ảnh lên thành công");
-                })
-                .catch((err) => console.log(err));
-        });
-    }
+
+    
     return (
         <>
-            <Form.Group className="mb-3 form-group">
-                <img
-                    className="image"
-                    id="childrenImage"
-                    alt=""
-                    src={
-                        (file && URL.createObjectURL(file)) ||
-                        image ||
-                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
-                    }
-                />
-                <Row>
-                    <Form.Label
-                        htmlFor="childrenImageFile"
-                        className="form-label btn__image btn btn--secondary"
-                    >
-                        <i className="bi bi-image icon icon__image"></i>
-                        Chọn ảnh
-                    </Form.Label>
-                    <Form.Control
-                        className="form-control form-control__file"
-                        type="file"
-                        accept="image/*"
-                        name="image"
-                        id="childrenImageFile"
-                        onChange={onFileChange}
-                        required
-                    />
-                    <Button
-                        className="form-label btn__image btn btn--secondary"
-                        onClick={handleUpdateImage}
-                    >
-                        <i className="bi bi-file-earmark-arrow-up-fill"></i> Lưu
-                        ảnh
-                    </Button>
-                </Row>
-                {imageSuccess && (
-                    <p className="image__success">{imageSuccess}</p>
-                )}
-            </Form.Group>
-            <Form onSubmit={handleSubmit} className="form" id="childrenUpdate">
+           <Card className="card modal-dialog1 " >
+             <Card.Header className="card__header">
+                <div>
+                      <h3  style={{ color: "#0f1e54" }}>Cập nhật yêu cầu sửa chữa</h3>
+                </div>
+            </Card.Header>
+            <Card.Body className="card__body">
+                <ListGroup  className="list-group">
+                <ListGroup.Item >
+
+            <Form onSubmit={handleSubmit} className="form" id="furnitureRequestUpdate">
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
                         className="form-control"
@@ -238,11 +148,6 @@ const ChildrenUpdate = ({ theChildren }) => {
                     </Form.Group>
                 </Row>
                 <Form.Group as={Col} className="mb-3 form-group">
-                    <SearchBar
-                        placeholder={"Nhập tên người giới thiệu"}
-                        data={introducers}
-                        getValueId={getIntroducerId}
-                    />
                 </Form.Group>
                 {introducer && Object.keys(introducer).length !== 0 && (
                     <Form.Group className="mb-3 form-group search-item">
@@ -261,11 +166,6 @@ const ChildrenUpdate = ({ theChildren }) => {
                     </Form.Group>
                 )}
                 <Form.Group as={Col} className="mb-3 form-group">
-                    <SearchBar
-                        placeholder={"Nhập tên người nhận nuôi"}
-                        data={nurturers}
-                        getValueId={getNurturerId}
-                    />
                 </Form.Group>
                 {nurturer && Object.keys(nurturer).length !== 0 && (
                     <Form.Group className="mb-3 form-group search-item">
@@ -284,8 +184,35 @@ const ChildrenUpdate = ({ theChildren }) => {
                     </Form.Group>
                 )}
             </Form>
+            </ListGroup.Item>
+        </ListGroup>
+            </Card.Body>
+            <div className="row-fluid">
+                <div className="span7"></div>
+                <div className="span1-5">  <Button
+                            variant="secondary"
+                            className="btn btn--secondary btn__close"
+                        >
+                            Đóng
+                        </Button>
+                </div>
+                <div className="span2">
+                <Button
+                            variant="success"
+                            form="furnitureRequestCreate"
+                            type="submit"
+                            className="btn btn--primary btn__submit"
+                        >
+                            Xác nhận
+                        </Button>
+                </div>
+
+            </div>
+          
+                       
+        </Card>
         </>
     );
 };
 
-export default ChildrenUpdate;
+export default FurnitureRequestUpdate;
