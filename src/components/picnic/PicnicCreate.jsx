@@ -1,7 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import moment from "moment";
 import { useContext, useState } from "react";
-import { Button, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { PicnicContext } from "../../contexts/PicnicContext";
 import { storage } from "../../firebase";
@@ -13,12 +13,17 @@ const PicnicCreate = () => {
         image: "",
         namePicnic: "",
         title: "",
-        dateOfEvent: "",
+        dateStart: "",
+        dateEnd: "",
+        address: "",
+        money: "",
         content: "",
+        personInChargeId: [0],
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
-    const [pickerDate, setPickerDate] = useState("");
+    const [pickerDateStart, setPickerDateStart] = useState("");
+    const [pickerDateEnd, setPickerDateEnd] = useState("");
 
     const onInputChange = (e) => {
         setNewPicnic({
@@ -27,10 +32,30 @@ const PicnicCreate = () => {
         });
         console.log(newPicnic);
     };
-    const { image, namePicnic, title, dateOfEvent, content } = newPicnic;
+    const {
+        image,
+        namePicnic,
+        title,
+        dateStart,
+        dateEnd,
+        address,
+        money,
+        content,
+        personInChargeId = [0],
+    } = newPicnic;
     const handleSubmit = (e) => {
         e.preventDefault();
-        addPicnic(image, namePicnic, title, dateOfEvent, content);
+        addPicnic(
+            image,
+            namePicnic,
+            title,
+            dateStart,
+            dateEnd,
+            address,
+            money,
+            content,
+            personInChargeId
+        );
     };
 
     // IMAGE UPLOAD
@@ -135,29 +160,88 @@ const PicnicCreate = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3 form-group">
-                    <DatePicker
-                        className="form-control"
-                        placeholderText="Thời gian tổ chức"
-                        showYearDropdown
-                        scrollableYearDropdown
-                        yearDropdownItemNumber={100}
-                        dateFormat="dd/MM/yyyy h:mm aa"
-                        timeInputLabel="Thời gian:"
-                        showTimeInput
-                        selected={pickerDate}
-                        onChange={(date) => {
-                            const resultDate =
-                                moment(date).format("DD/MM/YYYY");
-                            setNewPicnic({
-                                ...newPicnic,
-                                dateOfEvent: resultDate,
-                            });
-                            setPickerDate(date);
-                        }}
-                        required
-                    />
-                </Form.Group>
+                <Row>
+                    <Form.Group as={Col} className="form-group">
+                        <Form.Control
+                            className="form-control"
+                            type="text"
+                            placeholder="Địa điểm"
+                            name="address"
+                            value={address}
+                            onChange={(e) => onInputChange(e)}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} className="form-group">
+                        <Form.Control
+                            className="form-control"
+                            type="number"
+                            min="1000000"
+                            max="100000000"
+                            step="1000000"
+                            placeholder="Chi phí"
+                            name="money"
+                            value={money}
+                            onChange={(e) => {
+                                onInputChange(e);
+                                setNewPicnic({
+                                    ...newPicnic,
+                                    money: +e.target.value,
+                                });
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian bắt đầu"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy HH:mm"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            selected={pickerDateStart}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY HH:mm");
+                                setNewPicnic({
+                                    ...newPicnic,
+                                    dateStart: resultDate,
+                                });
+                                setPickerDateStart(date);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} className="form-group">
+                        <DatePicker
+                            className="form-control"
+                            placeholderText="Thời gian kết thúc"
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy HH:mm"
+                            timeInputLabel="Thời gian:"
+                            showTimeInput
+                            selected={pickerDateEnd}
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY HH:mm");
+                                setNewPicnic({
+                                    ...newPicnic,
+                                    dateEnd: resultDate,
+                                });
+                                setPickerDateEnd(date);
+                            }}
+                            required
+                        />
+                    </Form.Group>
+                </Row>
 
                 <Form.Group className="mb-3 form-group">
                     <Form.Control
