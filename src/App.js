@@ -12,7 +12,12 @@ import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
-import ListIntroducer from "./pages/list/ListIntroducer";
+import ListFurnitureRequestLogistic from "./pages/list/ListFurnitureRequest_Logistic";
+// import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
+// import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
+// import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
+import ListIntroducer from "./pages/list/ListIntroducer"; 
+// import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
 import ListPicnic from "./pages/list/ListPicnic";
 import ListStorage from "./pages/list/ListStorage";
@@ -75,6 +80,14 @@ function App() {
                     <Route path="/picnic" element={<ListPicnic />} />
                     <Route path="/feedback" element={<Feedback />} />
                     <Route path="/announcement" element={<Announcement />} />
+
+                    {/* //Manager Logistic */}
+                    <Route path="/manager/furniture" element={<ListFurniture/>}/>  
+                    <Route path="/manager/request-furniture" element={<ListFurnitureRequestLogistic/>} exact/>
+                    <Route path="/manager/request-furniture/:id" element={<ListFurnitureRequestDetail/>}/>
+                    <Route path="/manager/charity" element={<ListCharity/>}/>    
+                    <Route path="/manager/picnic" element={<ListPicnic/>}/>        
+                    
                 </Routes>
             </BrowserRouter>
         </div>

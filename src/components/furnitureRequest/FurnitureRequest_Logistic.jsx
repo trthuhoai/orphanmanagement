@@ -11,10 +11,10 @@ const FurnitureRequest = ({ furnitureRequest }) => {
     const handleCloseDelete = () => setShowDelete(false);
     const handleShowDelete = () => setShowDelete(true);
    const openModal=(id)=> {
-        navigate(`/furniture/request/${id}`);
+        navigate(`/manager/request-furniture/${id}`);
     }
     const openUpdate=(id)=> {
-        navigate(`/furniture/request/update/${id}`);
+        navigate(`/manager/request-furniture/update/${id}`);
     }
     useEffect(() => {
         handleCloseDelete();
@@ -46,13 +46,14 @@ const FurnitureRequest = ({ furnitureRequest }) => {
                     onClick={(e)=>openModal(furnitureRequest.furnitureRequestId)}
                 ></i>
                 <i
-                    // title="Chỉnh sửa"
-                    // className="bi bi-pencil-square icon icon__update"
-                    // onClick={(e)=>openUpdate(furnitureRequest.furnitureRequestId)}
+                    title="Chỉnh sửa"
+                    className="bi bi-pencil-square icon icon__update"
+                    onClick={(e)=>openUpdate(furnitureRequest.furnitureRequestId)}
                 ></i>
-                <i
-                    className="bi bi-trash3 icon icon__delete"
-                    onClick={handleShowDelete}
+                <i  
+                // aria-disabled
+                    // className="bi bi-trash3 icon icon__delete"
+                    // onClick={handleShowDelete}
                 ></i>
             </td>
             {/* MODAL DELETE */}

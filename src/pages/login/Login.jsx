@@ -58,10 +58,10 @@ export default function Login() {
                         navigate("/account");
                         break;
                     case "ROLE_MANAGER_LOGISTIC":
-                        navigate("/furniture");
+                        navigate("/manager/furniture");
                         break;
                     case "ROLE_MANAGER_HR":
-                        navigate("/hr");
+                        navigate("/employee");
                         break;
                     case "ROLE_MANAGER_CHILDREN":
                         navigate("/children");
