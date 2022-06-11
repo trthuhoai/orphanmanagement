@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
+import { Navigate } from "react-router-dom";
 import EmployeeList from "../../components/employee/EmployeeList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import EmployeeContextProvider from "../../contexts/EmployeeContext";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./list.scss";
 
 const ListEmployee = () => {
@@ -19,7 +20,9 @@ const ListEmployee = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <EmployeeContextProvider>
                         <EmployeeList />

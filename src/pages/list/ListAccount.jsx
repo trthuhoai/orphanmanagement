@@ -4,6 +4,7 @@ import AccountList from "../../components/account/AccountList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AccountContextProvider from "../../contexts/AccountContext";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./list.scss";
 
 const ListAccount = () => {
@@ -19,7 +20,9 @@ const ListAccount = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <AccountContextProvider>
                         <AccountList />

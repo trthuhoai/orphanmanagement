@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import FormInfo from "../../components/profile/FormInfo";
 import Sidebar from "../../components/sidebar/Sidebar";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./_profile.scss";
 
 const ProfileInfo = () => {
@@ -18,7 +19,9 @@ const ProfileInfo = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <div className="profile">
                         <FormInfo></FormInfo>

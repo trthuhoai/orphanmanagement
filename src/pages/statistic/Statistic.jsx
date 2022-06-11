@@ -5,6 +5,7 @@ import Chart from "../../components/chart/Chart";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Widget from "../../components/widget/Widget";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import StatisticContextProvider from "../../contexts/StatisticContext";
 import "./_statistic.scss";
 
@@ -17,7 +18,7 @@ const Statistic = () => {
     }
 
     const getChartId = (chartId) => {
-        console.log(chartId)
+        console.log(chartId);
         setChartId(chartId);
     };
 
@@ -28,7 +29,9 @@ const Statistic = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main statistic">
                     <StatisticContextProvider>
                         <Widget getChartId={getChartId} />

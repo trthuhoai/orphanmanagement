@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import IntroducerList from "../../components/introducer/IntroducerList";
 import Sidebar from "../../components/sidebar/Sidebar";
 import IntroducerContextProvider from "../../contexts/IntroducerContext";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./list.scss";
 
 const ListIntroducer = () => {
@@ -19,7 +20,9 @@ const ListIntroducer = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <IntroducerContextProvider>
                         <IntroducerList />
