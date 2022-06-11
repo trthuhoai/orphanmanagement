@@ -1,13 +1,11 @@
 import { MetaTags } from "react-meta-tags";
-import FurnitureRequestDetail from "../../components/furnitureRequest/FurnitureRequestDetail";
+import FurnitureRequestExtendEmployee from "../../components/furnitureRequest/FurnitureRequestExtend_Employee";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
-import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
-// import { withRouter } from "react-router-dom";
+import FurnitureRequestEmployeeContextProvider from "../../contexts/FurnitureRequestEmployeeContext";
 import { useParams } from 'react-router-dom'
-// import "./list.scss";
 
-const ListFurnitureRequest_Detail = () => {
+const ListFurnitureRequestDetail_Employee = () => {
     const params = useParams()
    console.log("id", params.id);
    let id=params.id;
@@ -21,13 +19,13 @@ const ListFurnitureRequest_Detail = () => {
             <div className="listContainer">
                 <Header />
                 <div className="main"> 
-                    <FurnitureRequestContextProvider>
-                        <FurnitureRequestDetail furnitureRequestId={id}/>
-                    </FurnitureRequestContextProvider>
+                    <FurnitureRequestEmployeeContextProvider>
+                        <FurnitureRequestExtendEmployee furnitureRequestId={id}/>
+                    </FurnitureRequestEmployeeContextProvider>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ListFurnitureRequest_Detail;  
+export default ListFurnitureRequestDetail_Employee;  

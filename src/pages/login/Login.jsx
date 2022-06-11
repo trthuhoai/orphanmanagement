@@ -6,9 +6,26 @@ import "./login.scss";
 export default function Login() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-
+    const currentUser = JSON.parse(localStorage.getItem("current-user"));
+    // useEffect(() => {
+    //     if (token) navigate("/account");
+    // }, []);
     useEffect(() => {
-        if (token) navigate("/account");
+        if (token){
+        if(currentUser.roles[0].roleName==="ROLE_ADMIN"){ navigate("/account");}
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_LOGISTIC"){
+            navigate("/manager/furniture");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_HR")
+        {navigate("/employee");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_CHILDREN"){
+            navigate("/children");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_EMPLOYEE"){
+            navigate("/employee/furniture/request");
+        }}
+
     }, []);
     
     const [password, setPassword] = useState("");

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import { FurnitureRequestEmployeeContext } from "../../contexts/FurnitureRequestEmployeeContext";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const FurnitureRequestDetail = ({ furnitureRequestId }) => {

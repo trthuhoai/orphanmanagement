@@ -3,9 +3,7 @@ import FurnitureRequestUpdateEmployee from "../../components/furnitureRequest/Fu
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestEmployeeContextProvider from "../../contexts/FurnitureRequestEmployeeContext";
-// import { withRouter } from "react-router-dom";
 import { useParams } from 'react-router-dom'
-// import "./list.scss";
 
 const ListFurnitureRequestDetail_Employee = () => {
     const params = useParams()

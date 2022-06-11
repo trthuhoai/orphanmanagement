@@ -3,12 +3,13 @@ import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnit
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestEmployeeDetail from "./components/furnitureRequest/ListFurnitureRequestDetail_Employee";
 import ListFurnitureRequestEmployeeUpdate from "./components/furnitureRequest/ListFurnitureRequestUpdate_Employee";
+import ListFurnitureRequestEmployeeExtend from "./components/furnitureRequest/ListFurnitureRequestExtend_Employee";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
 import NotificationDetail from "./components/notification/NotificationDetail";
 import Charity from "./pages/charity/Charity";
 import Feedback from "./pages/feedback/Feedback";
 import Home from "./pages/home/Home";
-import ListAccount from "./pages/list/ListAccount";
+import ListAccount from "./pages/list/ListAccount"; 
 import ListCharity from "./pages/list/ListCharity";
 import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
@@ -23,7 +24,7 @@ import ListFurnitureRequestEmployee from "./pages/list/ListFurnitureRequest_Empl
 import ListIntroducer from "./pages/list/ListIntroducer"; 
 // import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
-import ListPicnic from "./pages/list/ListPicnic";
+import ListPicnic from "./pages/list/ListPicnic"; 
 import ListStorage from "./pages/list/ListStorage";
 import ChangePassword from "./pages/login/ChangePassword";
 import Login from "./pages/login/Login";
@@ -109,8 +110,14 @@ function App() {
                         element={<ListFurnitureRequestEmployeeUpdate />}
                         exact
                     />
+                     <Route
+                        path="/employee/furniture/request/extend/:id"
+                        element={<ListFurnitureRequestEmployeeExtend />}
+                        exact
+                    />
 
                 </Routes>
+                
             </BrowserRouter>
         </div>
     );

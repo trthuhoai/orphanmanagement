@@ -3,10 +3,8 @@ import FurnitureRequestCreate from "../../components/furnitureRequest/FurnitureR
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
-// import { withRouter } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import NotificationContextProvider from "../../contexts/NotificationContext";
-// import "./list.scss";
 
 const ListFurnitureRequest_Create = () => {
     const params = useParams();
