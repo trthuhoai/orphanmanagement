@@ -1,12 +1,12 @@
 import { MetaTags } from "react-meta-tags";
 import { Navigate } from "react-router-dom";
-import AccountList from "../../components/account/AccountList";
 import Header from "../../components/header/Header";
+import NotificationDetail from "../../components/notification/NotificationDetail";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AccountContextProvider from "../../contexts/AccountContext";
-import "./list.scss";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 
-const List = () => {
+const NotificationDetailPage = () => {
     const token = localStorage.getItem("token");
     if (token === null) {
         return <Navigate to="/" />;
@@ -15,19 +15,19 @@ const List = () => {
     return (
         <div className="list">
             <MetaTags>
-                <title>CYF Center | Thành viên</title>
+                <title>CYF Center | Thông báo</title>
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
-                <div className="main">
-                    <AccountContextProvider>
-                        <AccountList />
-                    </AccountContextProvider>
-                </div>
+                <NotificationContextProvider>
+                    <Header />
+                        <div className="main">
+                            <NotificationDetail />
+                        </div>
+                </NotificationContextProvider>
             </div>
         </div>
     );
 };
 
-export default List;
+export default NotificationDetailPage;

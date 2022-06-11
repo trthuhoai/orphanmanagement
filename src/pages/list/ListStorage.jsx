@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StorageList from "../../components/storage/StorageList";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import StorageContextProvider from "../../contexts/StorageContext";
 import "./list.scss";
 
@@ -19,7 +20,9 @@ const ListStorage = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <StorageContextProvider>
                         <StorageList />

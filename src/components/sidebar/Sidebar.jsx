@@ -3,7 +3,6 @@ import "./sidebar.scss";
 
 const Sidebar = () => {
     const currentUser = JSON.parse(localStorage.getItem("current-user"));
-    let employee=0;
     const linkStyle = {
         color: "#fff",
         textDecoration: "none",
@@ -125,7 +124,7 @@ const Sidebar = () => {
                         Thống kê
                     </NavLink>
                     <NavLink
-                        to="/announcement"
+                        to="/notification"
                         style={linkStyle}
                         className={({ isActive }) =>
                             isActive ? "link-active" : "link"

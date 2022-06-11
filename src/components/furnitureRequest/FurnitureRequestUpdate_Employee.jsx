@@ -161,9 +161,6 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                         <div class="row-fluid">
                         <div class="span2"></div>
                             <div class="span5 p-title">Tổng giá (đồng)
-                            {/* <p className="list-group__item-content">
-                            {detailFurnitureRequest.totalPrice}
-                            </p> */}
                               <Form onSubmit={handleSubmit} className="form" id="furnitureRequestUpdate">
                               <Form.Group className="mb-3 form-group">
                     <Form.Control
