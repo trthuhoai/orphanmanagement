@@ -17,7 +17,7 @@ const FurnitureRequest = ({ furnitureRequest }) => {
         navigate(`/employee/furniture/request/update/${id}`);
     }
     const openExtend=(id)=> {
-        navigate(`/employee/furniture/request/update/${id}`);
+        navigate(`/employee/furniture/request/extend/${id}`);
     }
     useEffect(() => {
         handleCloseDelete();

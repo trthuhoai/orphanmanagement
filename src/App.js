@@ -3,6 +3,7 @@ import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnit
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestEmployeeDetail from "./components/furnitureRequest/ListFurnitureRequestDetail_Employee";
 import ListFurnitureRequestEmployeeUpdate from "./components/furnitureRequest/ListFurnitureRequestUpdate_Employee";
+import ListFurnitureRequestEmployeeExtend from "./components/furnitureRequest/ListFurnitureRequestExtend_Employee";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
 import Announcement from "./pages/announcement/Announcement";
 import Charity from "./pages/charity/Charity";
@@ -106,7 +107,13 @@ function App() {
                         element={<ListFurnitureRequestEmployeeUpdate />}
                         exact
                     />
+                     <Route
+                        path="/employee/furniture/request/extend/:id"
+                        element={<ListFurnitureRequestEmployeeExtend />}
+                        exact
+                    />
                 </Routes>
+                
             </BrowserRouter>
         </div>
     );

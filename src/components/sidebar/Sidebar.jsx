@@ -269,15 +269,6 @@ else if(currentUser.roles[0].roleName==="ROLE_MANAGER_CHILDREN")
         <div className="center">
             <ul>
                 <h2 className="title">Trung tâm</h2>
-                {/* <NavLink
-                    to="/account"
-                    style={linkStyle}
-                    className={({ isActive }) =>
-                        isActive ? "link-active" : "link"
-                    }
-                >
-                    Tài khoản
-                </NavLink> */}
                 <NavLink
                     to="/children"
                     style={linkStyle}
@@ -330,15 +321,6 @@ else {
         <div className="center">
             <ul>
                 <h2 className="title">Thiết bị</h2>
-                {/* <NavLink
-                    to="/manager/furniture" exact
-                    style={linkStyle}
-                    className={({ isActive }) =>
-                        isActive ? "link-active" : "link"
-                    }
-                >
-                    Thông tin
-                </NavLink> */}
                 <NavLink
                     to="/employee/furniture/request"
                     style={linkStyle}
