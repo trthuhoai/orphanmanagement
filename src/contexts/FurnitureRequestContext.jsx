@@ -11,6 +11,7 @@ const FurnitureRequestContextProvider = (props) => {
     const [pages, setPages] = useState([]);
     const [accounts, setAccounts] = useState([]);
 
+    const [furnitureRequestsEmployee, setFurnitureRequestsEmployee] = useState([]);
     
 
     const furnitureRequestPage = JSON.parse(
@@ -36,7 +37,7 @@ const FurnitureRequestContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            `https://orphanmanagement.herokuapp.com/api/v1/admin/all`,
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/request_form/employee`,
             requestOptions
         )
             .then((response) => response.json())
@@ -167,6 +168,29 @@ const FurnitureRequestContextProvider = (props) => {
             .then((result) => {
                 console.log(result);
                 setFurnitureRequests(result.data.result);
+                
+                setPages(result.data.pages);
+            })
+            .catch((error) => console.log("error", error));
+    }
+
+    async function getFurnitureRequestsEmployeeList(furnitureRequestPage) {
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/account/furniture/request_form?page=${furnitureRequestPage}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                setFurnitureRequestsEmployee(result.data.result);
                 
                 setPages(result.data.pages);
             })
@@ -311,6 +335,7 @@ const FurnitureRequestContextProvider = (props) => {
         <FurnitureRequestContext.Provider
             value={{
                 furnitureRequests,
+                furnitureRequestsEmployee,
                 introducers,
                 nurturers,
                 accounts,
@@ -319,6 +344,7 @@ const FurnitureRequestContextProvider = (props) => {
                 getFurniture,
                 getNameFurniture,
                 getFurnitureRequestsList,
+                getFurnitureRequestsEmployeeList,
                 addFurnitureRequest,
                 deleteFurnitureRequest,
                 viewFurnitureRequest,

@@ -3,11 +3,12 @@ import "./sidebar.scss";
 
 const Sidebar = () => {
     const currentUser = JSON.parse(localStorage.getItem("current-user"));
-
+    let employee=0;
     const linkStyle = {
         color: "#fff",
         textDecoration: "none",
     };
+
     if(currentUser.roles[0].roleName==="ROLE_ADMIN")
 {
     return (
@@ -166,7 +167,7 @@ else if(currentUser.roles[0].roleName==="ROLE_MANAGER_LOGISTIC")
                     Thông tin
                 </NavLink>
                 <NavLink
-                    to="/manager/request-furniture"
+                    to="/furniture/request"
                     style={linkStyle}
                     className={({ isActive }) =>
                         isActive ? "link-active" : "link"
@@ -313,6 +314,66 @@ else if(currentUser.roles[0].roleName==="ROLE_MANAGER_CHILDREN")
     </div>
     );
 
+}
+else {
+    return (
+
+        <div className="sidebar">
+        <div className="top">
+            <Link to="/" style={linkStyle}>
+                <span className="logo">
+                    <span className="logo__name">CYF</span>
+                    <span>Center</span>
+                </span>
+            </Link>
+        </div>
+        <div className="center">
+            <ul>
+                <h2 className="title">Thiết bị</h2>
+                {/* <NavLink
+                    to="/manager/furniture" exact
+                    style={linkStyle}
+                    className={({ isActive }) =>
+                        isActive ? "link-active" : "link"
+                    }
+                >
+                    Thông tin
+                </NavLink> */}
+                <NavLink
+                    to="/employee/furniture/request"
+                    style={linkStyle}
+                    className={({ isActive }) =>
+                        isActive ? "link-active" : "link"
+                    }
+                >
+                    Yêu cầu
+                </NavLink>
+                <h2 className="title">Hoạt động</h2>
+                <NavLink
+                    to="/manager/charity"
+                    style={linkStyle}
+                    className={({ isActive }) =>
+                        isActive ? "link-active" : "link"
+                    }
+                >
+                    Từ thiện
+                </NavLink>
+                <NavLink
+                    to="/manager/picnic"
+                    style={linkStyle}
+                    className={({ isActive }) =>
+                        isActive ? "link-active" : "link"
+                    }
+                >
+                    Dã ngoại
+                </NavLink>
+            </ul>
+        </div>
+        <div className="bottom">
+            <ul></ul>
+        </div>
+    </div>
+    );
 };
 }
 

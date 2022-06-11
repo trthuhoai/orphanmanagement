@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
+import { FurnitureRequestEmployeeContext } from "../../contexts/FurnitureRequestEmployeeContext";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -12,16 +12,16 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
     const [detailFurnitureRequest, setDetailFurnitureRequest] = useState({});
     const [idPerson, setIdPerson]=useState(0); 
     const [idFurniture, setIdFurniture]=useState(0)
-    const { viewFurnitureRequest } = useContext(FurnitureRequestContext);
+    const { viewFurnitureRequestEmployee } = useContext(FurnitureRequestEmployeeContext);
     const [request, setRequest]=useState({});
     const handleUpdate=(id)=> {
-        navigate(`/furniture/request/update/${id}`);
+        navigate(`/employee/furniture/request/update/${id}`);
     }
     const handleReturn=() =>{
-        navigate('/furniture/request');
+        navigate('/employee/furniture/request');
     }
     useEffect(() => {
-        viewFurnitureRequest(id).then((result) => {
+        viewFurnitureRequestEmployee(id).then((result) => {
             setDetailFurnitureRequest(result);
             setIdFurniture(result.furnitureRequestList[0].furnitureId);
             setRequest(result.furnitureRequestList[0]);
@@ -70,7 +70,7 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
             };
         
              fetch(
-                `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/${id}`,
+                `https://orphanmanagement.herokuapp.com/api/v1/account/furniture/request_form/furnitureDetail/${id}`,
                 requestOptions
             )
                 .then((response) => response.text())
@@ -154,7 +154,7 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                         </div>
                         <div class="row-fluid">
                         <div class="span2"></div>
-                            <div class="span5 p-title">Tổng giá
+                            <div class="span5 p-title">Tổng giá (đồng)
                             <p className="list-group__item-content">
                             {detailFurnitureRequest.totalPrice}
                         </p></div>
@@ -187,7 +187,7 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                             }}
                             className="btn btn--primary btn__update"
                         >
-                            Cập nhật
+                            Xác nhận
                         </Button>
                 </div>
 

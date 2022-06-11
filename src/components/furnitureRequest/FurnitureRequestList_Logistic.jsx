@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import FurnitureRequestLogistic from "./FurnitureRequest_Logistic";
+import FurnitureRequestLogistic from "./FurnitureRequest_Employee";
 import FurnitureRequestCreate from "./FurnitureRequestCreate";
 import FurnitureRequestPagination from "./FurnitureRequestPagination";
 import "./_furnitureRequest.scss";

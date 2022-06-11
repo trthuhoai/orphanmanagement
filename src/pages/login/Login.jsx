@@ -66,6 +66,9 @@ export default function Login() {
                     case "ROLE_MANAGER_CHILDREN":
                         navigate("/children");
                         break;
+                    case "ROLE_EMPLOYEE":
+                        navigate("/employee/furniture/request");
+                        break;
                     default:
                         break;
                 }
