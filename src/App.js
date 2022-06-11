@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
-import Announcement from "./pages/announcement/Announcement";
+import NotificationDetail from "./components/notification/NotificationDetail";
 import Charity from "./pages/charity/Charity";
 import Feedback from "./pages/feedback/Feedback";
 import Home from "./pages/home/Home";
@@ -20,6 +20,8 @@ import ChangePassword from "./pages/login/ChangePassword";
 import Login from "./pages/login/Login";
 import ResetPassword from "./pages/login/ResetPassword";
 import News from "./pages/news/News";
+import Notification from "./pages/notification/Notification";
+import NotificationDetailPage from "./pages/notification/NotificationDetailPage";
 import ProfileInfo from "./pages/profile/ProfileInfo";
 import ProfilePassword from "./pages/profile/ProfilePassword";
 import Statistic from "./pages/statistic/Statistic";
@@ -74,7 +76,8 @@ function App() {
                     <Route path="/charity" element={<ListCharity />} />
                     <Route path="/picnic" element={<ListPicnic />} />
                     <Route path="/feedback" element={<Feedback />} />
-                    <Route path="/announcement" element={<Announcement />} />
+                    <Route path="/notification" element={<Notification />} />
+                    <Route path="/notification/:idNotification" element={<NotificationDetailPage />} />
                 </Routes>
             </BrowserRouter>
         </div>
