@@ -123,7 +123,7 @@ const Sidebar = () => {
                         Thống kê
                     </NavLink>
                     <NavLink
-                        to="/announcement"
+                        to="/notification"
                         style={linkStyle}
                         className={({ isActive }) =>
                             isActive ? "link-active" : "link"
