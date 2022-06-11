@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Card, ListGroup } from "react-bootstrap";
-import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
+import { FurnitureRequestEmployeeContext } from "../../contexts/FurnitureRequestEmployeeContext";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const FurnitureRequestDetail = ({ furnitureRequestId }) => {
+    const { updateRequestFurniture } = useContext(FurnitureRequestEmployeeContext);
+    const [totalMoney, setTotalMoney] = useState(0);
     const navigate = useNavigate();
     const id = furnitureRequestId;
     const [nameFurniture, setNameFurniture] = useState("");
@@ -12,16 +14,20 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
     const [detailFurnitureRequest, setDetailFurnitureRequest] = useState({});
     const [idPerson, setIdPerson]=useState(0); 
     const [idFurniture, setIdFurniture]=useState(0)
-    const { viewFurnitureRequest } = useContext(FurnitureRequestContext);
+    const { viewFurnitureRequestEmployee } = useContext(FurnitureRequestEmployeeContext);
     const [request, setRequest]=useState({});
     const handleUpdate=(id)=> {
         navigate(`/furniture/request/update/${id}`);
     }
     const handleReturn=() =>{
-        navigate('/furniture/request');
+        navigate('/employee/furniture/request');
     }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        updateRequestFurniture(id, totalMoney);
+    };
     useEffect(() => {
-        viewFurnitureRequest(id).then((result) => {
+        viewFurnitureRequestEmployee(id).then((result) => {
             setDetailFurnitureRequest(result);
             setIdFurniture(result.furnitureRequestList[0].furnitureId);
             setRequest(result.furnitureRequestList[0]);
@@ -70,7 +76,7 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
             };
         
              fetch(
-                `https://orphanmanagement.herokuapp.com/api/v1/manager/furniture/${id}`,
+                `https://orphanmanagement.herokuapp.com/api/v1/account/furniture/request_form/furnitureDetail/${id}`,
                 requestOptions
             )
                 .then((response) => response.text())
@@ -89,7 +95,7 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
         <Card className="card modal-dialog1 "  >
             <Card.Header className="card__header">
                 <div>
-                      <h3  style={{ color: "#0f1e54" }}> Thông tin chi tiết yêu cầu sửa chữa, mua mới trang thiết bị</h3>
+                      <h3  style={{ color: "#0f1e54" }}> Xác nhận hoàn thành yêu cầu sửa chữa, mua mới trang thiết bị</h3>
                 </div>
             </Card.Header>
             <Card.Body className="card__body">
@@ -154,10 +160,25 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                         </div>
                         <div class="row-fluid">
                         <div class="span2"></div>
-                            <div class="span5 p-title">Tổng giá
-                            <p className="list-group__item-content">
+                            <div class="span5 p-title">Tổng giá (đồng)
+                            {/* <p className="list-group__item-content">
                             {detailFurnitureRequest.totalPrice}
-                        </p></div>
+                            </p> */}
+                              <Form onSubmit={handleSubmit} className="form" id="furnitureRequestUpdate">
+                              <Form.Group className="mb-3 form-group">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        placeholder="Nhập tổng giá"
+                        name="totalMoney"
+                        value={totalMoney}
+                        onChange={(e) => setTotalMoney(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+                              </Form>
+                        </div>
                             <div class="span4 p-title"> Ghi chú
                              <p className="list-group__item-content">
                             {request.note}
@@ -180,15 +201,13 @@ const FurnitureRequestDetail = ({ furnitureRequestId }) => {
                 </div>
                 <div className="span2">
                 <Button
-                            variant="success"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                handleUpdate(detailFurnitureRequest.furnitureRequestId);
-                            }}
-                            className="btn btn--primary btn__update"
-                        >
-                            Cập nhật
-                        </Button>
+                        form="furnitureRequestUpdate"
+                        variant="success"
+                        type="submit"
+                        className="btn btn--primary btn__submit"
+                    >
+                        Xác nhận
+                    </Button>
                 </div>
 
             </div>

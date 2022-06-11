@@ -67,7 +67,7 @@ export default function Login() {
                         navigate("/children");
                         break;
                     case "ROLE_EMPLOYEE":
-                        navigate("/employee/furniture");
+                        navigate("/employee/furniture/request");
                         break;
                     default:
                         break;
