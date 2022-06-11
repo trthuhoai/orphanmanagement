@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
+import ListFurnitureRequestEmployeeDetail from "./components/furnitureRequest/ListFurnitureRequestDetail_Employee";
+import ListFurnitureRequestEmployeeUpdate from "./components/furnitureRequest/ListFurnitureRequestUpdate_Employee";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
 import NotificationDetail from "./components/notification/NotificationDetail";
 import Charity from "./pages/charity/Charity";
@@ -12,7 +14,14 @@ import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
-import ListIntroducer from "./pages/list/ListIntroducer";
+// import ListFurnitureRequestLogistic from "./pages/list/ListFurnitureRequest_Logistic";
+import ListFurnitureRequestEmployee from "./pages/list/ListFurnitureRequest_Employee";
+
+// import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
+// import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
+// import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
+import ListIntroducer from "./pages/list/ListIntroducer"; 
+// import ListIntroducer from "./pages/list/ListIntroducer";
 import ListNurturer from "./pages/list/ListNurturer";
 import ListPicnic from "./pages/list/ListPicnic";
 import ListStorage from "./pages/list/ListStorage";
@@ -78,6 +87,29 @@ function App() {
                     <Route path="/feedback" element={<Feedback />} />
                     <Route path="/notification" element={<Notification />} />
                     <Route path="/notification/:idNotification" element={<NotificationDetailPage />} />
+
+                    {/* //Manager Logistic */}
+                    <Route path="/manager/furniture" element={<ListFurniture/>}/>  
+                    {/* <Route path="/manager/request-furniture" element={<ListFurnitureRequestLogistic/>} exact/> */}
+                    <Route path="/manager/request-furniture/:id" element={<ListFurnitureRequestDetail/>}/>
+                    <Route path="/manager/charity" element={<ListCharity/>}/>    
+                    <Route path="/manager/picnic" element={<ListPicnic/>}/>
+
+                         
+                    
+                    {/* //Employee */}
+                    <Route path="/employee/furniture/request" element={<ListFurnitureRequestEmployee/> } exact/>    
+                    <Route
+                        path="/employee/furniture/request/:id"
+                        element={<ListFurnitureRequestEmployeeDetail />}
+                        exact
+                    />
+                    <Route
+                        path="/employee/furniture/request/update/:id"
+                        element={<ListFurnitureRequestEmployeeUpdate />}
+                        exact
+                    />
+
                 </Routes>
             </BrowserRouter>
         </div>

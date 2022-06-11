@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import FurnitureRequest from "./FurnitureRequest";
+import FurnitureRequestLogistic from "./FurnitureRequest_Employee";
 import FurnitureRequestCreate from "./FurnitureRequestCreate";
 import FurnitureRequestPagination from "./FurnitureRequestPagination";
 import "./_furnitureRequest.scss";
@@ -26,9 +26,9 @@ const FurnitureRequestList = () => {
             <div className="table">
                 <div className="table__top">
                     <h2>Danh sánh yêu cầu sửa chữa</h2>
-                    <Button className="btn btn--primary" onClick={handleShow}>
+                    {/* <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm yêu cầu
-                    </Button>
+                    </Button> */}
                 </div>
                 <table className="table__body">
                     <thead>
@@ -42,9 +42,9 @@ const FurnitureRequestList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {furnitureRequests.reverse().map((furnitureRequest) => (
+                        {furnitureRequests.map((furnitureRequest) => (
                             <tr key={furnitureRequest.furnitureRequestId}>
-                                <FurnitureRequest furnitureRequest={furnitureRequest} />
+                                <FurnitureRequestLogistic furnitureRequest={furnitureRequest} />
                             </tr>
                         ))}
                     </tbody>
