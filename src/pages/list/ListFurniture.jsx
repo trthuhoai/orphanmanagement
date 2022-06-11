@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
+import { Navigate } from "react-router-dom";
 import FurnitureList from "../../components/furniture/FurnitureList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureContextProvider from "../../contexts/FurnitureContext";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./list.scss";
 
 const List = () => {
@@ -19,7 +20,9 @@ const List = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <FurnitureContextProvider>
                         <FurnitureList />

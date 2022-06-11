@@ -107,7 +107,7 @@ export default class Home extends React.Component {
 										<span class="label label-information">      TIN TỨC  </span>										2021/09/06									</dt>
 									<dd>
 										<h5>Hoàn cảnh đáng thương của hai cháu bị bệnh bại não xã Quang Sơn</h5>
-									Nghẹn ngào lau giọt nước mắt chảy dài trên đôi má gầy gò, người mẹ trẻ kêu lên như gào thét: “Các con ơi, thương các con lắm, nhưng giờ mẹ biết làm gì để có tiền mà chữa bệnh cho các con đây, xin các con hãy tha thứ cho mẹ”. Đó là lời khóc van trong tuyệt vọng của chị Lê Thị Na ở xóm 4, xã Quang Sơn, huyện Đô Lương, tỉnh Nghệ An kêu lên khi có 2 đứa con đều bị bệnh bại não
+									Nghẹn ngào lau giọt nước mắt chảy dài trên đôi má gầy gò, người mẹ trẻ kêu lên như gào thét: “Các con ơi, thương các con lắm, nhưng giờ mẹ biết làm gì để có tiền mà chữa bệnh cho các con đây, xin các con hzãy tha thứ cho mẹ”. Đó là lời khóc van trong tuyệt vọng của chị Lê Thị Na ở xóm 4, xã Quang Sơn, huyện Đô Lương, tỉnh Nghệ An kêu lên khi có 2 đứa con đều bị bệnh bại não
 									</dd>
 								</dl>
 							</a>

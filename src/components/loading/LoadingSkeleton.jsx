@@ -72,7 +72,7 @@ export const LoadingDetail = ({ tableName }) => {
         introducer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
         nurturer: ["Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại"],
         charity: [],
-        picnic: []
+        picnic: [],
     };
     return (
         <Card className="card">
@@ -100,6 +100,21 @@ export const LoadingDetail = ({ tableName }) => {
                 </ListGroup>
             </Card.Body>
         </Card>
+    );
+};
+
+export const LoadingNotification = () => {
+    return (
+        <li className="notification__item ">
+            <LoadingSkeleton className="rounded-circle py-4 px-4 d-inline-block"></LoadingSkeleton>
+            <div className="notification__content">
+                <div className="gap-5 mb-3">
+                    <LoadingSkeleton className=" w-75"></LoadingSkeleton>
+                    <LoadingSkeleton className=" w-25"></LoadingSkeleton>
+                </div>
+                <LoadingSkeleton className="my-1 w-100"></LoadingSkeleton>
+            </div>
+        </li>
     );
 };
 

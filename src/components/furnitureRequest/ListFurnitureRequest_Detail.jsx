@@ -4,13 +4,14 @@ import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
 // import { withRouter } from "react-router-dom";
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
 // import "./list.scss";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 
 const ListFurnitureRequest_Detail = () => {
-    const params = useParams()
-   console.log("id", params.id);
-   let id=params.id;
+    const params = useParams();
+    console.log("id", params.id);
+    let id = params.id;
 
     return (
         <div className="list">
@@ -19,10 +20,12 @@ const ListFurnitureRequest_Detail = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
-                <div className="main"> 
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
+                <div className="main">
                     <FurnitureRequestContextProvider>
-                        <FurnitureRequestDetail furnitureRequestId={id}/>
+                        <FurnitureRequestDetail furnitureRequestId={id} />
                     </FurnitureRequestContextProvider>
                 </div>
             </div>
@@ -30,4 +33,4 @@ const ListFurnitureRequest_Detail = () => {
     );
 };
 
-export default ListFurnitureRequest_Detail;  
+export default ListFurnitureRequest_Detail;

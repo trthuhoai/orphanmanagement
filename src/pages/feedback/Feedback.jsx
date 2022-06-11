@@ -3,8 +3,9 @@ import { MetaTags } from "react-meta-tags";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 // import FeedbackContextProvider from "../../contexts/FeedbackContext";
-import "./_feedback.scss";
 import { Navigate } from "react-router-dom";
+import "./_feedback.scss";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 
 const Feedback = () => {
     const token = localStorage.getItem("token");
@@ -19,7 +20,9 @@ const Feedback = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <h1 style={{ color: "black" }}>Chua co du lieu phan hoi</h1>
                     {/* <FeedbackContextProvider>

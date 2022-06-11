@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
+import { Navigate } from "react-router-dom";
 import ChildrenList from "../../components/children/ChildrenList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ChildrenContextProvider from "../../contexts/ChildrenContext";
+import NotificationContextProvider from "../../contexts/NotificationContext";
 import "./list.scss";
 
 const ListChildren = () => {
@@ -19,7 +20,9 @@ const ListChildren = () => {
             </MetaTags>
             <Sidebar />
             <div className="listContainer">
-                <Header />
+                <NotificationContextProvider>
+                    <Header />
+                </NotificationContextProvider>
                 <div className="main">
                     <ChildrenContextProvider>
                         <ChildrenList />
