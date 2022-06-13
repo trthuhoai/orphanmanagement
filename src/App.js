@@ -2,14 +2,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ListFurnitureRequestCreate from "./components/furnitureRequest/ListFurnitureRequest_Create";
 import ListFurnitureRequestDetail from "./components/furnitureRequest/ListFurnitureRequest_Detail";
 import ListFurnitureRequestUpdate from "./components/furnitureRequest/ListFurnitureRequest_Update";
-import NotificationDetail from "./components/notification/NotificationDetail";
 import Charity from "./pages/charity/Charity";
-import Feedback from "./pages/feedback/Feedback";
+import Feedback from "./pages/home/Feedback";
 import Home from "./pages/home/Home";
 import ListAccount from "./pages/list/ListAccount";
 import ListCharity from "./pages/list/ListCharity";
 import ListChildren from "./pages/list/ListChildren";
 import ListEmployee from "./pages/list/ListEmployee";
+import ListFeedback from "./pages/list/ListFeedback";
 import ListFurniture from "./pages/list/ListFurniture";
 import ListFurnitureRequest from "./pages/list/ListFurnitureRequest";
 import ListIntroducer from "./pages/list/ListIntroducer";
@@ -46,6 +46,7 @@ function App() {
                         element={<ProfilePassword />}
                     />
                     <Route path="/make-charity" element={<Charity />} />
+                    <Route path="/sendfeedback" element={<Feedback />} />
                     <Route path="/account" element={<ListAccount />} />
                     <Route path="/children" element={<ListChildren />} />
                     <Route path="/introducer" element={<ListIntroducer />} />
@@ -75,9 +76,12 @@ function App() {
                     <Route path="/statistic" element={<Statistic />} />
                     <Route path="/charity" element={<ListCharity />} />
                     <Route path="/picnic" element={<ListPicnic />} />
-                    <Route path="/feedback" element={<Feedback />} />
+                    <Route path="/feedback" element={<ListFeedback/>} />
                     <Route path="/notification" element={<Notification />} />
-                    <Route path="/notification/:idNotification" element={<NotificationDetailPage />} />
+                    <Route
+                        path="/notification/:idNotification"
+                        element={<NotificationDetailPage />}
+                    />
                 </Routes>
             </BrowserRouter>
         </div>
