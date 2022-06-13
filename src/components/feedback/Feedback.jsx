@@ -28,17 +28,24 @@ const Feedback = ({ feedback }) => {
             <td>{feedback.subject} </td>
             <td>{viewDate(feedback.dateFeedback)}</td>
             <td>
-                {feedback.dateReply
-                    ? viewDate(feedback.dateReply)
-                    : "Đang chờ"}
+                {feedback.dateReply ? viewDate(feedback.dateReply) : "Đang chờ"}
             </td>
             <td>
-                <i
-                    title="Phản hồi"
-                    className="bi bi-reply icon icon__view"
-                    onClick={handleShowReply}
-                    style={{ paddingRight: "42px" }}
-                ></i>
+                {!feedback.dateReply ? (
+                    <i
+                        title="Phản hồi"
+                        className="bi bi-reply icon icon__view"
+                        onClick={handleShowReply}
+                        style={{ paddingRight: "42px" }}
+                    ></i>
+                ) : (
+                    <i
+                        title="Xem chi tiết"
+                        className="bi bi-info-circle icon icon__view"
+                        onClick={handleShowReply}
+                        style={{ paddingRight: "42px" }}
+                    ></i>
+                )}
             </td>
 
             {/* ======================= MODAL ================================ */}
