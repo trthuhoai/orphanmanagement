@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import "./_skeleton.scss";
 
@@ -118,4 +117,33 @@ export const LoadingNotification = () => {
     );
 };
 
+export const LoadingNotificationDetail = () => {
+    return (
+        <div className="notification-detail">
+            <h2 className="notification-detail__subject">
+                <LoadingSkeleton className="w-50 py-3" />
+            </h2>
+            <div className="notification-detail__body">
+                <LoadingSkeleton className="rounded-circle py-4 px-4 d-inline-block" />
+                <div className="flex-grow-1 mx-3 ">
+                    <LoadingSkeleton className="w-25 h-50" />
+                </div>
+                <div>
+                    <LoadingSkeleton className="px-5 h-50" />
+                </div>
+            </div>
+            <div className="notification-detail__content">
+                <LoadingSkeleton className="w-100 py-4 mb-3" />
+                <LoadingSkeleton className="w-100 py-3 mb-5" />
+                <LoadingSkeleton className="w-100 mb-2" />
+                <LoadingSkeleton className="w-100 mb-2" />
+                <LoadingSkeleton className="w-100 mb-5" />
+                <LoadingSkeleton className="w-100 mb-2" />
+                <LoadingSkeleton className="w-100 mb-2" />
+                <LoadingSkeleton className="w-100 mb-5" />
+                <LoadingSkeleton className="w-100 mb-2" />
+            </div>
+        </div>
+    );
+};
 export default LoadingSkeleton;
