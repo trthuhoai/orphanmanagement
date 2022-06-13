@@ -1,10 +1,8 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import { MetaTags } from 'react-meta-tags' 
+import React from 'react';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import { MetaTags } from 'react-meta-tags';
 import { NavLink } from 'react-router-dom';
 import "./news.scss";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Row, Container } from "react-bootstrap";
 
 export default class Home extends React.Component {
 
@@ -57,8 +55,7 @@ export default class Home extends React.Component {
       <Nav  className="me-auto">
         <NavLink activeClassName="active" className="aa" to="/">Trang chủ</NavLink>
         <NavLink activeClassName="active" className="aa" to="/news">Tin tức</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/make-charity">Làm từ thiện</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/ask">Hỏi đáp</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/sendfeedback">Đánh giá</NavLink>
         <NavLink activeClassName="active" className="aa" to="/login">Đăng nhập</NavLink>
       </Nav>
       <span className="logo">

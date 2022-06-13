@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { Link, useNavigate } from "react-router-dom";
+import { Header } from "../home/Header";
 import "./login.scss";
 
 export default function Login() {
@@ -84,6 +85,7 @@ export default function Login() {
             <MetaTags>
                 <title>CYF Center | Đăng nhập</title>
             </MetaTags>
+            <Header/>
             <form className="form form__login">
                 <div className="form__top">
                     <Link to="/" style={{ color: "#fff" }}>

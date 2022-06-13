@@ -79,16 +79,9 @@ export default class Home extends React.Component {
                                 <NavLink
                                     activeClassName="active"
                                     className="aa"
-                                    to="/make-charity"
+                                    to="/sendfeedback"
                                 >
-                                    Làm từ thiện
-                                </NavLink>
-                                <NavLink
-                                    activeClassName="active"
-                                    className="aa"
-                                    to="/ask"
-                                >
-                                    Hỏi đáp
+                                    Đánh giá
                                 </NavLink>
                                 <NavLink
                                     activeClassName="active"
