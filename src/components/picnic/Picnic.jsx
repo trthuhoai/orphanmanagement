@@ -13,7 +13,11 @@ export const viewDate = (dateString) => {
         dateString.substring(14, 16)
     );
     return `${dateObj.getHours()}h${
-        dateObj.getMinutes() === 0 ? "" : dateObj.getMinutes()
+        dateObj.getMinutes() === 0
+            ? ""
+            : dateObj.getMinutes() < 10
+            ? "0" + dateObj.getMinutes()
+            : dateObj.getMinutes()
     } ${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
 };
 
