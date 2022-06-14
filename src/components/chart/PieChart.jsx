@@ -1,5 +1,5 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Pie } from "react-chartjs-2";
 import { StatisticContext } from "../../contexts/StatisticContext";
 
@@ -34,6 +34,15 @@ const PieChart = ({ chartId }) => {
     ];
     const { childrenGender } = useContext(StatisticContext);
 
+    const { financeFurniture } = useContext(StatisticContext);
+    const { financePicnic } = useContext(StatisticContext);
+    const { financeCharity } = useContext(StatisticContext);
+    
+    let totalFurniture = 0, totalPicnic = 0, totalCharity = 0;
+    financePicnic.forEach(item => totalPicnic += item.amount)
+    financeFurniture.forEach(item => totalFurniture += item.amount)
+    financeCharity.forEach(item => totalCharity += item.amount)
+
     let chartData = [];
     if (chartId === 1) {
         options.plugins.title.text =
@@ -46,7 +55,7 @@ const PieChart = ({ chartId }) => {
             value: item.value,
         }));
     } else if (chartId === 3) {
-        options.plugins.title.text = "Chua co du lieu"
+        options.plugins.title.text = "Biểu đồ tỉ lệ số tiền chi tiêu trong năm 2022";
     }
 
     const labels = chartData.map((item) => item.keyword);
