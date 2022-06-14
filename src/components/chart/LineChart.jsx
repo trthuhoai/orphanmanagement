@@ -8,7 +8,7 @@ import {
     Title,
     Tooltip,
 } from "chart.js";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Line } from "react-chartjs-2";
 import { StatisticContext } from "../../contexts/StatisticContext";
 
@@ -41,9 +41,17 @@ const LineChart = ({ chartId }) => {
     const { accountDeletedYear } = useContext(StatisticContext);
     const { childrenIntroduction } = useContext(StatisticContext);
     const { childrenAdoption } = useContext(StatisticContext);
+    const { financeFurniture } = useContext(StatisticContext);
+    const { financePicnic } = useContext(StatisticContext);
+    const { financeCharity } = useContext(StatisticContext);
+    console.log(
+        "🚀 ~ file: LineChart.jsx ~ line 47 ~ LineChart ~ financeCharity",
+        financeCharity
+    );
 
     let firstChartData = [],
-        secondChartData = [];
+        secondChartData = [],
+        thirdChartData = [];
     let label = [];
     let labels = [];
     if (chartId === 1) {
@@ -52,12 +60,6 @@ const LineChart = ({ chartId }) => {
         label = ["Tài khoản mới", ""];
         firstChartData = accountActiveYear.map((item) => item.amount);
         labels = accountActiveYear.map((item) => item.year);
-        // secondChartData = labels.map((label) => {
-        //     let index = accountDeletedYear.find(
-        //         (element) => element.year === label
-        //     );
-        //     return (index && index.amount) || 0;
-        // });
     } else if (chartId === 2) {
         options.plugins.title.text =
             "Biểu đồ thể hiện sự thay đổi số lượng trẻ em qua từng năm từ 2010 - 2022 ";
@@ -71,7 +73,13 @@ const LineChart = ({ chartId }) => {
             return (index && index.amount) || 0;
         });
     } else if (chartId === 3) {
-        options.plugins.title.text = "Chua co du lieu";
+        options.plugins.title.text =
+            "Biểu đồ thể hiện sự thay đổi các khoản chi tiêu trong năm 2022";
+        label = ["Từ thiện", "Dã ngoại", "Trang thiết bị"];
+        firstChartData = financeCharity.map((item) => item.amount);
+        secondChartData = financePicnic.map((item) => item.amount);
+        // thirdChartData = financeCharity.map((item) => item.amount);
+        labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     }
 
     const data = {
@@ -87,7 +95,8 @@ const LineChart = ({ chartId }) => {
                 label: label[1],
                 data: secondChartData,
                 borderColor: chartId !== 1 ? "rgb(94, 200, 235)" : "#fff",
-                backgroundColor: chartId !== 1 ? "rgba(94, 200, 235, 0.5)" : "#fff",
+                backgroundColor:
+                    chartId !== 1 ? "rgba(94, 200, 235, 0.5)" : "#fff",
             },
         ],
     };

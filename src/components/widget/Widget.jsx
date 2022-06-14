@@ -20,8 +20,8 @@ const Widget = ({ getChartId }) => {
         },
         {
             id: 3,
-            total: 0,
-            description: "No data",
+            total: "",
+            description: "Tài chính",
         },
     ];
     const handleClickWidget = (widgetId) => {
