@@ -3,9 +3,7 @@ import FurnitureRequestDetail from "../../components/furnitureRequest/FurnitureR
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
-// import { withRouter } from "react-router-dom";
 import { useParams } from "react-router-dom";
-// import "./list.scss";
 import NotificationContextProvider from "../../contexts/NotificationContext";
 
 const ListFurnitureRequest_Detail = () => {

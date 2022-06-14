@@ -1,28 +1,23 @@
+import { Navigate } from "react-router-dom";
 import { MetaTags } from "react-meta-tags";
-import FurnitureRequestCreate from "../../components/furnitureRequest/FurnitureRequestCreate";
+import FurnitureRequestListLogistic from "../../components/furnitureRequest/FurnitureRequestList_Logistic";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
 import FurnitureRequestContextProvider from "../../contexts/FurnitureRequestContext";
-import { useParams } from "react-router-dom";
-import NotificationContextProvider from "../../contexts/NotificationContext";
+import "./list.scss";
 
-const ListFurnitureRequest_Create = () => {
-    const params = useParams();
-    console.log("id", params.id);
-    let id = params.id;
+const ListFurnitureRequest = () => {
     return (
         <div className="list">
             <MetaTags>
                 <title>CYF Center | Yêu cầu sửa chữa</title>
             </MetaTags>
             <Sidebar />
-            <div className="listContainer">
-                <NotificationContextProvider>
-                    <Header />
-                </NotificationContextProvider>
+            <div className="listContainer"> 
+                <Header />
                 <div className="main">
                     <FurnitureRequestContextProvider>
-                        <FurnitureRequestCreate />
+                        <FurnitureRequestListLogistic />
                     </FurnitureRequestContextProvider>
                 </div>
             </div>
@@ -30,4 +25,4 @@ const ListFurnitureRequest_Create = () => {
     );
 };
 
-export default ListFurnitureRequest_Create;
+export default ListFurnitureRequest;

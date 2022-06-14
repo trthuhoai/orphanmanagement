@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { FurnitureRequestContext } from "../../contexts/FurnitureRequestContext";
+import { FurnitureRequestEmployeeContext } from "../../contexts/FurnitureRequestEmployeeContext";
 import "../../scss/abstracts/_modal.scss";
 import "../../scss/abstracts/_table.scss";
-import FurnitureRequest from "./FurnitureRequest";
+import FurnitureRequestEmployee from "./FurnitureRequest_Employee";
 import FurnitureRequestCreate from "./FurnitureRequestCreate";
-import FurnitureRequestPagination from "./FurnitureRequestPagination";
+import FurnitureRequestPaginationEmployee from "./FurnitureRequestPagination_Employee";
 import "./_furnitureRequest.scss";
 import { useNavigate } from "react-router-dom";
 const FurnitureRequestList = () => {
     const navigate = useNavigate();
-    const { furnitureRequests } = useContext(FurnitureRequestContext);
+    const { furnitureRequestsEmployee } = useContext(FurnitureRequestEmployeeContext);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () =>{
@@ -19,16 +19,16 @@ const FurnitureRequestList = () => {
 
     useEffect(() => {
         handleClose();
-    }, [furnitureRequests]);
+    }, [furnitureRequestsEmployee]);
     // furnitureRequests.reverse();
     return (
         <>
             <div className="table">
                 <div className="table__top">
                     <h2>Danh sánh yêu cầu sửa chữa</h2>
-                    <Button className="btn btn--primary" onClick={handleShow}>
+                    {/* <Button className="btn btn--primary" onClick={handleShow}>
                         Thêm yêu cầu
-                    </Button>
+                    </Button> */}
                 </div>
                 <table className="table__body">
                     <thead>
@@ -37,14 +37,14 @@ const FurnitureRequestList = () => {
                             <th scope="col">Ngày yêu cầu</th>
                             <th scope="col">Hạn cuối</th>
                             <th scope="col">Trạng thái</th>
-                            <th scope="col">Nhân viên được giao</th>
+                            {/* <th scope="col">Nhân viên được giao</th> */}
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {furnitureRequests.reverse().map((furnitureRequest) => (
+                        {furnitureRequestsEmployee.reverse().map((furnitureRequest) => (
                             <tr key={furnitureRequest.furnitureRequestId}>
-                                <FurnitureRequest furnitureRequest={furnitureRequest} />
+                                <FurnitureRequestEmployee furnitureRequest={furnitureRequest} />
                             </tr>
                         ))}
                     </tbody>
@@ -80,7 +80,7 @@ const FurnitureRequestList = () => {
                     </Modal.Footer>
                 </Modal>
             </div>
-            <FurnitureRequestPagination />
+            <FurnitureRequestPaginationEmployee />
         </>
     );
 };

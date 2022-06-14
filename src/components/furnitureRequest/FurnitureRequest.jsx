@@ -46,9 +46,9 @@ const FurnitureRequest = ({ furnitureRequest }) => {
                     onClick={(e)=>openModal(furnitureRequest.furnitureRequestId)}
                 ></i>
                 <i
-                    title="Chỉnh sửa"
-                    className="bi bi-pencil-square icon icon__update"
-                    onClick={(e)=>openUpdate(furnitureRequest.furnitureRequestId)}
+                    // title="Chỉnh sửa"
+                    // className="bi bi-pencil-square icon icon__update"
+                    // onClick={(e)=>openUpdate(furnitureRequest.furnitureRequestId)}
                 ></i>
                 <i
                     className="bi bi-trash3 icon icon__delete"
