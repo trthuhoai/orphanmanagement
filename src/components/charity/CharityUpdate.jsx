@@ -21,8 +21,9 @@ const CharityUpdate = ({ theCharity }) => {
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
     const [title, setTitle] = useState("");
+    const [totalDonation, setTotalDonation] = useState(0);
     const [content, setContent] = useState("");
-   
+
     const { viewCharity } = useContext(CharityContext);
     useEffect(() => {
         viewCharity(id).then((result) => {
@@ -31,10 +32,11 @@ const CharityUpdate = ({ theCharity }) => {
             setTitle(result.title);
             setDateStart(result.dateStart);
             setDateEnd(result.dateEnd);
+            setTotalDonation(result.totalDonation);
             setContent(result.content);
         });
     }, []);
-    
+
     const { updateCharity } = useContext(CharityContext);
     const updatedCharity = {
         charityName,
@@ -42,6 +44,7 @@ const CharityUpdate = ({ theCharity }) => {
         dateEnd,
         dateStart,
         image,
+        totalDonation,
         title,
     };
 
@@ -159,7 +162,20 @@ const CharityUpdate = ({ theCharity }) => {
                         required
                     />
                 </Form.Group>
-
+                <Form.Group className="form-group mb-3">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        min="1000000"
+                        max="100000000"
+                        step="1000000"
+                        placeholder="Chi phí"
+                        name="totalDonation"
+                        value={totalDonation}
+                        onChange={(e) => setTotalDonation(+e.target.value)}
+                        required
+                    />
+                </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
                         <DatePicker
