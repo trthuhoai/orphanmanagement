@@ -1,10 +1,9 @@
 import { MetaTags } from "react-meta-tags";
-// import FeedbackList from "../../components/feedback/FeedbackList";
+import { Navigate } from "react-router-dom";
+import FeedbackList from "../../components/feedback/FeedbackList";
 import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/Sidebar";
-// import FeedbackContextProvider from "../../contexts/FeedbackContext";
-import { Navigate } from "react-router-dom";
-import "./_feedback.scss";
+import FeedbackContextProvider from "../../contexts/FeedbackContext";
 import NotificationContextProvider from "../../contexts/NotificationContext";
 
 const Feedback = () => {
@@ -24,10 +23,9 @@ const Feedback = () => {
                     <Header />
                 </NotificationContextProvider>
                 <div className="main">
-                    <h1 style={{ color: "black" }}>Chua co du lieu phan hoi</h1>
-                    {/* <FeedbackContextProvider>
+                    <FeedbackContextProvider>
                         <FeedbackList />
-                    </FeedbackContextProvider> */}
+                    </FeedbackContextProvider>
                 </div>
             </div>
         </div>
