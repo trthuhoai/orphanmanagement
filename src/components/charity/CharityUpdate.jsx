@@ -168,7 +168,7 @@ const CharityUpdate = ({ theCharity }) => {
                         type="number"
                         min="1000000"
                         max="100000000"
-                        step="1000000"
+                        step="100000"
                         placeholder="Chi phí"
                         name="totalDonation"
                         value={totalDonation}
