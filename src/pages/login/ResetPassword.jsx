@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { Link } from "react-router-dom";
+import { Header } from "../home/Header";
 import "./login.scss";
 
 export default function ResetPassword() {
@@ -40,6 +41,7 @@ export default function ResetPassword() {
             <MetaTags>
                 <title>CYF Center | Đặt lại mật khẩu</title>
             </MetaTags>
+            <Header/>
             <form className="form form__login">
                 <div className="form__top">
                     <Link to="/" style={{ color: "#fff" }}>

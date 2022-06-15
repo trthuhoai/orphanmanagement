@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Header } from "../home/Header";
 import "./login.scss";
 
 export default function ChangePassword() {
-    const [newPassWord, setNewPassWord] = useState("");
-    const [confirmPassWord, setConfirmPassWord] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [announcement, setAnnouncement] = useState("");
 
@@ -20,8 +21,9 @@ export default function ChangePassword() {
 
     async function login() {
         let raw = JSON.stringify({
-            newPassWord,
-            confirmPassWord,
+            currentPassword: "123456789@X",
+            newPassword,
+            confirmPassword,
         });
 
         let requestOptions = {
@@ -54,6 +56,7 @@ export default function ChangePassword() {
             <MetaTags>
                 <title>CYF Center | Đặt lại mật khẩu</title>
             </MetaTags>
+            <Header/>
             <form className="form form__login">
                 <div className="form__top">
                     <Link to="/" style={{ color: "#fff" }}>
@@ -74,7 +77,7 @@ export default function ChangePassword() {
                             name=""
                             placeholder="Mật khẩu"
                             onChange={(event) => {
-                                setNewPassWord(event.target.value);
+                                setNewPassword(event.target.value);
                             }}
                             onKeyPress={(e) => {
                                 if (e.key === "Enter") {
@@ -91,7 +94,7 @@ export default function ChangePassword() {
                             name=""
                             placeholder="Xác nhận mật khẩu"
                             onChange={(event) => {
-                                setConfirmPassWord(event.target.value);
+                                setConfirmPassword(event.target.value);
                             }}
                             onKeyPress={(e) => {
                                 if (e.key === "Enter") {
@@ -100,14 +103,14 @@ export default function ChangePassword() {
                             }}
                             required
                         />
-                        {confirmPassWord && newPassWord === confirmPassWord && (
+                        {confirmPassword && newPassword === confirmPassword && (
                             <i
                                 className="bi bi-check2 icon icon__password"
                                 style={{ color: "#17B978" }}
                             ></i>
                         )}
                     </div>
-                    {newPassWord !== confirmPassWord && (
+                    {newPassword !== confirmPassword && (
                         <p className="login__annoucement">
                             Mật khẩu không khớp
                         </p>
