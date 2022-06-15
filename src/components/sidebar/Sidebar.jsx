@@ -231,7 +231,7 @@ const Sidebar = () => {
                             Phản hồi
                         </NavLink>
                         <NavLink
-                            to="/announcement"
+                            to="/notification"
                             style={linkStyle}
                             className={({ isActive }) =>
                                 isActive ? "link-active" : "link"

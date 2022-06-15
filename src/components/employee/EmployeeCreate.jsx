@@ -19,8 +19,6 @@ const EmployeeCreate = () => {
         identification: "",
         phone: "",
         email: "",
-        password: "",
-        confirmPassword: "",
     });
 
     const [imageSuccess, setImageSuccess] = useState("");
@@ -43,8 +41,6 @@ const EmployeeCreate = () => {
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
     } = newEmployee;
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -58,8 +54,6 @@ const EmployeeCreate = () => {
             identification,
             phone,
             email,
-            password,
-            confirmPassword
         );
     };
 
@@ -282,37 +276,6 @@ const EmployeeCreate = () => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => onInputChange(e)}
-                            required
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );

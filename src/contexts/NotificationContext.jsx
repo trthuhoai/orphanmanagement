@@ -24,7 +24,7 @@ const NotificationContextProvider = (props) => {
             redirect: "follow",
         };
         await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin/all",
+            "https://orphanmanagement.herokuapp.com/api/v1/manager/notification/user/all",
             requestOptions
         )
             .then((response) => response.json())

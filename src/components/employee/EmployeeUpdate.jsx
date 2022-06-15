@@ -26,8 +26,6 @@ const EmployeeUpdate = ({ theEmployee }) => {
     const [identification, setIdentification] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const { viewEmployee } = useContext(EmployeeContext);
     useEffect(() => {
@@ -55,8 +53,6 @@ const EmployeeUpdate = ({ theEmployee }) => {
         identification,
         phone,
         email,
-        password,
-        confirmPassword,
     };
 
     const handleSubmit = (e) => {
@@ -279,35 +275,6 @@ const EmployeeUpdate = ({ theEmployee }) => {
                         required
                     />
                 </Form.Group>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Mật khẩu"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="password"
-                            placeholder="Xác nhận mật khẩu"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                    </Form.Group>
-                    {password !== confirmPassword && (
-                        <p className="password__match">
-                            Mật khẩu không trùng khớp.
-                        </p>
-                    )}
-                </Row>
             </Form>
         </>
     );
