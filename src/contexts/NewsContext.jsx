@@ -6,13 +6,12 @@ const NewsContextProvider = (props) => {
     const [charity, setCharity] = useState([]);
     const [pages, setPages] = useState([]);
 
-    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
-    console.log("Current",currentPage);
-    const token = JSON.parse(localStorage.getItem("token"));
+    // const currentPage = JSON.parse(localStorage.getItem("newsPage"));
+    // console.log("Current",currentPage);
 
     useEffect(() => {
-        localStorage.setItem("currentPage", 1);
-        getNewsList(1);
+        // localStorage.setItem("newsPage", 1);
+        getNewsList(1,"");
     }, []);
 
     // GET CHARITYS LIST

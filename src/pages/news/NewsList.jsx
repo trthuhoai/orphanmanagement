@@ -22,18 +22,18 @@ const NewsList = ({ charity }) => {
     return (
         <>
         <bb onClick={(e)=>openModal()}>
-        <dl class="dl-horizontal">
-				<dt>
-                <span class="label label-information">      TỪ THIỆN  </span>{charity.dateStart} - {charity.dateEnd}
-            </dt>
-            <dd>
-                <h5>{charity.title}</h5>
-            {charity.content}
-            </dd>
-            {active===1?
-            <RenderData/>:""}
+            <dl class="dl-horizontal">
+                <dt>
+                    <span class="label label-information">      TỪ THIỆN  </span>{charity.dateStart} - {charity.dateEnd}
+                </dt>
+                <dd>
+                    <h5>{charity.title}</h5>
+                {charity.content}
+                </dd>
+                {active===1?
+                <RenderData/>:""}
 
-        </dl>
+            </dl>
         </bb>
         </>
     );
