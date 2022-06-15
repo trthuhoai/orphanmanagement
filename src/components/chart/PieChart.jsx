@@ -37,11 +37,13 @@ const PieChart = ({ chartId }) => {
     const { financeFurniture } = useContext(StatisticContext);
     const { financePicnic } = useContext(StatisticContext);
     const { financeCharity } = useContext(StatisticContext);
-    
-    let totalFurniture = 0, totalPicnic = 0, totalCharity = 0;
-    financePicnic.forEach(item => totalPicnic += item.amount)
-    financeFurniture.forEach(item => totalFurniture += item.amount)
-    financeCharity.forEach(item => totalCharity += item.amount)
+
+    let totalFurniture = 0,
+        totalPicnic = 0,
+        totalCharity = 0;
+    financePicnic.forEach((item) => (totalPicnic += item.amount));
+    financeFurniture.forEach((item) => (totalFurniture += item.amount));
+    financeCharity.forEach((item) => (totalCharity += item.amount));
 
     let chartData = [];
     if (chartId === 1) {
@@ -51,11 +53,30 @@ const PieChart = ({ chartId }) => {
     } else if (chartId === 2) {
         options.plugins.title.text = "Biểu đồ tỉ lệ giới tính trẻ em ";
         chartData = childrenGender.map((item) => ({
-            keyword: item.keyword ? "Nam" : "Nữ",
+            keyword: item.keyword === "true" ? "Nam" : "Nữ",
             value: item.value,
         }));
     } else if (chartId === 3) {
-        options.plugins.title.text = "Biểu đồ tỉ lệ số tiền chi tiêu trong năm 2022";
+        options.plugins.title.text =
+            "Biểu đồ tỉ lệ số tiền chi tiêu trong năm 2022";
+        chartData = [
+            {
+                keyword: "Dã ngoại",
+                value: financePicnic.reduce(
+                    (previousValue, currentValue) =>
+                        previousValue + currentValue.amount,
+                    0
+                ),
+            },
+            {
+                keyword: "Trang thiết bị",
+                value: financeFurniture.reduce(
+                    (previousValue, currentValue) =>
+                        previousValue + currentValue.amount,
+                    0
+                ),
+            },
+        ];
     }
 
     const labels = chartData.map((item) => item.keyword);
