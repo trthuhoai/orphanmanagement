@@ -9,6 +9,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 const EmployeeUpdate = ({ theEmployee }) => {
     const id = theEmployee.id;
@@ -161,11 +163,9 @@ const EmployeeUpdate = ({ theEmployee }) => {
                 </Form.Group>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">
-                        <Form.Control
+                        <DatePicker
                             className="form-control"
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="date_of_birth"
+                            placeholderText="Ngày sinh"
                             selected={
                                 new Date(
                                     date_of_birth.substring(6, 11),
@@ -173,7 +173,15 @@ const EmployeeUpdate = ({ theEmployee }) => {
                                     date_of_birth.substring(0, 2)
                                 )
                             }
-                            onChange={(e) => setDate_of_birth(e.target.value)}
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={100}
+                            dateFormat="dd/MM/yyyy"
+                            onChange={(date) => {
+                                const resultDate =
+                                    moment(date).format("DD/MM/YYYY");
+                                setDate_of_birth(resultDate);
+                            }}
                             required
                         />
                     </Form.Group>
