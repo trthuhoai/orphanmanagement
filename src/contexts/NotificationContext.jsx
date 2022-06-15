@@ -4,14 +4,12 @@ export const NotificationContext = createContext();
 
 const NotificationContextProvider = (props) => {
     const [notifications, setNotifications] = useState([]);
-    const [accounts, setAccounts] = useState([]);
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
         getNotificationsList();
-        getAccountListAll();
     }, []);
 
     async function getNotificationsList() {
@@ -106,7 +104,7 @@ const NotificationContextProvider = (props) => {
         return result.data;
     }
 
-    async function getAccountListAll() {
+    async function viewSender(id) {
         let requestOptions = {
             method: "GET",
             headers: {
@@ -115,17 +113,12 @@ const NotificationContextProvider = (props) => {
             },
             redirect: "follow",
         };
-        await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin/all",
+        let result = await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/profile/account/${id}`,
             requestOptions
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                setAccounts(result.data);
-            })
-            .catch((error) => {
-                console.log("error", error);
-            });
+        );
+        result = await result.json();
+        return result.data;
     }
 
     return (
@@ -133,7 +126,7 @@ const NotificationContextProvider = (props) => {
             value={{
                 notifications,
                 viewNotification,
-                accounts,
+                viewSender,
                 addNotification,
             }}
         >

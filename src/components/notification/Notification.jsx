@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NotificationContext } from "../../contexts/NotificationContext";
 import "./_notification.scss";
@@ -53,7 +53,17 @@ export const viewDate = (dateSend) => {
 };
 
 const Notification = ({ theNotification }) => {
-    const { accounts } = useContext(NotificationContext);
+    const id = theNotification.senderId;
+    const [sender, setSender] = useState({
+        roles: [{ description: "" }],
+    });
+
+    const { viewSender } = useContext(NotificationContext);
+    useEffect(() => {
+        viewSender(id).then((result) => {
+            setSender(result);
+        });
+    }, []);
 
     return (
         <NavLink
@@ -64,9 +74,7 @@ const Notification = ({ theNotification }) => {
                 <img
                     src={
                         "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57" &&
-                        accounts.find(
-                            (account) => account.id === theNotification.senderId
-                        ).image
+                        sender.image
                     }
                     alt=""
                     className="notification__img"
@@ -74,12 +82,7 @@ const Notification = ({ theNotification }) => {
                 <div className="notification__content">
                     <div className="">
                         <h4 className="notification__sender">
-                            {
-                                accounts.find(
-                                    (account) =>
-                                        account.id === theNotification.senderId
-                                ).roles[0].description
-                            }
+                            {sender.roles[0].description}
                         </h4>
                         <span className="notification__timer">
                             {viewDate(theNotification.dateSend)}

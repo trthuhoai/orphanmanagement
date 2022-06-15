@@ -53,7 +53,7 @@ const NotificationCreate = () => {
         recipients: [],
         roles: [],
         subject: "",
-        type: "ROLE_NOTIFY",
+        type: "MAIL_NOTIFY",
     });
 
     const [pickerDate, setPickerDate] = useState("");

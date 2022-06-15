@@ -9,22 +9,22 @@ const NotificationDetail = () => {
     const params = useParams();
     const id = params.idNotification;
 
-    const { accounts } = useContext(NotificationContext);
+    const { viewSender } = useContext(NotificationContext);
     const { viewNotification } = useContext(NotificationContext);
 
     const [detailNotification, setDetailNotification] = useState({});
     const [sender, setSender] = useState({
         roles: [{ description: "" }],
     });
-    
+
     useEffect(() => {
         viewNotification(id).then((result) => {
             setDetailNotification(result);
-            setSender(
-                accounts.find((account) => account.id === result.senderId)
-            );
+            viewSender(detailNotification.senderId).then((result) => {
+                setSender(result);
+            });
         });
-    }, [id, accounts, viewNotification]);
+    }, [id, sender, viewNotification]);
 
     function createMarkup(markup) {
         return { __html: markup };

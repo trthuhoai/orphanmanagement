@@ -59,6 +59,11 @@ $borderColor: #ccc;
         font-weight: 400;
         margin-bottom: 0;
     }
+
+    &__null{
+        text-align: center;
+        margin-top: 1rem;
+    }
 }
 
 .form__notification-top {
@@ -141,10 +146,6 @@ $borderColor: #ccc;
     color: #000;
     min-height: 300px;
     border-top: 0;
-
-    & > .ql-toolbar:first-child {
-        display: none !important;
-    }
 
     .ql-toolbar.ql-snow {
         border: 0;

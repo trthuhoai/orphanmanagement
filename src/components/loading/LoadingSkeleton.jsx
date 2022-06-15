@@ -16,7 +16,7 @@ export const LoadingList = ({ columns }) => {
             {Array(5)
                 .fill(0)
                 .map((item, index) => (
-                    <tr>
+                    <tr key={index}>
                         <td className="d-flex align-items-center gap-3 h-75">
                             <LoadingSkeleton className="rounded-circle w-25 py-4 px-3 d-inline-block"></LoadingSkeleton>
                             <LoadingSkeleton className="my-3 mx-3 d-inline-block w-75"></LoadingSkeleton>
