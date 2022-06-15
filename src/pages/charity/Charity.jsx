@@ -1,11 +1,9 @@
-import React from 'react'
-import { MetaTags } from 'react-meta-tags' 
+import React from 'react';
+import { Button, Col, Container, Form, Nav, Navbar, Row } from 'react-bootstrap';
+import DatePicker from "react-datepicker";
+import { MetaTags } from 'react-meta-tags';
 import { NavLink } from 'react-router-dom';
 import "./charity.scss";
-import { Navbar, Nav } from 'react-bootstrap';
-import { Row, Container } from "react-bootstrap";
-import { Button, Col, Form, Row1 } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 
 export default class Home extends React.Component {
 
@@ -59,7 +57,7 @@ export default class Home extends React.Component {
         <NavLink activeClassName="active" className="aa" to="/">Trang chủ</NavLink>
         <NavLink activeClassName="active" className="aa" to="/news">Tin tức</NavLink>
         <NavLink activeClassName="active" className="aa" to="/make-charity">Làm từ thiện</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/ask">Hỏi đáp</NavLink>
+        
         <NavLink activeClassName="active" className="aa" to="/login">Đăng nhập</NavLink>
       </Nav>
       <span className="logo">

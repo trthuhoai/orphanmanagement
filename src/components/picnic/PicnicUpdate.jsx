@@ -168,33 +168,31 @@ const PicnicUpdate = ({ thePicnic }) => {
                     />
                 </Form.Group>
 
-                <Row>
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="text"
-                            placeholder="Địa điểm"
-                            name="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} className="form-group">
-                        <Form.Control
-                            className="form-control"
-                            type="number"
-                            min="1000000"
-                            max="100000000"
-                            step="1000000"
-                            placeholder="Chi phí"
-                            name="money"
-                            value={money}
-                            onChange={(e) => setMoney(+e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-                </Row>
+                <Form.Group className="form-group mb-3">
+                    <Form.Control
+                        className="form-control"
+                        type="text"
+                        placeholder="Địa điểm"
+                        name="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+                <Form.Group className="form-group mb-3">
+                    <Form.Control
+                        className="form-control"
+                        type="number"
+                        min="1000000"
+                        max="100000000"
+                        step="1000000"
+                        placeholder="Chi phí"
+                        name="money"
+                        value={money}
+                        onChange={(e) => setMoney(+e.target.value)}
+                        required
+                    />
+                </Form.Group>
 
                 <Row className="mb-3">
                     <Form.Group as={Col} className="form-group">

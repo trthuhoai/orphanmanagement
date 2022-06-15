@@ -121,8 +121,7 @@ export default function News() {
       <Nav  className="me-auto">
         <NavLink activeClassName="active" className="aa" to="/">Trang chủ</NavLink>
         <NavLink activeClassName="active" className="aa" to="/news">Tin tức</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/make-charity">Làm từ thiện</NavLink>
-        <NavLink activeClassName="active" className="aa" to="/ask">Hỏi đáp</NavLink>
+        <NavLink activeClassName="active" className="aa" to="/sendfeedback">Đánh giá</NavLink>
         <NavLink activeClassName="active" className="aa" to="/login">Đăng nhập</NavLink>
       </Nav>
       <span className="logo">

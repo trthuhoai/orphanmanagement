@@ -78,7 +78,7 @@ const CharityContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getCharitysList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }
@@ -121,7 +121,7 @@ const CharityContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getCharitysList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }
@@ -143,7 +143,7 @@ const CharityContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getCharitysList(currentPage);
+                getCharitysList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }

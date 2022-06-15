@@ -49,7 +49,6 @@ const PicnicContextProvider = (props) => {
         dateStart,
         dateEnd,
         address,
-        money,
         content,
         personInChargeId
     ) {
@@ -60,9 +59,8 @@ const PicnicContextProvider = (props) => {
             dateStart,
             dateEnd,
             address,
-            money,
             content,
-            personInChargeId
+            personInChargeId,
         });
 
         let requestOptions = {
@@ -82,7 +80,7 @@ const PicnicContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getPicnicsList(currentPage);
+                getPicnicsList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }
@@ -125,7 +123,7 @@ const PicnicContextProvider = (props) => {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                getPicnicsList(currentPage);
+                getPicnicsList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }
@@ -147,7 +145,7 @@ const PicnicContextProvider = (props) => {
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
-                getPicnicsList(currentPage);
+                getPicnicsList(currentPage, "");
             })
             .catch((error) => console.log("error", error));
     }

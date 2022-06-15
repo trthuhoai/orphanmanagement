@@ -62,6 +62,10 @@ const StatisticContextProvider = (props) => {
     const [childrenIntroduction, setChildrenIntroduction] = useState([]);
     const [childrenAdoption, setChildrenAdoption] = useState([]);
 
+    const [financeFurniture, setFinanceFurniture] = useState([]);
+    const [financePicnic, setFinancePicnic] = useState([]);
+    const [financeCharity, setFinanceCharity] = useState([]);
+    
     const token = JSON.parse(localStorage.getItem("token"));
     let requestOptions = {
         method: "GET",
@@ -81,6 +85,10 @@ const StatisticContextProvider = (props) => {
         getChildrensList();
         getChildrenGender();
         getChildrenStatus();
+
+        getFinanceFurniture();
+        getFinancePicnic();
+        getFinanceCharity();
     }, []);
 
     // ================ACCOUNT STATS================
@@ -137,7 +145,7 @@ const StatisticContextProvider = (props) => {
         )
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
+                console.log(result);
                 setAccountDeletedYear(result.data);
             })
             .catch((error) => console.log("error", error));
@@ -194,6 +202,41 @@ const StatisticContextProvider = (props) => {
             .catch((error) => console.log("error", error));
     }
 
+    // ================FINANCE STATS================
+    //LINE CHART
+    async function getFinanceFurniture() {
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/fund/furniture`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                setFinanceFurniture(result.data);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    async function getFinancePicnic() {
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/fund/picnic`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                setFinancePicnic(result.data);
+            })
+            .catch((error) => console.log("error", error));
+    }
+    async function getFinanceCharity() {
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/manager/fund/charity`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                setFinanceCharity(result.data);
+            })
+            .catch((error) => console.log("error", error));
+    }
     return (
         <StatisticContext.Provider
             value={{
@@ -207,6 +250,9 @@ const StatisticContextProvider = (props) => {
                 childrenGender,
                 childrenIntroduction,
                 childrenAdoption,
+                financeFurniture,
+                financePicnic,
+                financeCharity,
             }}
         >
             {props.children}

@@ -1,0 +1,29 @@
+@use "../../scss/abstracts/" as *;
+
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #282d32;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    .row {
+        flex-grow: 1;
+        margin-bottom: 0 !important;
+    }
+
+    h3 {
+        font-size: $fontSizeMedium;
+    }
+
+    ul {
+        font-size: $fontSizeNormal;
+    }
+
+    .copyright {
+        margin-right: 20px;
+        width: 20%;
+    }
+}

@@ -18,7 +18,6 @@ const Statistic = () => {
     }
 
     const getChartId = (chartId) => {
-        console.log(chartId);
         setChartId(chartId);
     };
 
