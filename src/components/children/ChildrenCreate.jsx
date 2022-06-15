@@ -246,7 +246,6 @@ const ChildrenCreate = () => {
                             });
                             setPickerAdopDate(date);
                         }}
-                        required
                     />
                 </Form.Group>
             </Row>

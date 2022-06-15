@@ -4,13 +4,37 @@ export const NotificationContext = createContext();
 
 const NotificationContextProvider = (props) => {
     const [notifications, setNotifications] = useState([]);
+    const [accounts, setAccounts] = useState([]);
 
     const currentPage = JSON.parse(localStorage.getItem("currentPage"));
     const token = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
         getNotificationsList();
+        getAccountsList();
     }, []);
+
+    async function getAccountsList() {
+        let requestOptions = {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
+        await fetch(
+            "https://orphanmanagement.herokuapp.com/api/v1/admin/all",
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                setAccounts(result.data);
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+    }
 
     async function getNotificationsList() {
         let requestOptions = {
@@ -128,6 +152,7 @@ const NotificationContextProvider = (props) => {
                 viewNotification,
                 viewSender,
                 addNotification,
+                accounts
             }}
         >
             {props.children}
