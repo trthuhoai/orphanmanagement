@@ -6,7 +6,7 @@ const FurnitureContextProvider = (props) => {
     const [furnitures, setFurnitures] = useState([]);
     const [addResult, setAddResult] = useState("false");
     const [pages, setPages] = useState([]);
-    const furniturePage = JSON.parse(localStorage.getItem("furniturePage"));
+    // const furniturePage = JSON.parse(localStorage.getItem("furniturePage"));
     const [detailAccounts, setDetailAccounts] = useState({});
 
     const token = JSON.parse(localStorage.getItem("token"));

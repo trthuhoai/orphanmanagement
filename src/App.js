@@ -29,7 +29,7 @@ import ListStorage from "./pages/list/ListStorage";
 import ChangePassword from "./pages/login/ChangePassword";
 import Login from "./pages/login/Login";
 import ResetPassword from "./pages/login/ResetPassword";
-import News from "./pages/news/News";
+import News from "./pages/list/ListNews"; 
 import Notification from "./pages/notification/Notification";
 import NotificationDetailPage from "./pages/notification/NotificationDetailPage";
 import ProfileInfo from "./pages/profile/ProfileInfo";
