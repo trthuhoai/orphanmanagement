@@ -136,28 +136,31 @@ export default class Home extends React.Component {
                             Thông tin chung về Trung tâm Bảo trợ trẻ em CYF
                         </h2>
                         <p>1. Thông tin chung:</p>- Tên đơn vị: Trung tâm Bảo
-                        trợ trẻ em CYF - Địa chỉ Trung tâm có 2 trụ sở: + Trụ sở
+                        trợ trẻ em CYF
+                        <br/>- Địa chỉ Trung tâm có 2 trụ sở: + Trụ sở
                         chính: Số 45 Bà Triệu, phường Hòa Khánh Bắc, quận Liên
-                        Chiểu, Đà Nẵng Điện thoại: 02433.5525651 + Cơ sở 2: Thôn
-                        Đồng Dầu, xã Dục Tú, huyện Đông Anh, Hà Nội Điện thoại:
-                        0243. 9613113 - Web: ctxhvaqbtte.hanoi.gov.vn - Email:
-                        ttctxhqbtte_soldtbxh@hanoi.gov.vn Trung tâm Công tác xã
-                        hội và Quỹ Bảo trợ trẻ em Hà Nội được thành lập trên cơ
+                        Chiểu, Đà Nẵng - Điện thoại: 02433.5525651<br/> - Cơ sở 2: Thôn
+                        Đồng Dầu, xã Dục Tú, huyện Đông Anh, Hà Nội - Điện thoại:
+                        0243. 9613113
+                        <br/> - Web: cyfcenter.herokuapp.com<br/> - Email: cyf.center@danang.gov.vn
+                        <br/>  Trung tâm Công tác xã
+                        hội và Quỹ Bảo trợ trẻ em CYF được thành lập trên cơ
                         sở hợp nhất 3 đơn vị đó là: Trung tâm Bảo trợ xã hội I
-                        Hà Nội, Trung tâm Cung cấp dịch vụ công tác xã hội Hà
-                        Nội và Quỹ Bảo trợ trẻ em Hà Nội theo Quyết định số
-                        5326/QĐ-UBND ngày 22/12/2021 của UBND thành phố Hà Nội.
+                        Đà Nẵng, Trung tâm Cung cấp dịch vụ công tác xã hội Đà Nẵng và Quỹ Bảo trợ trẻ em Hà Nội theo Quyết định số
+                        5326/QĐ-UBND ngày 22/12/2021 của UBND thành phố Đà Nẵng.
+                        <br/>
+                        <br/>
                         <p>2. Chức năng, nhiệm vụ</p>
-                        Trung tâm Công tác xã hội và Quỹ Bảo trợ trẻ em Hà Nội
-                        có chức năng cung cấp các dịch vụ công tác xã hội; tập
-                        trung, tiếp nhận, quản lý, nuôi dưỡng người lang thang;
-                        đối tượng cần sự bảo vệ khẩn cấp; trẻ bị bỏ rơi; người
-                        cao tuổi, trẻ em bị đi lạc gia đình và các đối tượng
+                        Trung tâm Bảo trợ trẻ em CYF có chức năng cung cấp các dịch vụ công tác xã hội; tập
+                        trung, tiếp nhận, quản lý, nuôi dưỡng trẻ em lang thang, mồ côi;
+                        đối tượng cần sự bảo vệ khẩn cấp; trẻ bị bỏ rơi, trẻ em bị đi lạc gia đình và các đối tượng
                         khác nhau theo quy định; tiếp nhận các nguồn lực hỗ trợ
                         của các tổ chức, cá nhân trong nước và nước ngoài; vận
                         động, tiếp nhận, quản lý, sử dụng Quỹ Bảo trợ trẻ em Hà
                         Nội để thực hiện mục đích bảo vệ chăm sóc và giáo dục
                         trẻ em theo quy định của pháp luật.
+                        <br/>
+                        <br/>
                         <p>3. Tổ chức:</p>- Ban Giám đốc:
                         <p className="p-info">
                             1. Đ/c Kiều Thị Hương - Giám đốc.
