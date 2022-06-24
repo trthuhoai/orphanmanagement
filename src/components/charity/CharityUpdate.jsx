@@ -197,9 +197,11 @@ const CharityUpdate = ({ theCharity }) => {
                             timeInputLabel="Thời gian:"
                             showTimeInput
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY HH:mm");
-                                setDateStart(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY HH:mm");
+                                    setDateStart(resultDate);
+                                }
                             }}
                             required
                         />
@@ -224,9 +226,11 @@ const CharityUpdate = ({ theCharity }) => {
                             timeInputLabel="Thời gian:"
                             showTimeInput
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY HH:mm");
-                                setDateEnd(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY HH:mm");
+                                    setDateEnd(resultDate);
+                                }
                             }}
                             required
                         />

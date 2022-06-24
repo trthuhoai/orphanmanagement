@@ -2,7 +2,7 @@ import {
     deleteObject,
     getDownloadURL,
     ref,
-    uploadBytes
+    uploadBytes,
 } from "firebase/storage";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
@@ -197,10 +197,11 @@ const ChildrenUpdate = ({ theChildren }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
-                                console.log(date);
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDateOfBirth(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY");
+                                    setDateOfBirth(resultDate);
+                                }
                             }}
                             required
                         />
@@ -243,9 +244,11 @@ const ChildrenUpdate = ({ theChildren }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setIntroductoryDate(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY");
+                                    setIntroductoryDate(resultDate);
+                                }
                             }}
                             required
                         />
@@ -267,9 +270,11 @@ const ChildrenUpdate = ({ theChildren }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setAdoptiveDate(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY");
+                                    setAdoptiveDate(resultDate);
+                                }
                             }}
                         />
                     </Form.Group>
