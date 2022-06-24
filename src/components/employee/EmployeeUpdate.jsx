@@ -2,15 +2,15 @@ import {
     deleteObject,
     getDownloadURL,
     ref,
-    uploadBytes
+    uploadBytes,
 } from "firebase/storage";
+import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import { EmployeeContext } from "../../contexts/EmployeeContext";
 import { storage } from "../../firebase";
 import "../../scss/abstracts/_form.scss";
-import DatePicker from "react-datepicker";
-import moment from "moment";
 
 const EmployeeUpdate = ({ theEmployee }) => {
     const id = theEmployee.id;
@@ -174,9 +174,11 @@ const EmployeeUpdate = ({ theEmployee }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDate_of_birth(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY");
+                                    setDate_of_birth(resultDate);
+                                }
                             }}
                             required
                         />

@@ -170,9 +170,11 @@ const NurturerUpdate = ({ theNurturer }) => {
                             yearDropdownItemNumber={100}
                             dateFormat="dd/MM/yyyy"
                             onChange={(date) => {
-                                const resultDate =
-                                    moment(date).format("DD/MM/YYYY");
-                                setDateOfBirth(resultDate);
+                                if (date) {
+                                    const resultDate =
+                                        moment(date).format("DD/MM/YYYY");
+                                    setDateOfBirth(resultDate);
+                                }
                             }}
                             required
                         />
