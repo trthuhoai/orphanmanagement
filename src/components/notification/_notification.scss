@@ -1,0 +1,205 @@
+@use "../../scss/abstracts/" as *;
+
+$borderColor: #ccc;
+
+.header .notification.user__menu {
+    width: 150%;
+}
+
+.notification {
+    max-height: 464px;
+    overflow-y: auto;
+
+    &__item {
+        display: flex;
+        padding: 6px 8px;
+        gap: 8px;
+        width: 100%;
+        color: $mainColor;
+        border-radius: 6px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: $secondaryColor;
+            background-color: $mainColor;
+        }
+    }
+
+    &__img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    &__content {
+        flex-grow: 1;
+
+        & div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    &__sender {
+        font-size: $fontSizeMedium;
+        margin-bottom: 0;
+    }
+
+    &__timer {
+        font-size: $fontSizeNormal;
+        font-weight: 400;
+    }
+
+    &__message {
+        font-size: $fontSizeNormal;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+    &__null{
+        text-align: center;
+        margin-top: 1rem;
+    }
+}
+
+.form__notification-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $mainColor;
+
+    .form-check__notification {
+        margin-right: -1rem;
+        user-select: none;
+
+        & * {
+            cursor: pointer;
+        }
+    }
+}
+
+.form__notification-bottom {
+    position: absolute;
+    bottom: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .react-datepicker-wrapper {
+        width: 100%;
+        max-width: 180px;
+    }
+    .form-control__notification {
+        width: 100%;
+        border: 1px solid $borderColor;
+        border-radius: 6px;
+        padding: 8px 16px;
+    }
+    .btn {
+        margin-left: 16px;
+        display: inline-block;
+    }
+}
+
+.form__notification {
+    border: 1px solid $borderColor;
+    background-color: $secondaryColor;
+
+    .form-group__notification {
+        border: 0;
+    }
+}
+.row__notification {
+    margin-bottom: 0 !important;
+    align-items: flex-start;
+}
+.email__list {
+    display: flex;
+    max-width: 1168px;
+    width: 100%;
+    gap: 4px;
+    overflow-x: auto;
+    margin-left: 8px;
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+}
+.email__item {
+    display: flex;
+    font-size: $fontSizeNormal;
+    background-color: $mainColor;
+    color: $secondaryColor;
+    padding: 0 4px;
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    user-select: none;
+}
+.quill {
+    background-color: $secondaryColor;
+    color: #000;
+    min-height: 300px;
+    border-top: 0;
+
+    .ql-toolbar.ql-snow {
+        border: 0;
+        border-top: 1px solid $borderColor;
+        border-bottom: 1px solid $borderColor;
+        margin: 0 12px;
+    }
+
+    .ql-container.ql-snow {
+        height: 300px;
+        overflow-y: auto;
+        background-color: $secondaryColor;
+        border: 0;
+    }
+}
+
+//detail
+.notification-detail {
+    color: $mainColor;
+    $borderRadius: 8px;
+
+    &__subject {
+        font-size: $fontSizeLarge;
+        background-color: #ecf5ff;
+    }
+
+    &__body {
+        display: flex;
+        justify-content: space-between;
+        background-color: $secondaryColor;
+
+        border-radius: $borderRadius $borderRadius 0 0;
+        padding: 16px;
+    }
+
+    &__img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    &__sender {
+        flex-grow: 1;
+        margin-left: 16px;
+        font-size: $fontSizeMedium;
+        font-weight: 500;
+    }
+
+    &__content {
+        background-color: $secondaryColor;
+        padding: 0 16px 16px;
+        border-radius: 0 0 $borderRadius $borderRadius;
+        overflow-y: auto;
+        height: 440px;
+    }
+}

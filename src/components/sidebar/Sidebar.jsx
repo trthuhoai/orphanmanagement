@@ -1,105 +1,331 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./sidebar.scss";
 
 const Sidebar = () => {
-    const [userInfo, setUserInfo] = useState({ roles: [] });
-
-    useEffect(() => {
-        getUserInfo();
-    }, []);
-
-    async function getUserInfo() {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        const result = await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/auth/account",
-            requestOptions
-        );
-        const getResult = await result.json();
-        setUserInfo(getResult.data);
-    }
+    const currentUser = JSON.parse(localStorage.getItem("current-user"));
     const linkStyle = {
         color: "#fff",
         textDecoration: "none",
     };
-    return (
-        <div className="sidebar">
-            <div className="top">
-                <Link to="/" style={linkStyle}>
-                    <span className="logo">
-                        <span className="logo__name">CYF</span>
-                        <span>Center</span>
-                    </span>
-                </Link>
-            </div>
-            <div className="center">
-                {userInfo.roles.includes("ROLE_ADMIN") ? (
+
+    if (currentUser.roles[0].roleName === "ROLE_ADMIN") {
+        return (
+            <div className="sidebar">
+                <div className="top">
+                    <Link to="/" style={linkStyle}>
+                        <span className="logo">
+                            <span className="logo__name">CYF</span>
+                            <span>Center</span>
+                        </span>
+                    </Link>
+                </div>
+                <div className="center">
                     <ul>
-                        <h2 className="title">Tài khoản</h2>
-                        <Link to="/users" style={linkStyle}>
-                            <li className="item">Thành viên</li>
-                        </Link>
+                        <h2 className="title">Trung tâm</h2>
+                        <NavLink
+                            to="/account"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Tài khoản
+                        </NavLink>
+                        <NavLink
+                            to="/children"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Trẻ em
+                        </NavLink>
+                        <NavLink
+                            to="/employee"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Nhân viên
+                        </NavLink>
+                        <NavLink
+                            to="/furniture"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Trang thiết bị
+                        </NavLink>
+                        <NavLink
+                            to="/storage"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Lưu trữ
+                        </NavLink>
+                        <h2 className="title">Hoạt động</h2>
+                        <NavLink
+                            to="/charity"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Từ thiện
+                        </NavLink>
+                        <NavLink
+                            to="/picnic"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Dã ngoại
+                        </NavLink>
+                        <NavLink
+                            to="/introducer"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Giới thiệu trẻ
+                        </NavLink>
+                        <NavLink
+                            to="/nurturer"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Nhận nuôi
+                        </NavLink>
+                        <NavLink
+                            to="/feedback"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Phản hồi
+                        </NavLink>
+                        <NavLink
+                            to="/statistic"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Thống kê
+                        </NavLink>
+                        <NavLink
+                            to="/notification"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Thông báo
+                        </NavLink>
                     </ul>
-                ) : userInfo.roles.includes("ROLE_MANAGER") ? (
-                    <>
-                        <ul>
-                            <h2 className="title">Trung tâm</h2>
-                            <Link to="/children" style={linkStyle}>
-                                <li className="item">Trẻ em</li>
-                            </Link>
-                            <Link to="/staff" style={linkStyle}>
-                                <li className="item">Nhân viên</li>
-                            </Link>
-                            <Link to="/furniture" style={linkStyle}>
-                                <li className="item">Trang thiết bị</li>
-                            </Link>
-                        </ul>
-                        <ul>
-                            <h2 className="title">Hoạt động</h2>
-                            <Link to="/charity" style={linkStyle}>
-                                <li className="item">Từ thiện</li>
-                            </Link>
-                            <Link to="/picnic" style={linkStyle}>
-                                <li className="item">Dã ngoại</li>
-                            </Link>
-                            <Link to="/adoption" style={linkStyle}>
-                                <li className="item">Nhận nuôi</li>
-                            </Link>
-                            <Link to="/introduction" style={linkStyle}>
-                                <li className="item">Giới thiệu trẻ</li>
-                            </Link>
-                            <Link to="/feedback" style={linkStyle}>
-                                <li className="item">Phản hồi</li>
-                            </Link>
-                            <Link
-                                to="/statistics"
-                                style={linkStyle}
-                            >
-                                <li className="item">Thống kê</li>
-                            </Link>
-                            <Link
-                                to="/notifications"
-                                style={linkStyle}
-                            >
-                                <li className="item">Thông báo</li>
-                            </Link>
-                        </ul>
-                    </>
-                ) : (
-                    ""
-                )}
+                </div>
+                <div className="bottom">
+                    <ul></ul>
+                </div>
             </div>
-            <div className="bottom"></div>
-        </div>
-    );
+        );
+    } else if (currentUser.roles[0].roleName === "ROLE_MANAGER_LOGISTIC") {
+        return (
+            <div className="sidebar">
+                <div className="top">
+                    <Link to="/" style={linkStyle}>
+                        <span className="logo">
+                            <span className="logo__name">CYF</span>
+                            <span>Center</span>
+                        </span>
+                    </Link>
+                </div>
+                <div className="center">
+                    <ul>
+                        <h2 className="title">Thiết bị</h2>
+                        <NavLink
+                            to="/manager/furniture"
+                            exact
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Thông tin
+                        </NavLink>
+                        <NavLink
+                            to="/furniture/request"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Yêu cầu
+                        </NavLink>
+                        <h2 className="title">Hoạt động</h2>
+                        <NavLink
+                            to="/manager/charity"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Từ thiện
+                        </NavLink>
+                        <NavLink
+                            to="/manager/picnic"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Dã ngoại
+                        </NavLink>
+                    </ul>
+                </div>
+                <div className="bottom">
+                    <ul></ul>
+                </div>
+            </div>
+        );
+    } else if (currentUser.roles[0].roleName === "ROLE_MANAGER_HR") {
+        return (
+            <div className="sidebar">
+                <div className="top">
+                    <Link to="/" style={linkStyle}>
+                        <span className="logo">
+                            <span className="logo__name">CYF</span>
+                            <span>Center</span>
+                        </span>
+                    </Link>
+                </div>
+                <div className="center">
+                    <ul>
+                        <h2 className="title">Trung tâm</h2>
+                        <NavLink
+                            to="/employee"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Nhân viên
+                        </NavLink>
+                        <h2 className="title">Hoạt động</h2>
+                        <NavLink
+                            to="/feedback"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Phản hồi
+                        </NavLink>
+                        <NavLink
+                            to="/notification"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Thông báo
+                        </NavLink>
+                    </ul>
+                </div>
+                <div className="bottom">
+                    <ul></ul>
+                </div>
+            </div>
+        );
+    } else if (currentUser.roles[0].roleName === "ROLE_MANAGER_CHILDREN") {
+        return (
+            <div className="sidebar">
+                <div className="top">
+                    <Link to="/" style={linkStyle}>
+                        <span className="logo">
+                            <span className="logo__name">CYF</span>
+                            <span>Center</span>
+                        </span>
+                    </Link>
+                </div>
+                <div className="center">
+                    <ul>
+                        <h2 className="title">Trung tâm</h2>
+                        <NavLink
+                            to="/children"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Trẻ em
+                        </NavLink>
+                        <h2 className="title">Hoạt động</h2>
+                        <NavLink
+                            to="/introducer"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Giới thiệu trẻ
+                        </NavLink>
+                        <NavLink
+                            to="/nurturer"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Nhận nuôi
+                        </NavLink>
+                    </ul>
+                </div>
+                <div className="bottom">
+                    <ul></ul>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="sidebar">
+                <div className="top">
+                    <Link to="/" style={linkStyle}>
+                        <span className="logo">
+                            <span className="logo__name">CYF</span>
+                            <span>Center</span>
+                        </span>
+                    </Link>
+                </div>
+                <div className="center">
+                    <ul>
+                        <h2 className="title">Thiết bị</h2>
+                        <NavLink
+                            to="/employee/furniture/request"
+                            style={linkStyle}
+                            className={({ isActive }) =>
+                                isActive ? "link-active" : "link"
+                            }
+                        >
+                            Yêu cầu
+                        </NavLink>
+                    </ul>
+                </div>
+                <div className="bottom">
+                    <ul></ul>
+                </div>
+            </div>
+        );
+    }
 };
 
 export default Sidebar;

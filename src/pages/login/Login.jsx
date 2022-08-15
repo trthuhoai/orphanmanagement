@@ -1,12 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MetaTags } from "react-meta-tags";
 import { Link, useNavigate } from "react-router-dom";
+import { Header } from "../home/Header";
 import "./login.scss";
 
 export default function Login() {
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+    const currentUser = JSON.parse(localStorage.getItem("current-user"));
+    // useEffect(() => {
+    //     if (token) navigate("/account");
+    // }, []);
+    useEffect(() => {
+        if (token){
+        if(currentUser.roles[0].roleName==="ROLE_ADMIN"){ navigate("/account");}
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_LOGISTIC"){
+            navigate("/manager/furniture");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_HR")
+        {navigate("/employee");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_MANAGER_CHILDREN"){
+            navigate("/children");
+        }
+        else if(currentUser.roles[0].roleName==="ROLE_EMPLOYEE"){
+            navigate("/employee/furniture/request");
+        }}
+
+    }, []);
+    
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState("");
 
     async function login() {
@@ -27,9 +51,46 @@ export default function Login() {
             }
         );
         result = await result.json();
-        localStorage.setItem("token", JSON.stringify(result.data.token));
+        console.log(result);
         if (result.code === 200) {
-            navigate("/users");
+            localStorage.setItem("token", JSON.stringify(result.data.token));
+            const token = JSON.parse(localStorage.getItem("token"));
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            let _result = await fetch(
+                "https://orphanmanagement.herokuapp.com/api/v1/profile/account",
+                requestOptions
+            );
+            _result = await _result.json();
+            const currentUser = _result.data;
+            localStorage.setItem("current-user", JSON.stringify(currentUser));
+            currentUser.roles.forEach((role) => {
+                switch (role.roleName) {
+                    case "ROLE_ADMIN":
+                        navigate("/account");
+                        break;
+                    case "ROLE_MANAGER_LOGISTIC":
+                        navigate("/manager/furniture");
+                        break;
+                    case "ROLE_MANAGER_HR":
+                        navigate("/employee");
+                        break;
+                    case "ROLE_MANAGER_CHILDREN":
+                        navigate("/children");
+                        break;
+                    case "ROLE_EMPLOYEE":
+                        navigate("/employee/furniture/request");
+                        break;
+                    default:
+                        break;
+                }
+            });
         } else {
             if (result.message === "Unauthorized") {
                 setErrorMessage("Bạn đã nhập sai mật khẩu!");
@@ -44,6 +105,7 @@ export default function Login() {
             <MetaTags>
                 <title>CYF Center | Đăng nhập</title>
             </MetaTags>
+            <Header/>
             <form className="form form__login">
                 <div className="form__top">
                     <Link to="/" style={{ color: "#fff" }}>
@@ -90,7 +152,7 @@ export default function Login() {
                         />
                     </div>
                     <div className="login__field"></div>
-                    <p style={{ color: "red" }}>
+                    <p style={{ color: "#CD1818" }}>
                         {errorMessage && (
                             <div className="error"> {errorMessage} </div>
                         )}
@@ -105,7 +167,7 @@ export default function Login() {
                         Đăng nhập
                     </button>
                     <div className="no-account">
-                        <Link className="btn-sign" to="/Register">
+                        <Link className="btn-sign" to="/resetpassword">
                             Quên mật khẩu?
                         </Link>
                     </div>

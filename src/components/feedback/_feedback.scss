@@ -1,0 +1,38 @@
+@use "../../scss/abstracts/" as *;
+
+.feedback-detail {
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+    &__sender {
+        font-size: $fontSizeMedium;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    &__timer {
+        font-size: $fontSizeNormal;
+    }
+    &__email {
+        font-size: 12px;
+        font-size: $fontSizeNormal;
+        opacity: 0.8;
+    }
+    &__message{
+        font-size: $fontSizeMedium;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
+
+#feedbackCreate {
+    margin-top: 140px;
+    text-align: center;
+
+    .form-group{
+        margin: auto;
+    }
+}

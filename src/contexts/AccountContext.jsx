@@ -4,30 +4,68 @@ export const AccountContext = createContext();
 
 const AccountContextProvider = (props) => {
     const [accounts, setAccounts] = useState([]);
+    const [pages, setPages] = useState([]);
+
+    const currentPage = JSON.parse(localStorage.getItem("currentPage"));
+    const token = JSON.parse(localStorage.getItem("token"));
+
     useEffect(() => {
-        getAccountsList();
+        localStorage.setItem("currentPage", 1);
+        getAccountsList(1, "");
     }, []);
 
     // GET ACCOUNTS LIST
-    async function getAccountsList() {
-        const token = JSON.parse(localStorage.getItem("token"));
-        let requestOptions = {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        };
-        await fetch(
-            "https://orphanmanagement.herokuapp.com/api/v1/admin",
-            requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                setAccounts(JSON.parse(result).data.result);
-            })
-            .catch((error) => console.log("error", error));
+    async function getAccountsList(currentPage, keyword) {
+        if (keyword) {
+            let raw = JSON.stringify({
+                keyword,
+            });
+
+            let requestOptions = {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                body: raw,
+                redirect: "follow",
+            };
+
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/admin/search?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result);
+                    setAccounts(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => console.log("error", error));
+        } else {
+            let requestOptions = {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+            };
+            await fetch(
+                `https://orphanmanagement.herokuapp.com/api/v1/admin?page=${currentPage}&limit=${5}`,
+                requestOptions
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    setAccounts(result.data.result);
+                    setPages(result.data.pages);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    setAccounts([]);
+                    getAccountsList(currentPage - 1);
+                });
+        }
     }
     // ADD ACCOUNT
     async function addAccount(
@@ -39,9 +77,7 @@ const AccountContextProvider = (props) => {
         address,
         identification,
         phone,
-        email,
-        password,
-        confirmPassword
+        email
     ) {
         let raw = JSON.stringify({
             image,
@@ -53,10 +89,9 @@ const AccountContextProvider = (props) => {
             identification,
             phone,
             email,
-            password,
-            confirmPassword,
         });
         const token = JSON.parse(localStorage.getItem("token"));
+
         let requestOptions = {
             method: "POST",
             headers: {
@@ -72,28 +107,14 @@ const AccountContextProvider = (props) => {
             requestOptions
         )
             .then((response) => response.json())
-            .then((result) => console.log(result))
+            .then((result) => {
+                console.log(result);
+                getAccountsList(currentPage);
+            })
             .catch((error) => console.log("error", error));
-        setAccounts([
-            ...accounts,
-            {
-                image,
-                fullName,
-                date_of_birth,
-                gender,
-                roles,
-                address,
-                identification,
-                phone,
-                email,
-                password,
-                confirmPassword,
-            },
-        ]);
     }
     // VIEW ACCOUNT DETAILS
     async function viewAccount(id) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let requestOptions = {
             method: "GET",
             headers: {
@@ -103,20 +124,15 @@ const AccountContextProvider = (props) => {
             redirect: "follow",
         };
 
-        await fetch(
+        let result = await fetch(
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
-        )
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(JSON.parse(result).data);
-                setAccounts(JSON.parse(result).data);
-            })
-            .catch((error) => console.log("error", error));
+        );
+        result = await result.json();
+        return result.data;
     }
     //EDIT ACCOUNT
     async function updateAccount(id, updatedAccount) {
-        const token = JSON.parse(localStorage.getItem("token"));
         let raw = JSON.stringify(updatedAccount);
         let requestOptions = {
             method: "PUT",
@@ -132,44 +148,46 @@ const AccountContextProvider = (props) => {
             `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
             requestOptions
         )
-            .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                getAccountsList(currentPage);
+            })
             .catch((error) => console.log("error", error));
-        setAccounts(
-            accounts.map((account) =>
-                account.id === id ? updatedAccount : account
-            )
-        );
     }
-    // DELETE ACCOUNT
-    async function deleteAccount(id) {
-        // const token = JSON.parse(localStorage.getItem("token"));
-        // let requestOptions = {
-        //     method: "DELETE",
-        //     headers: {
-        //         Authorization: "Bearer " + token,
-        //         "Content-Type": "application/json",
-        //     },
-        //     redirect: "follow",
-        // };
+    // STORE ACCOUNT
+    async function storeAccount(id) {
+        let requestOptions = {
+            method: "PUT",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+        };
 
-        // await fetch(
-        //     `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}`,
-        //     requestOptions
-        // )
-        //     .then((response) => response.text())
-        //     // .then((result) => console.log(result))
-        //     .catch((error) => console.log("error", error));
-        setAccounts(accounts.filter((account) => account.id !== id));
+        await fetch(
+            `https://orphanmanagement.herokuapp.com/api/v1/admin/${id}/updateStatus`,
+            requestOptions
+        )
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                getAccountsList(currentPage);
+            })
+            .catch((error) => console.log("error", error));
     }
     return (
         <AccountContext.Provider
             value={{
                 accounts,
+                getAccountsList,
                 addAccount,
-                deleteAccount,
+                storeAccount,
                 viewAccount,
                 updateAccount,
+                // searchAccount,
+                pages,
             }}
         >
             {props.children}

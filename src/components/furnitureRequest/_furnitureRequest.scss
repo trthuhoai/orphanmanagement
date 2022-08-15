@@ -1,0 +1,211 @@
+@use "../../scss/abstracts/" as *;
+
+.search-item {
+    display: flex;
+
+    &__image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    &__content {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+
+        p{
+            margin-bottom: 0;
+        }
+        span{
+            opacity: 0.7;
+        }
+    }
+}
+
+.modal-dialog1 {
+    max-width: none !important;
+}
+// .flexible-modal {
+//     position: absolute;
+//     z-index: 1000;
+//     border: 1px solid #ccc;
+//     background: white;
+//   }
+//   .flexible-modal-mask {
+//     position: fixed;
+//     height: 100%;
+//     background: rgba(55, 55, 55, 0.6);
+//     top:0;
+//     left:0;
+//     right:0;
+//     bottom:0;
+//   }
+//   .flexible-modal-resizer {
+//     position:absolute;
+//     right:0;
+//     bottom:0;
+//     cursor:se-resize;
+//     margin:5px;
+//     border-bottom: solid 2px #333;
+//     border-right: solid 2px #333;
+//   }
+//   .flexible-modal-drag-area{
+//     background: rgba(22, 22, 333, 0.2);
+//     height: 50px;
+//     position:absolute;
+//     right:0;
+//     top:0;
+//     cursor:move;
+//   }
+.group_item {
+    max-width: 119px;
+}
+
+.row-fluid {
+    width: 100%;
+    height: 1.8cm;
+    *zoom: 1;
+  }
+  
+  .row-fluid:before,
+  .row-fluid:after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+  
+  .row-fluid:after {
+    clear: both;
+  }
+  
+  .row-fluid [class*="span"] {
+    display: block;
+    float: left;
+    width: 100%;
+    min-height: 30px;
+    margin-left: 2.127659574468085%;
+    *margin-left: 2.074468085106383%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  .row-fluid [class*="span"]:first-child {
+    margin-left: 0;
+  }
+  
+  .row-fluid .controls-row [class*="span"]+[class*="span"] {
+    margin-left: 2.127659574468085%;
+  }
+  
+  .row-fluid .span12 {
+    width: 100%;
+    *width: 99.94680851063829%;
+  }
+  
+  .row-fluid .span11 {
+    width: 91.48936170212765%;
+    *width: 91.43617021276594%;
+  }
+  
+  .row-fluid .span10 {
+    width: 82.97872340425532%;
+    *width: 82.92553191489361%;
+  }
+  
+  .row-fluid .span9 {
+    width: 74.46808510638297%;
+    *width: 74.41489361702126%;
+  }
+  
+  .row-fluid .span8 {
+    width: 65.95744680851064%;
+    *width: 65.90425531914893%;
+  }
+  
+  .row-fluid .span7 {
+    width: 57.44680851063829%;
+    *width: 57.39361702127659%;
+  }
+  
+  .row-fluid .span6 {
+    width: 48.93617021276595%;
+    *width: 48.88297872340425%;
+  }
+  
+  .row-fluid .span5 {
+    width: 40.42553191489362%;
+    *width: 40.37234042553192%;
+  }
+  
+  .row-fluid .span4 {
+    width: 31.914893617021278%;
+    *width: 31.861702127659576%;
+  }
+  
+  .row-fluid .span3 {
+    width: 23.404255319148934%;
+    *width: 23.351063829787233%;
+  }
+  
+  .row-fluid .span2 {
+    width: 14.893617021276595%;
+    *width: 14.840425531914894%;
+  }
+  .row-fluid .span1-5 {
+    width: 10.893617021276595%;
+    *width: 10.840425531914894%;
+  }
+  .row-fluid .span1 {
+    width: 2.682978723404255%;
+    *width: 2.629787234042553%;
+  }
+  
+  .row-fluid .span0 {
+    width: 0.482978723404255%;
+    *width: 0.429787234042553%;
+  }
+  .table_request{
+      width: 100%;
+      margin: auto;
+      // padding-left: 1cm;
+      border-collapse: separate;
+      border-spacing: 0ch;
+      border-radius: 8px 8px 0 0 ;
+      overflow: hidden;
+      // background-color: #185f67;
+      box-shadow: 0 0 20px rgb(15 30 84 /15%);
+      height: 100%
+      
+  }
+  .table_request thead{
+      color: #FFFFFF;
+      background-color: #185f67;
+      height: 50px;
+  }
+  .table_request tbody tr{
+    height: 50px;
+    color: #185f67;
+      line-height: 1;
+      background-color: #FFFFFF;
+      padding-left: -1cm;
+  }
+  .p_id{
+      padding-left: 1cm;
+  }
+  .form-group1{
+    max-width: 730px;
+    // height: 15cm;
+  }
+
+  .p-title{
+   color: #0f1e54;
+  }
+  .p-value{
+    color: #0f1e54;
+    // font-weight: 500;
+    font-size: 18px;
+  }

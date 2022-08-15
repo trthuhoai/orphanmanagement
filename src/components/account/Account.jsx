@@ -1,13 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { AccountContext } from "../../contexts/AccountContext";
+import { LoadingDetail } from "../loading/LoadingSkeleton";
 import AccountUpdate from "./AccountUpdate";
 import AccountDetail from "./AccountDetail";
 
-const Account = ({ account }) => {
-    const { deleteAccount } = useContext(AccountContext);
-    const { viewAccount } = useContext(AccountContext);
-    const { updateAccount } = useContext(AccountContext);
+const Account = ({ account = {} }) => {
+    const { storeAccount } = useContext(AccountContext);
+
+    useEffect(() => {
+        handleCloseUpdate();
+        handleCloseDelete();
+    }, [account]);
 
     // MODAL DETAIL
     const [showDetail, setShowDetail] = useState(false);
@@ -30,22 +34,14 @@ const Account = ({ account }) => {
                 <img
                     src={
                         account.image ||
-                        "https://shahpourpouyan.com/wp-content/uploads/2018/10/orionthemes-placeholder-image-1.png"
+                        "https://firebasestorage.googleapis.com/v0/b/cyfcenter-323a8.appspot.com/o/placeholder-img.webp?alt=media&token=6f658374-20b2-4171-9ef2-32ad3f87fa57"
                     }
                     alt=""
                 />
                 {account.fullName}
             </td>
             <td>{account.email} </td>
-            <td>
-                {account.roles.includes("ROLE_ADMIN") ||
-                account.roles.includes("admin")
-                    ? "Admin"
-                    : account.roles.includes("ROLE_MANAGER") ||
-                      account.roles.includes("manager")
-                    ? "Manager"
-                    : ""}
-            </td>
+            <td>{account.roles[0].description}</td>
             <td>
                 <i
                     title="Xem chi tiết"
@@ -58,7 +54,8 @@ const Account = ({ account }) => {
                     onClick={handleShowUpdate}
                 ></i>
                 <i
-                    className="bi bi-trash3 icon icon__delete"
+                    title="Lưu trữ"
+                    className="bi bi-archive icon icon__storage"
                     onClick={handleShowDelete}
                 ></i>
             </td>
@@ -77,7 +74,6 @@ const Account = ({ account }) => {
                 <Modal.Body className="modal__body">
                     <AccountDetail theAccount={account} />
                 </Modal.Body>
-                
             </Modal>
             {/* MODAL UPDATE */}
             <Modal
@@ -122,7 +118,7 @@ const Account = ({ account }) => {
                 </Modal.Header>
                 <Modal.Body className="modal__body">
                     <p className="confirm-message">
-                        {`Bạn có chắc chắn muốn xoá ${account.fullName} khỏi danh sách không?`}
+                        {`Tài khoản ${account.fullName} sẽ được lưu trữ và bị xoá vĩnh viễn trong 7 ngày. Bạn có muốn tiếp tục không?`}
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -136,7 +132,7 @@ const Account = ({ account }) => {
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
-                            deleteAccount(account.id);
+                            storeAccount(account.id);
                         }}
                         className="btn btn--primary btn__submit"
                     >

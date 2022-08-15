@@ -1,0 +1,39 @@
+@use "./variables" as *;
+
+.pagination {
+    position: absolute;
+    bottom: $spacing;
+    right: $spacing;
+    list-style-type: none;
+    margin-bottom: 0;
+
+    .page-item {
+        display: inline-block;
+        min-width: 16px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .page-link {
+        font-size: $fontSizeNormal;
+        color: $mainColor;
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:active {
+            border: 1px solid $mainColor;
+        }
+    }
+
+    .page-item.active .page-link {
+        background-color: $mainColor;
+        border-color: unset;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
