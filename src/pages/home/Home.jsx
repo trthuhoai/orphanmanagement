@@ -133,7 +133,7 @@ export default class Home extends React.Component {
                     <br></br>
                     <p className="p-info">
                         <h2 style={{ color: "black" }}>
-                            Thông tin chung về Trung tâm Bảo trợ trẻ em CYF
+                            Thông tin chung về Trung tâm Bảo trợ trẻ em CYF FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFf
                         </h2>
                         <p>1. Thông tin chung:</p>- Tên đơn vị: Trung tâm Bảo
                         trợ trẻ em CYF
